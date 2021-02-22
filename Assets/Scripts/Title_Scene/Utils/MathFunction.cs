@@ -4,21 +4,28 @@ using UnityEngine;
 
 public class MathFunction : MonoBehaviour
 {
-    [SerializeField]
-    private float t1;
-    [SerializeField]
+    //[Range(0, 100f)]
+    public float height;
+    //[Range(0, 50f)]
+    public float limit;
+    //[Range(0, 10f)]
+    public float speed;
 
+    private float t1;
     private float t2;
+
+
     //주로 높낮이 Vector3 Y에 사용되는게 좋음  
-    private float Sin()
+    protected float Sin()
     {
+       
         t1 += Time.deltaTime * speed;
         float result = height + limit * Mathf.Sin(t1);
         return result;
         // Debug.Log("사인" + result);
 
     }
-    private float Cos()
+    protected float Cos()
     {
         t2 += Time.deltaTime * speed;
         float result = height + limit * Mathf.Cos(t2);

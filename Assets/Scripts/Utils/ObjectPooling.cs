@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class ObjectPooling 
 {
-    //풀링 오브젝트 목록
-    public enum pooling{
-        Cloud
-    };
-
     public static ObjectPooling cloudPooling = new ObjectPooling();
 
     public int cloudSize = 3;
@@ -20,11 +15,12 @@ public class ObjectPooling
     private GameObject parent;
     private GameObject clone;
     
-    //실제 풀 리스트들
+    //실제 풀 Queue 리스트
     private Queue<GameObject> pool = new Queue<GameObject>();
 
+    //오브젝트 생성
     private void Creation()
-    {
+    {   
         if (parent==null || !parent.activeInHierarchy)
         {
             parent = new GameObject();
@@ -40,6 +36,7 @@ public class ObjectPooling
         }
     }
 
+    //오브젝트 넣기
     public  void Push(GameObject temp)
     {
         if (temp.activeSelf)
@@ -49,8 +46,8 @@ public class ObjectPooling
         pool.Enqueue(temp);
         Pop();
     }
-
-    public  void Pop()
+    //오브젝트 빼기
+    public void Pop()
     {
         if (pool.Count == 0)
         {
