@@ -66,8 +66,7 @@ public class test : MonoBehaviour
     }
 
     private void Circle_exercise()
-    {
-    
+    {  
         this.transform.position += new Vector3(Cos(), y, Sin());
     }
 

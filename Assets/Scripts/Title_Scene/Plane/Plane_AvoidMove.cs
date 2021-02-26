@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Plane_AvoidMove : MathFunction
 {
@@ -65,9 +66,13 @@ public class Plane_AvoidMove : MathFunction
     //반원 운동
     private void Half_exercise()
     {
-        float cos = Cos_Control(-1,1);
-         this.transform.Translate((-Vector3.up+ new Vector3(cos, -Sin_Control(), 0f).normalized)* Time.deltaTime * runSpeed ,Space.Self);
-        this.transform.rotation = Quaternion.Euler(0f, 0f, cos * turnSpeed) * startRotation;
+        float cos = Cos_Control(-1f,1f);
+        float sin = Sin_Twice(); //이게 반원 운동에 KeyPoint!!!
+      
+        Vector3 move = new Vector3(cos, -1f*Time.deltaTime*runSpeed, sin /7f);
+  
+        this.transform.Translate(move, Space.Self);  //this.transform.Translate((Vector3.forward) * sin / 5f + (Vector3.right * cos) + (-Vector3.up*Time.deltaTime*runSpeed), Space.Self) ;
+        this.transform.Rotate(Vector3.up, cos * turnSpeed, Space.Self);
     }
     //발사
     private void Fire()

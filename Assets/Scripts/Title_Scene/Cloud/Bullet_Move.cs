@@ -13,9 +13,9 @@ public class Bullet_Move : MonoBehaviour
 
     private void Awake()
     {
-        bulletSpeed = 70f;
+        bulletSpeed = 80f;
         timeSpeed = 3f;
-        deadTime = 5f;
+        deadTime = 6f;
     }
     void Start()
     {
@@ -31,6 +31,6 @@ public class Bullet_Move : MonoBehaviour
             lifeTime = 0f;  //초기화
             BM.bullet_Control(this.gameObject); //Push 및 active 설정
         }
-        transform.Translate(transform.forward * Time.deltaTime * bulletSpeed, Space.Self);
+        transform.Translate(-Vector3.up * Time.deltaTime * bulletSpeed, Space.Self);
     }
 }
