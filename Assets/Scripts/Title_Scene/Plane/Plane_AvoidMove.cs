@@ -33,7 +33,7 @@ public class Plane_AvoidMove : MathFunction
     {
         //이동
         turnSpeed = 5f;
-        runSpeed = 10f;
+        runSpeed = 30f;
         //발사 설정
         fireReloadTime = 2f;
         fireWaitTime = 0.3f;
@@ -59,19 +59,9 @@ public class Plane_AvoidMove : MathFunction
         {
             Fire();
         }
-       // Straight(); 
         Half_exercise();     
     }
 
-    //직진
-    private void Straight()
-    {
-        Vector3 direction = transform.TransformDirection(Vector3.forward);
-        print("transform.forward" + direction);
-        Vector3 direction2 = transform.TransformDirection(-transform.forward);
-        print("transform.back" + direction2);
-
-    }
     //반원 운동
     private void Half_exercise()
     {
@@ -106,7 +96,6 @@ public class Plane_AvoidMove : MathFunction
     {
         if (other.gameObject.tag == "Finish")
         {
-            print("하앗");
             TS.SetActionState(Title_SceneManager.Action_State.revengeAction);
         }
     }

@@ -38,7 +38,7 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
     {
         circleAction_Time = 1f;
         fireAction_Time = 1f;
-        revengeAction_Time = 1.5f;
+        revengeAction_Time = 1f;
     }
     void Start()
     {
@@ -55,7 +55,7 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
         avoidPlane_StartPosition = avoidPlane.transform.position;
 
         //액션 시작
-        action = Action_State.revengeAction;
+        action = Action_State.circleAction;
     }
 
     private void Update()
@@ -123,6 +123,10 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
         firePlane.transform.rotation = Quaternion.Euler(-90f, 180f, 180f);
 
         yield return new WaitForSeconds(revengeAction_Time);
+
+        avoidPlane.GetComponent<Plane_AvoidMove>().fireCheck = true;
+        firePlane.GetComponent<Plane_AvoidMove>().fireCheck = false;
+
         avoidPlane.SetActive(true);
         firePlane.SetActive(true);
         action = Action_State.wait;
