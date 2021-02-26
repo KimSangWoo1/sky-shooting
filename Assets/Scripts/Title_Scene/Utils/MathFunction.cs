@@ -32,4 +32,18 @@ public class MathFunction : MonoBehaviour
         return result;
         //Debug.Log("코사인" + result);
     }
+
+    protected float Sin_Control()
+    {
+        t1 += Time.deltaTime * speed;
+        float result = height + limit * Mathf.Abs(Mathf.Sin(t1)); //반원 호만 그리기    
+        return result;
+    }
+    protected float Cos_Control(float min, float max)
+    {
+        t2 += Time.deltaTime * speed;
+        float result = height + limit * Mathf.Clamp(Mathf.Cos(t2),min,max);
+        return result;
+
+    }
 }

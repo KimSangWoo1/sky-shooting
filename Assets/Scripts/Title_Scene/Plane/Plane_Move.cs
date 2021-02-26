@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Plane_Move : MathFunction
 {
+    Title_SceneManager TS;
     public Transform target;
     
     public float x;
@@ -12,14 +13,14 @@ public class Plane_Move : MathFunction
 
     private Vector3 circle_StartPosition;
     private float move_Time;
-    private int timeSpeed;
+    private float timeSpeed;
 
     private bool circle;
 
     private void Start()
     {
-        timeSpeed = 2;
-
+        TS = Title_SceneManager.Instance;
+        timeSpeed = 2f;
     }
 
     void Update()
@@ -49,8 +50,8 @@ public class Plane_Move : MathFunction
     {
         Vercical_Circle(); //원 이동
         float result = transform.position.y - circle_StartPosition.y; //길이 및 방향
-        float dot = Vector3.Dot(Vector3.forward, (transform.position - circle_StartPosition).normalized); //내적
-
+        float dot = Vector3.Dot(Vector3.forward, (transform.position - circle_StartPosition).normalized); //내적 Vector3.Dot(타겟Object,기준Object)
+        //print((transform.position - circle_StartPosition).normalized);
         // 내적하여 원 이동 시작지점 뒤에 비행기가 있고 거리 길이가 1보다 작을때까지 기달린다.
         yield return new WaitUntil(() => dot<0 && result <= 1f);
         // 다 돌았다
@@ -104,6 +105,21 @@ public class Plane_Move : MathFunction
         {
             this.transform.position += new Vector3(Cos(), y, Sin());
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Finish")
+        {        
+            TS.SetActionState(Title_SceneManager.Action_State.fireAction);
+        }
+    }
+    private void OnDisable()
+    {
+        move_Time = 0f;
+        circle = false;
+        circle_StartPosition = Vector3.zero;
+        StopCoroutine(Circle_Movement());
     }
 }
 

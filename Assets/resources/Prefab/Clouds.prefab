@@ -107,9 +107,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027c3193d55d76243aa9b8ba7f3aa6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   cloudSpeed: 10
-  lifeTime: 120
-  currentTime: 0
+  startPoint: {fileID: 8213173945825266943, guid: b2f0ff9c5f7352e4ebd20e22896bbb3c,
+    type: 3}
 --- !u!1001 &432722516465198301
 PrefabInstance:
   m_ObjectHideFlags: 0
