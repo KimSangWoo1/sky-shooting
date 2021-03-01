@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class Plane_Move : MathFunction
 {
-    Title_SceneManager TS;
     public Transform target;
-    
-    public float x;
-    public float y;
-    public float z;
 
+    private Title_SceneManager TS;
     private Vector3 circle_StartPosition;
+    private Vector3 startEuler;
+
     private float move_Time;
     private float timeSpeed;
+    private float runSpeed;
 
     private bool circle;
 
+    private void OnEnable()
+    {
+       // transform.rotation = startRotation;
+    }
+    private void Awake()
+    {
+        timeSpeed = 2f;
+        speed = 2f;
+        runSpeed = 60f;
+    }
     private void Start()
     {
         TS = Title_SceneManager.Instance;
-        timeSpeed = 2f;
+        startEuler = this.transform.rotation.eulerAngles;
+
+       // print(transform.name + ": " + startEuler);
     }
 
     void Update()
@@ -45,13 +56,19 @@ public class Plane_Move : MathFunction
         }
        
     }
+    //직진 이동
+    private void Straight()
+    {
+        this.transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.World);
+    }
+
     //원 이동 및 체크
     IEnumerator Circle_Movement()
     {
         Vercical_Circle(); //원 이동
         float result = transform.position.y - circle_StartPosition.y; //길이 및 방향
         float dot = Vector3.Dot(Vector3.forward, (transform.position - circle_StartPosition).normalized); //내적 Vector3.Dot(타겟Object,기준Object)
-        //print((transform.position - circle_StartPosition).normalized);
+
         // 내적하여 원 이동 시작지점 뒤에 비행기가 있고 거리 길이가 1보다 작을때까지 기달린다.
         yield return new WaitUntil(() => dot<0 && result <= 1f);
         // 다 돌았다
@@ -82,15 +99,10 @@ public class Plane_Move : MathFunction
         }
         else
         {
-            this.transform.position += new Vector3(x, Sin(), Cos());
+            this.transform.position += new Vector3(0f, Sin(), Cos());
         }
     }
 
-    //직진 이동
-    private void Straight()
-    {
-        this.transform.Translate(-transform.forward *speed, Space.Self) ;
-    }
     private void Horizontal_Circle()
     {
         if (target != null)
@@ -103,7 +115,7 @@ public class Plane_Move : MathFunction
         }
         else
         {
-            this.transform.position += new Vector3(Cos(), y, Sin());
+            this.transform.position += new Vector3(Cos(), 0f, Sin());
         }
     }
 
@@ -116,9 +128,9 @@ public class Plane_Move : MathFunction
     }
     private void OnDisable()
     {
+        transform.rotation = Quaternion.Euler(startEuler);
         move_Time = 0f;
         circle = false;
-        circle_StartPosition = Vector3.zero;
         StopCoroutine(Circle_Movement());
     }
 }

@@ -42,7 +42,6 @@ public class Cloud_Move : MonoBehaviour
         if (distance < 50f)
         {
             CM.Cloud_Control(this.gameObject);
-            print("1번");
         }
     }
     //오류 방지를 위한 내적을 사용하여 Object가 타겟 뒤로 가면 Push 시키기
@@ -52,7 +51,6 @@ public class Cloud_Move : MonoBehaviour
         if (dot < 0)
         {
             CM.Cloud_Control(this.gameObject);
-            print("2번");
         }
     }
 }

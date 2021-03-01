@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testMove : MonoBehaviour
+public class Translate_Move : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool vector;

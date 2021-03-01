@@ -14,7 +14,6 @@ public class Plane_AvoidMove : MathFunction
     private Title_SceneManager TS;
 
     private Vector3 startPosition;  //초기 위치
-    private Quaternion startRotation; //초기 각도
 
     private float fireTime; // 발사 시간
     private float fireReloadTime; //재장전 시간
@@ -34,7 +33,7 @@ public class Plane_AvoidMove : MathFunction
     {
         //이동
         turnSpeed = 5f;
-        runSpeed = 30f;
+        runSpeed = 50f;
         //발사 설정
         fireReloadTime = 2f;
         fireWaitTime = 0.3f;
@@ -46,7 +45,6 @@ public class Plane_AvoidMove : MathFunction
     {
         //초기 값
         startPosition = transform.position;
-        startRotation = transform.rotation;
     }
     void Start()
     {
@@ -101,7 +99,14 @@ public class Plane_AvoidMove : MathFunction
     {
         if (other.gameObject.tag == "Finish")
         {
-            TS.SetActionState(Title_SceneManager.Action_State.revengeAction);
+            if (TS.Check_Revenge())
+            {
+                TS.SetActionState(Title_SceneManager.Action_State.cameraBumpAction);
+            }
+            else
+            {
+                TS.SetActionState(Title_SceneManager.Action_State.revengeAction);
+            }
         }
     }
 }

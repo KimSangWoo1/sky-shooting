@@ -6,11 +6,11 @@ public class Plane_break : MathFunction
 {
     public Transform target;
 
-    void Start()
+    private Title_SceneManager TS;
+    private void Start()
     {
-        
+        TS = Title_SceneManager.Instance;
     }
-
 
     void Update()
     {
@@ -18,7 +18,12 @@ public class Plane_break : MathFunction
         diret = diret.normalized;
         this.transform.rotation = Quaternion.LookRotation(diret) * Quaternion.AngleAxis(90f, Vector3.left);
 
-        this.transform.position = Vector3.MoveTowards(this.transform.position, target.position,
-            speed);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, target.position,speed);
+
+        float distance = Vector3.Distance(target.position, transform.position);
+        if (distance <= 2f)
+        {
+            TS.SetActionState(Title_SceneManager.Action_State.cameraBreakAction);
+        }
     }
 }

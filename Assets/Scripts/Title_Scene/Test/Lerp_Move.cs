@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testMove2 : MonoBehaviour
+public class Lerp_Move : MonoBehaviour
 {
 
     public Transform Target;
