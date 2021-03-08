@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: bullet_Emission
+  m_Name: Muzzle_Emission
   m_Shader: {fileID: 4800000, guid: eb7640044cdf97d459bfb3895b71698d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -72,9 +72,9 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - fB: 0
+    - fB: 0.69
     - fG: 0
-    - fR: 1
+    - fR: 0
     m_Colors:
     - _Color: {r: 0.9551099, g: 0.990566, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
