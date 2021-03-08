@@ -35,6 +35,11 @@ public class ObjectPooling
         }
     }
 
+    public Pooling_State getState()
+    {
+        return pooling;
+    }
+
     //오브젝트 생성
     public void Creation()
     {

@@ -80,6 +80,7 @@ public class Simple_RotMove : MonoBehaviour
 
             //회전
             Vector3 diret = new Vector3(h, 0f, v);
+            print(diret);
             if (diret != Vector3.zero)
             {
                 diret = diret.normalized;

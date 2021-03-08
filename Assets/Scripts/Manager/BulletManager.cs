@@ -24,6 +24,11 @@ public class BulletManager : Singleton<BulletManager>
     //총 발사
     internal void bullet_Fire(Transform firePosition)
     {
+        if (bulletPooling.getState() != ObjectPooling.Pooling_State.Bullet)
+        {
+            bulletPooling.setState(ObjectPooling.Pooling_State.Bullet);
+        }
+
         GameObject bullet = bulletPooling.Pop();
         bullet.transform.position = firePosition.position;
         bullet.transform.rotation = firePosition.rotation;

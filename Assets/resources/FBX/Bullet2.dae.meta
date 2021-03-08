@@ -1,22 +1,28 @@
 fileFormatVersion: 2
-guid: f613be07b7ca8f741afab9f2e518a184
+guid: 74aafeaa075ad3d41a510a1412596f9a
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: in
+    100000: Body
     100002: //RootNode
-    100004: out
-    400000: in
+    100004: Head
+    100006: Tail
+    400000: Body
     400002: //RootNode
-    400004: out
-    2100000: in_mat
-    2100002: out_mat
-    2300000: in
-    2300002: out
-    3300000: in
-    3300002: out
-    4300000: in
-    4300002: out
+    400004: Head
+    400006: Tail
+    2100000: tail_mat
+    2100002: head_mat
+    2100004: body_mat
+    2300000: Body
+    2300002: Head
+    2300004: Tail
+    3300000: Body
+    3300002: Head
+    3300004: Tail
+    4300000: Tail
+    4300002: Head
+    4300004: Body
   externalObjects: {}
   materials:
     importMaterials: 1
