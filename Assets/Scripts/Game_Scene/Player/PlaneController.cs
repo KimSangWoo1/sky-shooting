@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Simple_RotMove : MonoBehaviour
+public class PlaneController : MonoBehaviour
 {
     BulletManager BM;
     [Header("총구 위치")]
@@ -10,7 +10,9 @@ public class Simple_RotMove : MonoBehaviour
     public Transform rightMuzzle;
     public Transform centerMuzzle;
 
-    public bool fireButton;
+    [Header("UI")]
+    public RightPanel_Control rightPanel;
+    public JoyStick joystick;
 
     [Header("속도")]
     [SerializeField]
@@ -53,14 +55,13 @@ public class Simple_RotMove : MonoBehaviour
         Rot();
         //발사
         Fire();
-
     }
 
     void Move()
     {
         transform.Translate(Vector3.down * Time.deltaTime * runSpeed, Space.Self);
         //부스터
-        if (Input.GetKey(KeyCode.Space))
+        if (rightPanel.buster || Input.GetKey(KeyCode.Space))
         {
             runSpeed = 10f *2;
         }
@@ -72,6 +73,7 @@ public class Simple_RotMove : MonoBehaviour
 
     void Rot()
     {
+        //PC용
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             //입력
@@ -80,7 +82,6 @@ public class Simple_RotMove : MonoBehaviour
 
             //회전
             Vector3 diret = new Vector3(h, 0f, v);
-            print(diret);
             if (diret != Vector3.zero)
             {
                 diret = diret.normalized;
@@ -89,43 +90,66 @@ public class Simple_RotMove : MonoBehaviour
                 transform.rotation = Quaternion.Lerp(this.transform.rotation, diretion * Quaternion.AngleAxis(-90f, Vector3.right), Time.deltaTime * turnSpeed);
             }
         }
+        //Mobile 용
+        if (joystick.move)
+        {
+            Vector2 joyDirect = joystick.getDirection();
+            joyDirect = joyDirect.normalized;
+            float angle = Mathf.Atan2(joyDirect.x, joyDirect.y) * Mathf.Rad2Deg;
+            transform.eulerAngles = new Vector3(-90f, angle, 0f) ;
+        }
     }
-
-    public void Fire()
+    private void Fire()
     {
-    
-            fireTime += Time.deltaTime * fireSpeedTime;
-            if (fireCount >= fireMaxCount)
+        fireTime += Time.deltaTime * fireSpeedTime;
+        if (fireCount >= fireMaxCount)
+        {
+            if (fireTime >= fireReloadTime)
             {
-                if (fireTime >= fireReloadTime)
-                {
-                    fireCount = 0;
-                    fireTime = 0;
-                }
+                fireCount = 0;
+                fireTime = 0;
             }
-            else
+        }
+        else
+        {
+            if (fireTime >= fireWaitTime)
             {
-                if (fireTime >= fireWaitTime)
+                if (rightPanel.fire || Input.GetKeyDown(KeyCode.RightControl))
                 {
-                    if (fireButton)
-                    {
-                        fireTime = 0f;
-                        fireCount++;
-                        BM.bullet_Fire(leftMuzzle);
-                        BM.bullet_Fire(rightMuzzle);
-                    }              
+                    fireTime = 0f;
+                    fireCount++;
+                    BM.bullet_Fire(leftMuzzle);
+                    BM.bullet_Fire(rightMuzzle);
+                }
             }
         }
     }
-    
-    public void Fire_ButtonDown()
-    {
-        fireButton = true;
-    }
-    public void Fire_ButtonUp()
-    {
-        fireButton = false;
-    }
 
-   
+    /*
+    private void Fire()
+    {
+        fireTime += Time.deltaTime * fireSpeedTime;
+        if (fireCount >= fireMaxCount)
+        {
+            if (fireTime >= fireReloadTime)
+            {
+                fireCount = 0;
+                fireTime = 0;
+            }
+        }
+        else
+        {
+            if (fireTime >= fireWaitTime)
+            {
+                if (rightPanel.fire || Input.GetKeyDown(KeyCode.RightControl))
+                {
+                    fireTime = 0f;
+                    fireCount++;
+                    BM.bullet_Fire(leftMuzzle);
+                    BM.bullet_Fire(rightMuzzle);
+                }
+            }
+        }
+    }
+    */
 }
