@@ -8,7 +8,6 @@ public class RightPanel_Control : MonoBehaviour, IPointerDownHandler, IPointerUp
 {
     public Image fireButton;
     public Buster_Gage busterGage; //부스터 게이지
-    public Magazine magazine;
 
     [HideInInspector]
     public bool fire; //발사
@@ -40,16 +39,9 @@ public class RightPanel_Control : MonoBehaviour, IPointerDownHandler, IPointerUp
 
     void Update()
     {
-        if (fire)
-        {
-
-        }
-        else
-        {
-
-        }
         //부스터
         Buster_Control();
+        print(buster);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -60,6 +52,7 @@ public class RightPanel_Control : MonoBehaviour, IPointerDownHandler, IPointerUp
         if (temp.name =="Buster" )
         {
             buster = true;
+            
         }
         // Other UI 일경우: 총 버튼 위치 이동
         else
@@ -70,9 +63,10 @@ public class RightPanel_Control : MonoBehaviour, IPointerDownHandler, IPointerUp
                 fire = false;
                 fireButton.rectTransform.position = origin_FirePosition;
             }
+            //Right 판넬안에 정상 터치 할 경우
             else
             {
-                fire = true;
+                fire = true;        
                 eventData.selectedObject = fireButton.gameObject;
                 fireButton.rectTransform.position = eventData.position;
             }
@@ -109,11 +103,11 @@ public class RightPanel_Control : MonoBehaviour, IPointerDownHandler, IPointerUp
     //부스터 
     private void Buster_Control()
     {
-        //부스터 사용 & 충전
+        //부스터 사용 & 충전 
         if (buster)
         {
-            //부스터 게이지 다 사용했는지 검사
-            if (busterGage.Get_Possible())
+            //부스터 게이지 다 사용했는지 검사 
+            if (busterGage.Get_Possible() )
             {
                 busterGage.DIsCharge_Gage();
             }

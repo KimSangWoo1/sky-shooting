@@ -31,8 +31,10 @@ public class Buster_Gage : MonoBehaviour
     }
     private void Update()
     {
+        //부스터 색 변화
         Change_Color();
 
+        //부스터 사용 가능 여부
         if (gage.fillAmount <= 0f)
         {
             possible = false;
@@ -42,12 +44,12 @@ public class Buster_Gage : MonoBehaviour
             possible = true;
         }
     }
-
+    //부스터 사용 GET Method
     public bool Get_Possible()
     {
         return possible;
     }
-
+    //부스터 색 변화
     private void Change_Color()
     {
         if (gage.fillAmount >= 0.7f)
@@ -62,14 +64,17 @@ public class Buster_Gage : MonoBehaviour
             gage.color = red;
         }
     }
+    //부스터 게이지 충전
     public void Charge_Gage()
     {
+        // Max 충전 10초 걸림
         value += Time.deltaTime / 10f;
         value = Mathf.Clamp(value, 0f, 1f);
         gage.fillAmount = value;
     }
-
+    //부스터 게이지 방전
     public void DIsCharge_Gage() {
+        // Max 사용 5초 
         value -= Time.deltaTime / 5f;
         value = Mathf.Clamp(value, 0f, 1f);
         gage.fillAmount = value;

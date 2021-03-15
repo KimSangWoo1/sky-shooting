@@ -11,14 +11,12 @@ public class PlaneController : MonoBehaviour
     public Transform centerMuzzle;
 
     [Header("UI")]
-    public RightPanel_Control rightPanel;
-    public JoyStick joystick;
+    public RightPanel_Control rightPanel; //부스터 ,발사
+    public Magazine magazine; //탄창
+    public JoyStick joystick; //조이스틱
 
-    [Header("속도")]
-    [SerializeField]
-    private float runSpeed;
-    [SerializeField]
-    private float turnSpeed;
+    private float runSpeed; //이동속도
+    private float turnSpeed; //회전속도
 
     private float fireTime; // 발사 시간
     private float fireReloadTime; //재장전 시간
@@ -27,6 +25,8 @@ public class PlaneController : MonoBehaviour
 
     private int fireCount; //총 발사 횟수
     private int fireMaxCount; //발사 최대 횟수
+
+    private bool trigger; //총 발사
 
     //입력값
     private float h;
@@ -37,9 +37,10 @@ public class PlaneController : MonoBehaviour
         //이동설정
         runSpeed = 10f;
         turnSpeed = 15f;
+
         //발사 설정
         fireReloadTime = 2f;
-        fireWaitTime = 0.3f;
+        fireWaitTime = 0.2f;
         fireSpeedTime = 5f;
         fireMaxCount = 3;
     }
@@ -49,19 +50,24 @@ public class PlaneController : MonoBehaviour
     }
       void Update()
     {
-        //이동
+        //비행기 이동
         Move();
-        //회전
+        //비행기 회전
         Rot();
-        //발사
-        Fire();
+        //발사 Trigger 
+        Fire_Trigger();
+        //발사!!
+        if (trigger)
+        {
+            Shooting();
+        }
     }
-
+    //비행기 이동
     void Move()
     {
         transform.Translate(Vector3.down * Time.deltaTime * runSpeed, Space.Self);
-        //부스터
-        if (rightPanel.buster || Input.GetKey(KeyCode.Space))
+        //Mobile
+        if (rightPanel.buster)
         {
             runSpeed = 10f *2;
         }
@@ -69,8 +75,14 @@ public class PlaneController : MonoBehaviour
         {
             runSpeed = 10f;
         }
-    }
+        //PC
+        if (Input.GetKey(KeyCode.Space))
+        {
+            rightPanel.buster = true;
+        }
 
+    }
+    //비행기 회전
     void Rot()
     {
         //PC용
@@ -99,57 +111,38 @@ public class PlaneController : MonoBehaviour
             transform.eulerAngles = new Vector3(-90f, angle, 0f) ;
         }
     }
-    private void Fire()
+    // 발사!!
+    private void Shooting()
     {
-        fireTime += Time.deltaTime * fireSpeedTime;
         if (fireCount >= fireMaxCount)
-        {
-            if (fireTime >= fireReloadTime)
-            {
+        {            
+                trigger = false;
                 fireCount = 0;
-                fireTime = 0;
-            }
+                fireTime = 0f;
         }
         else
         {
             if (fireTime >= fireWaitTime)
             {
-                if (rightPanel.fire || Input.GetKeyDown(KeyCode.RightControl))
-                {
-                    fireTime = 0f;
-                    fireCount++;
-                    BM.bullet_Fire(leftMuzzle);
-                    BM.bullet_Fire(rightMuzzle);
-                }
+                BM.bullet_Fire(leftMuzzle);  // 총알 발사
+                BM.bullet_Fire(rightMuzzle); //총알 발사
+                fireCount++;
+                fireTime = 0f;
             }
-        }
+        }         
     }
+    //발사 Trigger
+    private void Fire_Trigger()
+    {
+        fireTime += Time.deltaTime * fireSpeedTime;
 
-    /*
-    private void Fire()
-    {
-        fireTime += Time.deltaTime * fireSpeedTime;
-        if (fireCount >= fireMaxCount)
-        {
-            if (fireTime >= fireReloadTime)
-            {
-                fireCount = 0;
-                fireTime = 0;
-            }
-        }
-        else
-        {
-            if (fireTime >= fireWaitTime)
-            {
-                if (rightPanel.fire || Input.GetKeyDown(KeyCode.RightControl))
-                {
-                    fireTime = 0f;
-                    fireCount++;
-                    BM.bullet_Fire(leftMuzzle);
-                    BM.bullet_Fire(rightMuzzle);
-                }
+        if (fireTime >= fireReloadTime)
+        {   // Mobile || PC
+            if (rightPanel.fire && magazine.get_Fireable() || Input.GetKeyDown(KeyCode.RightShift) && magazine.get_Fireable())
+            { 
+                trigger = true;
+                magazine.Shot(); //탄창 탄알 사용
             }
         }
     }
-    */
 }

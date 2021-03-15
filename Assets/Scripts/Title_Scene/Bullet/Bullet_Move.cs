@@ -14,8 +14,8 @@ public class Bullet_Move : MonoBehaviour
     private void Awake()
     {
         bulletSpeed = 80f;
-        timeSpeed = 3f;
-        deadTime = 6f;
+        timeSpeed = 2f;
+        deadTime = 4f;
     }
     void Start()
     {
@@ -25,6 +25,7 @@ public class Bullet_Move : MonoBehaviour
 
     void Update()
     {
+        //총 생명 시간 2초  -> 2+2 =4 
         lifeTime += Time.deltaTime *timeSpeed;
         if (lifeTime > deadTime)
         {
