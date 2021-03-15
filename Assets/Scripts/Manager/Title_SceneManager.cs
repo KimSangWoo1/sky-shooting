@@ -73,7 +73,7 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
         cameraBumpAction_Time = 1f;
         cameraBreakAction_Time = 1f;
 
-        fadeSpeed = 0.5f;
+        fadeSpeed = 0.3f;
     }
     void Start()
     {

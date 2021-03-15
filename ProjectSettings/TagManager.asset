@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Water
+  - Item_Bullet
+  - Item_Muzzle
+  - Item_Turbin
+  - Item_Health
+  - Item_Dollar
   layers:
   - Default
   - TransparentFX

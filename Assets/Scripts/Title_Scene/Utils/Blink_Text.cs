@@ -19,7 +19,6 @@ public class Blink_Text: MonoBehaviour
         alpha = Mathf.PingPong(Time.time, 1);
         Color color = titleText.color;
         blankColor = new Color(color.r, color.g, color.b, alpha);
-        print(alpha);
         titleText.color = blankColor;
     }
 }

@@ -41,7 +41,6 @@ public class RightPanel_Control : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         //부스터
         Buster_Control();
-        print(buster);
     }
 
     public void OnPointerDown(PointerEventData eventData)
