@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Circle_Move : MonoBehaviour
+public class Circle_Move : MathFunction
 {
+    /*
     [Range(0, 100f)]
     public float height;
     [Range(0, 50f)]
     public float limit;
     [Range(0, 10f)]
     public float speed;
-
+    */
     public float a;
     public float b;
     public float c;
@@ -25,10 +26,6 @@ public class Circle_Move : MonoBehaviour
     private float z;
 
     public float turnSpeed;
-    [SerializeField]
-    private float t1;
-    [SerializeField]
-    private float t2;
 
     private Vector3 startPoint;
     private Quaternion startRotation;
@@ -45,9 +42,11 @@ public class Circle_Move : MonoBehaviour
         //Tan();
         z += Time.deltaTime * speed* limit;
         //Circle_exercise();
-        Half_exercise();
+        //Half_exercise();
+        Horizontal_Circle();
     }
     //주로 높낮이 Vector3 Y에 사용되는게 좋음  
+    /*
     private float Sin()
     {
         t1 += Time.deltaTime * speed;
@@ -64,17 +63,24 @@ public class Circle_Move : MonoBehaviour
         return result;
         //Debug.Log("코사인" + result);
     }
+    */
 
     private void Circle_exercise()
     {  
         this.transform.position += new Vector3(Cos(), y, Sin());
     }
 
+    //직선 반원
     private void Half_exercise()
     {
         float cos = Cos();
         this.transform.position = new Vector3(cos, -Sin(), - z) + startPoint;
         this.transform.rotation =  Quaternion.Euler(x,y, cos * turnSpeed) * startRotation;
+    }
+
+    private void Horizontal_Circle()
+    {
+        this.transform.position += new Vector3(Cos(), 0f, Sin());   
     }
 }
 

@@ -13,6 +13,7 @@ public class PlaneController : MonoBehaviour
     public JoyStick joystick; //조이스틱
     public Health hp;
 
+    [SerializeField]
     private float runSpeed; //이동속도
     [SerializeField]
     private float turnSpeed; //회전속도
