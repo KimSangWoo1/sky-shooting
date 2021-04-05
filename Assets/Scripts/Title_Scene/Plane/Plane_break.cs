@@ -16,7 +16,7 @@ public class Plane_break : MathFunction
     {
         Vector3 diret = target.position - transform.position;
         diret = diret.normalized;
-        this.transform.rotation = Quaternion.LookRotation(diret) * Quaternion.AngleAxis(90f, Vector3.left);
+        this.transform.rotation = Quaternion.LookRotation(diret);
 
         this.transform.position = Vector3.MoveTowards(this.transform.position, target.position,speed);
 

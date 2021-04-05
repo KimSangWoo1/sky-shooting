@@ -35,6 +35,6 @@ public class Camera_Flow : MonoBehaviour
     {
         Vector3 camPosition = new Vector3(player.transform.position.x, height, player.transform.position.z);
         //this.transform.position = Vector3.MoveTowards(this.transform.position, camPosition,Time.deltaTime * camSpeed);
-        this.transform.position = Vector3.Lerp(this.transform.position, camPosition, Time.deltaTime * camSpeed);
+        this.transform.position = Vector3.Slerp(this.transform.position, camPosition, Time.deltaTime * camSpeed);
     }
 }

@@ -13,7 +13,11 @@ public class MathFunction : MonoBehaviour
 
     private float t1;
     private float t2;
-
+    private float t3;
+    private float t4;
+    private float t5;
+    private float t6;
+    private float t7;
 
     //주로 높낮이 Vector3 Y에 사용되는게 좋음  
     protected float Sin()
@@ -30,28 +34,34 @@ public class MathFunction : MonoBehaviour
     }
     protected float Sin_Twice()
     {
-        t1 += Time.fixedDeltaTime * speed *2f;
-        float result = height + limit * Mathf.Sin(t1);
+        t3 += Time.fixedDeltaTime * speed *2f;
+        float result = height + limit * Mathf.Sin(t3);
+        return result;
+    }
+    protected float Cos_Twice()
+    {
+        t4 += Time.fixedDeltaTime * speed * 2f;
+        float result = height + limit * Mathf.Cos(t4);
         return result;
     }
 
     protected float Sin_Abs()
     {
-        t1 += Time.fixedDeltaTime * speed;
-        float result = height + limit * Mathf.Abs(Mathf.Sin(t1)); //반원 호만 그리기    
+        t5 += Time.fixedDeltaTime * speed;
+        float result = height + limit * Mathf.Abs(Mathf.Sin(t5)); //반원 호만 그리기    
         return result;
     }
     protected float Sin_Control(float min, float max)
     {
-        t1 += Time.fixedDeltaTime * speed;
-        float result = height + limit * Mathf.Clamp(Mathf.Sin(t1), min, max);
+        t6 += Time.fixedDeltaTime * speed;
+        float result = height + limit * Mathf.Clamp(Mathf.Sin(t6), min, max);
         return result;
 
     }
     protected float Cos_Control(float min, float max)
     {
-        t2 += Time.fixedDeltaTime * speed;
-        float result = height + limit * Mathf.Clamp(Mathf.Cos(t2),min,max);
+        t7 += Time.fixedDeltaTime * speed;
+        float result = height + limit * Mathf.Clamp(Mathf.Cos(t7),min,max);
         return result;
 
     }

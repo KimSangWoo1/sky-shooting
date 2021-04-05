@@ -30,8 +30,6 @@ public class Plane_Move : MathFunction
     {
         TS = Title_SceneManager.Instance;
         startEuler = this.transform.rotation.eulerAngles;
-
-       // print(transform.name + ": " + startEuler);
     }
 
     void Update()
@@ -59,7 +57,7 @@ public class Plane_Move : MathFunction
     //직진 이동
     private void Straight()
     {
-        this.transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.World);
+        this.transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
     }
 
     //원 이동 및 체크
@@ -88,11 +86,11 @@ public class Plane_Move : MathFunction
             // Vector3.up 기준 타겟 방향
             if (diret.normalized.z > 0f)
             {
-                rotation = Quaternion.LookRotation(diret, Vector3.up) * Quaternion.AngleAxis(90f, -transform.right);
+                rotation = Quaternion.LookRotation(diret, Vector3.up) ;
             }
             else
             {
-                rotation = Quaternion.LookRotation(diret, Vector3.down) * Quaternion.AngleAxis(90f, -transform.right);
+                rotation = Quaternion.LookRotation(diret, Vector3.down);
             }
             this.transform.rotation = rotation;
             this.transform.position = Vector3.Lerp(this.transform.position, target.position,Time.deltaTime *speed);

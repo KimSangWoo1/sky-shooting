@@ -1,0 +1,95 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FireController : MonoBehaviour
+{
+    [Header("발사 관련")]
+    public MuzzleController muzzle;
+    public MagazineController magazine;
+    [Header("UI관련")]
+    public RightPanel_Control rightPanel; //발사 ,부스터
+
+
+    private float fireTime; // 발사 시간
+    private float fireReloadTime; //재장전 시간
+    private float fireWaitTime;  //발사 후 대기 시간
+    private float fireSpeedTime; //발사 속도 시간
+    private int fireCount; //총 발사 횟수
+
+    private bool trigger; //총 발사
+
+    private void Awake()
+    {
+        //발사 설정
+        fireReloadTime = 2f;
+        fireWaitTime = 0.2f;
+        fireSpeedTime = 5f;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //발사!!
+        if (trigger)
+        {
+            Shooting();
+        }
+    }
+    // Player : 발사 버튼 Trigger  
+    public void Player_FireTrigger()
+    {
+        fireTime += Time.deltaTime * fireSpeedTime;
+
+        if (fireTime >= fireReloadTime)
+        {
+            //부스터 사용 안하고 있을 때
+            if (!rightPanel.buster)
+            {
+                // Mobile || PC
+                if (rightPanel.fire && magazine.get_Fireable() || Input.GetKeyDown(KeyCode.RightShift) && magazine.get_Fireable())
+                {
+                    trigger = true;
+                    magazine.Shot(); //탄창 탄알 사용
+                }
+            }
+        }
+    }
+
+    
+    // AI : 발사 Trigger
+    public void AI_FireTrigger(bool fire)
+    {
+        fireTime += Time.deltaTime * fireSpeedTime;
+
+        if (fireTime >= fireReloadTime)
+        {   // Mobile || PC
+            if (fire && magazine.get_Fireable())
+            {
+                trigger = true;
+                magazine.Shot(); //탄창 탄알 사용
+            }
+        }
+    }
+    
+    // 발사 버튼 눌렀다. 발사!!
+    private void Shooting()
+    {
+        if (fireCount >= muzzle.Get_BulletCount())
+        {
+            trigger = false;
+            fireCount = 0;
+            fireTime = 0f;
+        }
+        else
+        {
+            if (fireTime >= fireWaitTime)
+            {
+                muzzle.Fire(); //총구에서 발사
+                fireCount++;
+                fireTime = 0f;
+            }
+        }
+    }
+
+}

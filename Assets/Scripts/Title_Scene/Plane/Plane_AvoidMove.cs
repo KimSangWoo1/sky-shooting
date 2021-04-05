@@ -14,6 +14,7 @@ public class Plane_AvoidMove : MathFunction
     private Title_SceneManager TS;
 
     private Vector3 startPosition;  //초기 위치
+    private Quaternion startRotation;
 
     private float fireTime; // 발사 시간
     private float fireReloadTime; //재장전 시간
@@ -24,7 +25,9 @@ public class Plane_AvoidMove : MathFunction
     private float turnSpeed;  //비행기 회전 속도
     [SerializeField]
     private float runSpeed; //비행기 이동 속도
-   
+    [SerializeField]
+    private float sinSensitivity; //비행기 높이 감도
+
     private int fireCount; //총 발사 횟수
     private int fireMaxCount; //발사 최대 횟수
 
@@ -34,6 +37,7 @@ public class Plane_AvoidMove : MathFunction
         //이동
         turnSpeed = 5f;
         runSpeed = 50f;
+        sinSensitivity = 1.5f;
         //발사 설정
         fireReloadTime = 2f;
         fireWaitTime = 0.3f;
@@ -45,6 +49,7 @@ public class Plane_AvoidMove : MathFunction
     {
         //초기 값
         startPosition = transform.position;
+        startRotation = transform.rotation;
     }
     void Start()
     {
@@ -64,13 +69,14 @@ public class Plane_AvoidMove : MathFunction
     //반원 운동
     private void Half_exercise()
     {
-        float cos = Cos_Control(-1f,1f);
+        float cos = Cos();
         float sin = Sin_Twice(); //이게 반원 운동에 KeyPoint!!!
-      
-        Vector3 move = new Vector3(cos, -1f*Time.deltaTime*runSpeed, sin /7f);
-  
-        this.transform.Translate(move, Space.Self);  //this.transform.Translate((Vector3.forward) * sin / 5f + (Vector3.right * cos) + (-Vector3.up*Time.deltaTime*runSpeed), Space.Self) ;
-        this.transform.Rotate(Vector3.up, cos * turnSpeed, Space.Self);
+        Vector3 move = new Vector3(cos , sin / sinSensitivity,  0f);
+
+        this.transform.Translate(Vector3.forward + move, Space.Self);
+        //this.transform.rotation = startRotation * Quaternion.AngleAxis(cos * turnSpeed, Vector3.forward);
+        this.transform.Rotate(Vector3.forward, cos *turnSpeed, Space.Self);
+        
     }
     //발사
     private void Fire()

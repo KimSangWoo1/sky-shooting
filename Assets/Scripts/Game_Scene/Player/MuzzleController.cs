@@ -16,11 +16,14 @@ public class MuzzleController : MonoBehaviour
 
     private int muzzle_Count; //총구 갯수
     private int bullet_Count; //총알 갯수
- 
+
+    private void OnEnable()
+    {
+        init(); //초기 설정
+    }
     void Start()
     {
         BM = BulletManager.Instance;
-        init(); //초기 설정
     }
 
     void Update()

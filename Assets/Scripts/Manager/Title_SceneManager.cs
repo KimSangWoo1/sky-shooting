@@ -162,8 +162,8 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
         firePlane.transform.position = fire_FirePosition.position;
 
         //각도 초기화   * 곱해준 이유는 더 자연스럽게 보이기 위해 +(각도 초기화하면 반원 운동이 약간 대각선으로 만 움직여서)
-        firePlane.transform.rotation = fire_StartRotation * Quaternion.AngleAxis(40f,Vector3.up);
-        avoidPlane.transform.rotation = avoid_StartRotation * Quaternion.AngleAxis(40f, Vector3.up);
+        firePlane.transform.rotation = fire_StartRotation;
+        avoidPlane.transform.rotation = avoid_StartRotation;
 
         //총 발사 비행기 선택
         avoidPlane.GetComponent<Plane_AvoidMove>().fireCheck = false;
@@ -194,8 +194,8 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
         avoidPlane.transform.position = revenge_FirePosition.position;
         firePlane.transform.position = revenge_AvoidPosition.position;
         //각도 변경
-        avoidPlane.transform.rotation = Quaternion.Euler(-90f, 180f, 180f);
-        firePlane.transform.rotation = Quaternion.Euler(-90f, 180f, 180f);
+        avoidPlane.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        firePlane.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         //총 발사 비행기 선택
         avoidPlane.GetComponent<Plane_AvoidMove>().fireCheck = true;
         firePlane.GetComponent<Plane_AvoidMove>().fireCheck = false;
@@ -276,8 +276,8 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
         breakPlane.transform.position = breakPlane_StartPosition;
 
         //각도 초기화
-        firePlane.transform.rotation = fire_StartRotation * Quaternion.AngleAxis(40f, Vector3.up);
-        avoidPlane.transform.rotation = avoid_StartRotation * Quaternion.AngleAxis(40f, Vector3.up);
+        firePlane.transform.rotation = fire_StartRotation;
+        avoidPlane.transform.rotation = avoid_StartRotation;
 
         nextAction_WaitTime = 0f;
         alpha = 0f;

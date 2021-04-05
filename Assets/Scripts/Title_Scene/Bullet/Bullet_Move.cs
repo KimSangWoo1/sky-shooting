@@ -34,4 +34,13 @@ public class Bullet_Move : MonoBehaviour
         }
         transform.Translate(Vector3.forward * Time.deltaTime * bulletSpeed, Space.Self);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            print("맞았다");
+            BM.bullet_Control(this.gameObject); //Push 및 active 설정
+        }
+    }
 }
