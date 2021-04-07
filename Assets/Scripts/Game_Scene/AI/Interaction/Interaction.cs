@@ -2,35 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Item_Interaction))]
+[RequireComponent(typeof(MessageSender))]
 public partial class Interaction : MonoBehaviour
 {
-    private Item_Interaction itemInteraction;
+    private MessageSender messageSender;
     
     private float damage;
 
     private void Start()
     {
-        itemInteraction = GetComponent<Item_Interaction>();
+        messageSender = GetComponent<MessageSender>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Item_Bullet")
         {
-            itemInteraction.Apply_AddBullet();
+            messageSender.Apply_AddBullet();
         }
         else if (other.gameObject.tag == "Item_Muzzle")
         {
-            itemInteraction.Apply_AddMuzzle();
+            messageSender.Apply_AddMuzzle();
         }
         else if (other.gameObject.tag == "Item_Turbin")
         {
-            itemInteraction.Apply_AddTurbin();
+            messageSender.Apply_AddTurbin();
         }
         else if (other.gameObject.tag == "Item_Health")
         {
-             itemInteraction.Apply_AddHealth(other.gameObject);
+            messageSender.Apply_AddHealth(other.gameObject);
         }
         else if (other.gameObject.tag == "Item_Dollar")
         {
@@ -39,21 +39,21 @@ public partial class Interaction : MonoBehaviour
         other.transform.parent.gameObject.SetActive(false);
     }
 
-    //데미지 적용
-    public float ApplyDamage()
+    private void OnCollisionEnter(Collision collision)
     {
-        damage = 0.1f;
-
-        return damage;
+        if (collision.gameObject.tag == "Bullet")
+        {
+            messageSender.ApplyDamage();
+        }
+        else if (collision.gameObject.tag == "Player")
+        {
+            messageSender.Self_Destruction();
+        }
+        else if (collision.gameObject.tag == "AI")
+        {
+            messageSender.Self_Destruction();
+        }
     }
-    //자폭
-    public void Self_Destruction()
-    {
 
-    }
-    //초기화
-    public void Reset_Interaction()
-    {
 
-    }
 }

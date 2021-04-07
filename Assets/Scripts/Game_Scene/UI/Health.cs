@@ -7,8 +7,9 @@ public class Health : MonoBehaviour
 {
     public Image hp;
 
-    public void ChaneHP(float amount)
+    public void ChaneHP(int amount)
     {
+        float current_HP = amount / 100f;
         hp.fillAmount = amount;
     }
 }

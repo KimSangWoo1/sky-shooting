@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Item_Interaction : MonoBehaviour
+public class MessageSender : MonoBehaviour
 {
     public GameObject mono;
     private Message.IMessageReceiver onInteractionMessageReceiver;
@@ -38,7 +38,7 @@ public class Item_Interaction : MonoBehaviour
     {
         msg = new Interaction.InteractMessage
         {
-            amount = 0.3f, //HP 0.3증가
+            amount = 30, //HP 0.3증가
             upgrade = false
         };
         onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.HEALTH, msg);
@@ -48,7 +48,7 @@ public class Item_Interaction : MonoBehaviour
     {
         msg = new Interaction.InteractMessage
         {
-            amount = 0.6f, //HP 0.6 증가
+            amount = 60, //HP 0.6 증가
             upgrade = false
         };
         onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.HEALTH, msg);
@@ -58,7 +58,7 @@ public class Item_Interaction : MonoBehaviour
     {
         msg = new Interaction.InteractMessage
         {
-            amount = 1f, //HP 1증가
+            amount = 100, //HP 1증가
             upgrade = false
         };
         onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.HEALTH, msg);
@@ -70,7 +70,7 @@ public class Item_Interaction : MonoBehaviour
     {
         msg = new Interaction.InteractMessage
         {
-            amount = 0f,
+            amount = 0,
             upgrade = true
         };
         onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.BULLET, msg);
@@ -80,7 +80,7 @@ public class Item_Interaction : MonoBehaviour
     {
         msg = new Interaction.InteractMessage
         {
-            amount = 5f, //runSpeed 5 증가 , fireWaitTime  0.1증가
+            amount = 5, //runSpeed 5 증가 , fireWaitTime  0.1증가
             upgrade = true
         };
         onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.TURBIN, msg);
@@ -90,9 +90,29 @@ public class Item_Interaction : MonoBehaviour
     {
         msg = new Interaction.InteractMessage
         {
-            amount = 0f,
+            amount = 0,
             upgrade = true
         };
         onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.MUZZLE, msg);
+    }
+    //데미지 적용
+    public void ApplyDamage()
+    {
+        msg = new Interaction.InteractMessage
+        {
+            amount = 10, // 대미지 0.1f
+            upgrade = false
+        };
+        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.DAMAGE, msg);
+    }
+    //자폭
+    public void Self_Destruction()
+    {
+        //onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType., msg);
+    }
+    //초기화
+    public void Reset_Interaction()
+    {
+
     }
 }

@@ -56,22 +56,24 @@ public class FireController : MonoBehaviour
         }
     }
 
-    
+    #region AI 발사 전용
     // AI : 발사 Trigger
-    public void AI_FireTrigger(bool fire)
+    public void AI_FireTrigger( )
     {
         fireTime += Time.deltaTime * fireSpeedTime;
-
         if (fireTime >= fireReloadTime)
         {   // Mobile || PC
-            if (fire && magazine.get_Fireable())
-            {
-                trigger = true;
-                magazine.Shot(); //탄창 탄알 사용
-            }
+
+            trigger = true;
+            magazine.Shot(); //탄창 탄알 사용
         }
     }
-    
+
+    public bool IsRemainMagazine()
+    {
+        return magazine.get_Fireable();
+    }
+    #endregion
     // 발사 버튼 눌렀다. 발사!!
     private void Shooting()
     {
@@ -92,4 +94,8 @@ public class FireController : MonoBehaviour
         }
     }
 
+    public int Get_BulletCount()
+    {
+        return magazine.bulletCount;
+    }
 }

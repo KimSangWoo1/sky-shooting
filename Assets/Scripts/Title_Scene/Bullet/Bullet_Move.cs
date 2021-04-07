@@ -39,7 +39,6 @@ public class Bullet_Move : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            print("맞았다");
             BM.bullet_Control(this.gameObject); //Push 및 active 설정
         }
     }

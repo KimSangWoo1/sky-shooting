@@ -8,16 +8,16 @@ public  class PlaneBase :MonoBehaviour
     public float turnSpeed; //회전속도
     public float runPower; //추가 이동속도
 
-    public float hp;
+    public int hp;
 
-    private void OnEnable()
+    public void OnEnable()
     {
         //이동설정
         runSpeed = 10f;
         runPower = 10f;
         turnSpeed = 2f;
         
-        hp = 1f;
+        hp = 100;
     }
 
     /*

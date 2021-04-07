@@ -19,7 +19,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
     void Update()
     {
         runPower = Mathf.Clamp(runPower, 10, 30);
-        hp = Mathf.Clamp(hp, 0f, 1f);
+        hp = Mathf.Clamp(hp, 0, 100);
 
         //비행기 이동
         Move();

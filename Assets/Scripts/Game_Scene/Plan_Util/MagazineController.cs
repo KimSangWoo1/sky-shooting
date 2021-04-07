@@ -8,10 +8,10 @@ public class MagazineController : MonoBehaviour
 
     private bool fireable; //발사 가능 여부
 
-    //발사 설정
+
     private void OnEnable()
     {
-        bulletCount = 3;
+        bulletCount = 3; //초기화
     }
 
     void Update()
@@ -69,20 +69,6 @@ public class MagazineController : MonoBehaviour
     public bool get_Fireable()
     {
         return fireable;
-    }
-
-    //탄창 준비하기
-    private void Ready_Bullet2(Image bullet)
-    {
-        if (bullet.fillAmount < 1f)
-        {
-            bullet.fillAmount = chargeTime;
-        }
-        else
-        {
-            bulletCount += 1;
-            chargeTime = 0f;
-        }
     }
 }
 

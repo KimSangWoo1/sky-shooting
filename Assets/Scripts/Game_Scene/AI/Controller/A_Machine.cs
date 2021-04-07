@@ -186,7 +186,7 @@ public class A_Machine : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-            scanner.EditorScanner(this.transform);
+            scanner.Editor_TargetScanner(this.transform);
     }
 #endif
     

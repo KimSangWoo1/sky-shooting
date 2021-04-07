@@ -13,6 +13,7 @@ public class TargetScanner
     [Header("색 조정")]
     public Color red;
     public Color blue;
+    public Color pupple;
     [Header("Layer설정")]
     public LayerMask blockLayerMask; //장애물 레이어
     public LayerMask targetLayerMask; //목표물 레이어
@@ -75,7 +76,6 @@ public class TargetScanner
         //싹다 범위 밖에 있었던 경우
         else
         {
-            Debug.Log("없다");
             canSee = false;
             count = 0;
         }
@@ -83,13 +83,35 @@ public class TargetScanner
         return null;
     }
 
+    public bool AttackDetect(Transform transform)
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, transform.forward,out hit, radius, targetLayerMask, QueryTriggerInteraction.Collide)){
+            if (hit.transform.gameObject.tag == "Player")
+            {
+                return true;
+            }
+            else if (hit.transform.gameObject.tag == "AI")
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 #if UNITY_EDITOR
-        public void EditorScanner(Transform transform)
+    public void Editor_TargetScanner(Transform transform)
     {
         Handles.color = canSee ? red : blue; //색 설정
         //부채꼴로 각도 그려줌
         Vector3 rotateForward = Quaternion.Euler(0, -angle * 0.5f, 0f) * transform.forward;
         Handles.DrawSolidArc(transform.position, Vector3.up, rotateForward, angle, radius);
+    }
+
+    public void Editor_AttackScanner(Transform transform)
+    {
+        Gizmos.color = pupple;
+        Gizmos.DrawRay(transform.position, transform.forward * radius);
     }
 #endif
 }

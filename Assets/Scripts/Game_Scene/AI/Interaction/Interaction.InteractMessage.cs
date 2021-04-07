@@ -3,7 +3,7 @@
 public partial class Interaction : MonoBehaviour
 {
     public struct InteractMessage{
-       public float amount;
+       public int amount;
        public bool upgrade;
     }
 }

@@ -10,6 +10,7 @@ TagManager:
   - Item_Turbin
   - Item_Health
   - Item_Dollar
+  - Bullet
   layers:
   - Default
   - TransparentFX
