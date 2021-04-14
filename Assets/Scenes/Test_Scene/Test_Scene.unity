@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa3fe9de407e1e45adb6d8020c77ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 0
+  runSpeed: 20
   turnSpeed: 0
   runPower: 0
   hp: 0
@@ -1821,7 +1821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa3fe9de407e1e45adb6d8020c77ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 0
+  runSpeed: 20
   turnSpeed: 0
   runPower: 0
   hp: 0
@@ -2125,7 +2125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa3fe9de407e1e45adb6d8020c77ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 0
+  runSpeed: 20
   turnSpeed: 0
   runPower: 0
   hp: 0
@@ -2426,7 +2426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa3fe9de407e1e45adb6d8020c77ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 0
+  runSpeed: 20
   turnSpeed: 0
   runPower: 0
   hp: 0

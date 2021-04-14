@@ -128,6 +128,12 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 //거리 점검
                 if (targetDistance <= safeDistance )
                 {
+                    //피하기 전 총알 쏘기
+                    if (fireController.IsRemainMagazine())
+                    {
+                        fireController.AI_FireTrigger();
+                    }
+
                     fightPosition = this.transform.position;
                     emergencyMode = 1; // 1. 비행기 출돌 피하기 모드
                     avoidTime = 0f;
@@ -409,7 +415,9 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 break;
             case MessageType.TURBIN:
                 runSpeed += message.amount;
-                //fireWaitTime += 0.1f;
+                break;
+            case MessageType.CLASH:
+                this.gameObject.SetActive(false);
                 break;
         }
     }

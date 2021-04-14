@@ -8,7 +8,8 @@
         BULLET,
         TURBIN,
         MUZZLE,
-        DOLLAR
+        DOLLAR,
+        CLASH
     }
     // Interface
     public interface IMessageReceiver

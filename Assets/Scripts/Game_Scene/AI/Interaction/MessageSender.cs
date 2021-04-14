@@ -108,7 +108,12 @@ public class MessageSender : MonoBehaviour
     //자폭
     public void Self_Destruction()
     {
-        //onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType., msg);
+        msg = new Interaction.InteractMessage
+        {
+            amount = 0, // 대미지 0.1f
+            upgrade = false
+        };
+        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.CLASH, msg);
     }
     //초기화
     public void Reset_Interaction()
