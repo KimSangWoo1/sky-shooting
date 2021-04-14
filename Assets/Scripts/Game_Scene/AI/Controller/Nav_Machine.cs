@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 using Message;
+using Mapmesh;
 
 [DefaultExecutionOrder(100)]
-public class B_Machine : PlaneBase, IMessageReceiver
+public class Nav_Machine : PlaneBase, IMessageReceiver
 {
     enum State { Wait, Found, Attack, Avoid, Item, Dead }; //비행기 상태 : (대기, 찾음, 공격, 도망, 아이템, 죽음)
     enum WaitState { GetPosition, GoPosition }; //비행기 대기 상태 : (랜덤좌표 얻기, 랜덤좌표 이동)
@@ -12,7 +14,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
     AvoidState avoidState;
 
     public TargetScanner scanner; //스캐너
-    public Map map; // 맵
+    public Map_V2 map; // 맵
     public MuzzleController muzzle; //총구
     public FireController fireController; //발사
 
@@ -24,15 +26,20 @@ public class B_Machine : PlaneBase, IMessageReceiver
     private float closeDistance; // Map 랜덤 좌표 접근 인정 거리
     private float avoidTime; //도망치는 시간
 
+    private int randomNumber; //랜덤 번호
     // AI 형에 따른 설정 가능
     [SerializeField]
     private float avoidWaitTime; //도망가는 시간 설정 기본 2초  //시간이 : 짧을수록 공격형 - 밸런스형 - 방어형  시간이 길수록
     [SerializeField]
     private float busterWaitTime; //부스터
                                   // 스피드 
-    private Vector3 direct;
-    private Quaternion direction;
-    private int emergencyMode; //1 : 비행기 충돌 피하기 2 : 피격 피하기 후 공격하러 가기
+
+    //test
+    public bool check;
+    private Bounds bound;
+    Vector3 left;
+    Vector3 right;
+    private NavMeshAgent agent;
     private void OnEnable()
     {
         base.OnEnable();
@@ -48,6 +55,13 @@ public class B_Machine : PlaneBase, IMessageReceiver
     {
         closeDistance = 10f;
         avoidWaitTime = 2f;
+
+        //Test
+        agent = GetComponent<NavMeshAgent>();
+        bound = GetComponent<Renderer>().bounds;
+        right = bound.extents;
+        left = new Vector3(-right.x, right.y, right.z);
+
     }
     void Update()
     {
@@ -60,8 +74,47 @@ public class B_Machine : PlaneBase, IMessageReceiver
             avoidState = AvoidState.GetDirection;
         }
 
-        Move(); //이동
-        Machine_State(); //상태 관리
+        //Move(); //이동
+        //Machine_State(); //상태 관리
+        if (check)
+        {
+            Test();
+            check = false;
+        }
+        else
+        {
+            Test2();
+        }
+    }
+
+    private void Test()
+    {
+        Coord coord = map.GetRandomCoord();  //랜덤 좌표 받기
+        random_Position = new Vector3(coord.x, transform.position.y, coord.y);
+        
+    }
+    private void Test2()
+    {
+        agent.SetDestination(random_Position);
+        Vector3 direct = random_Position - transform.position ;
+        float distance = direct.sqrMagnitude;
+        float stopDistance = agent.stoppingDistance * agent.stoppingDistance;
+
+        if (distance < stopDistance)
+        {
+            check = true;
+        }
+        else
+        {
+            check = false;
+        }
+        NavMeshPath path = agent.path;
+        Vector3[] paths = new Vector3[20];
+        int count = path.GetCornersNonAlloc(paths);
+        for(int i = 0; i<count; i++)
+        {
+            Debug.DrawRay(paths[i], Vector3.up, Color.blue, 5f);
+        }
     }
     //이동
     private void Move()
@@ -73,7 +126,6 @@ public class B_Machine : PlaneBase, IMessageReceiver
     {
         //자폭 위험 방지
         EmerGencyPrevention();
-       // print(state+" "+ fireController.Get_BulletCount());
         switch (state)
         {
             case State.Wait:
@@ -115,25 +167,21 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 break;
         }
     }
-    // 비행기 출돌 피하기
+
     private void EmerGencyPrevention()
     {
-        if (state==State.Found || state == State.Attack || (state ==State.Avoid && avoidState != AvoidState.Emergency ) || (avoidState == AvoidState.Emergency && avoidTime>=1f))
+        if(state==State.Found || state == State.Attack || avoidState == AvoidState.RunAway)
         {
             if(target != null)
-            {           
-                direct = target.position - transform.position;
-                float targetDistance = direct.sqrMagnitude;
-                float safeDistance = closeDistance * closeDistance *7f;
+            {
+                Vector3 _target = target.position - transform.position;
+                float targetDistance = _target.sqrMagnitude;
+                float safeDistance = closeDistance * closeDistance *5f ;
                 //거리 점검
                 if (targetDistance <= safeDistance )
                 {
-                    fightPosition = this.transform.position;
-                    emergencyMode = 1; // 1. 비행기 출돌 피하기 모드
-                    avoidTime = 0f;
-                    avoidPosition = map.ClashAvoid_RandomPosition(transform);
+                    avoidState = AvoidState.GetDirection;
                     state = State.Avoid;
-                    avoidState = AvoidState.Emergency;                 
                 }
             }
         }
@@ -146,7 +194,9 @@ public class B_Machine : PlaneBase, IMessageReceiver
         switch (waitState)
         {
             case WaitState.GetPosition:
-                random_Position = map.Random_Position(); //랜덤 좌표 받기
+                Coord  coord = map.GetRandomCoord();  //랜덤 좌표 받기
+                random_Position = new Vector3(coord.x, transform.position.y, coord.y);
+                //Debug.DrawRay(random_Position, Vector3.up, Color.red, 5f);
                 waitState = WaitState.GoPosition; //상태 변경
                 break;
             case WaitState.GoPosition:
@@ -180,12 +230,12 @@ public class B_Machine : PlaneBase, IMessageReceiver
         //회전
         if (point != null && point != Vector3.zero)
         {
-            direct = point - transform.position;
-            if (direct != Vector3.zero)
+            Vector3 diret = point - transform.position;
+            if (diret != Vector3.zero)
             {
-                direct = direct.normalized;
-                direction = Quaternion.LookRotation(direct, Vector3.up);
-                transform.rotation = Quaternion.Lerp(this.transform.rotation, direction, Time.deltaTime * turnSpeed);
+                diret = diret.normalized;
+                Quaternion diretion = Quaternion.LookRotation(diret, Vector3.up);
+                transform.rotation = Quaternion.Lerp(this.transform.rotation, diretion, Time.deltaTime * turnSpeed);
             }
         }
     }
@@ -199,13 +249,13 @@ public class B_Machine : PlaneBase, IMessageReceiver
         //회전
         if (target != null)
         {
-            direct = target.position - transform.position;
-            if (direct != Vector3.zero)
+            Vector3 diret = target.position - transform.position;
+            if (diret != Vector3.zero)
             {
-                direct = direct.normalized;
+                diret = diret.normalized;
 
-                direction = Quaternion.LookRotation(direct, Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, direction, Time.deltaTime * turnSpeed * 2f);
+                Quaternion diretion = Quaternion.LookRotation(diret, Vector3.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, diretion, Time.deltaTime * turnSpeed * 2f);
             }
         }
         else
@@ -250,12 +300,13 @@ public class B_Machine : PlaneBase, IMessageReceiver
         {
             //0. 도망칠 방향 정하기
             case AvoidState.GetDirection:
-                avoidPosition = map.Spot_RendomPosition(transform);
+                randomNumber = Random.Range(1, 3);
+//avoidPosition = map.Spot_RendomPosition(transform);
                 avoidState = AvoidState.RunAway;
                 break;
             //1. 도망 
             case AvoidState.RunAway:
-                RunAway(avoidPosition);
+                RandomAway(avoidPosition);
                 break;
             //2. 도망 갔다가 싸운 지점 복귀
             case AvoidState.Return:
@@ -270,14 +321,10 @@ public class B_Machine : PlaneBase, IMessageReceiver
                     Return_FightPosition(fightPosition);
                 }
                 break;
-            //3. 위급 상황
-            case AvoidState.Emergency:
-                EmergencyAway(avoidPosition, emergencyMode);
-                break;
         }
     }
     //1. 도망 (설정 : 도망 칠 거리, 도망칠 방향 범위, 장애물 검사, Map 경계 검사)
-    private void RunAway(Vector3 _avoidPosition)
+    private void RandomAway(Vector3 _avoidPosition)
     {
         //가까우면 복귀
         if (Vector3.Distance(transform.position, _avoidPosition) < closeDistance)
@@ -291,11 +338,11 @@ public class B_Machine : PlaneBase, IMessageReceiver
             if (avoidTime <= avoidWaitTime)
             {
                 avoidTime += Time.deltaTime;
-                direct = _avoidPosition - transform.position;
-                direct = direct.normalized;
+                Vector3 diret = _avoidPosition - transform.position;
+                diret = diret.normalized;
                 //회전
-                direction = Quaternion.LookRotation(direct, Vector3.up);
-                transform.rotation = Quaternion.Lerp(this.transform.rotation, direction, Time.deltaTime * turnSpeed);
+                Quaternion diretion = Quaternion.LookRotation(diret, Vector3.up);
+                transform.rotation = Quaternion.Lerp(this.transform.rotation, diretion, Time.deltaTime * turnSpeed);
             }
             else
             {
@@ -326,56 +373,11 @@ public class B_Machine : PlaneBase, IMessageReceiver
         // 싸운 지점 복귀중
         else
         {
-            direct = position - transform.position;
-            direct = direct.normalized;
+            Vector3 diret = position - transform.position;
+            diret = diret.normalized;
             //회전
-            direction = Quaternion.LookRotation(direct, Vector3.up);
-            transform.rotation = Quaternion.Lerp(this.transform.rotation, direction, Time.deltaTime * turnSpeed);
-        }
-    }
-
-    private void EmergencyAway(Vector3 _avoidPosition , int mode)
-    {
-        Debug.DrawRay(_avoidPosition, Vector3.up, Color.black, 5f);
-        //가까우면 복귀
-        if (Vector3.Distance(transform.position, _avoidPosition) < closeDistance)
-        {
-            avoidTime = 0f;
-            if(mode == 1)
-            {
-                state = State.Wait;
-            }
-            else
-            {
-                avoidState = AvoidState.Return;
-            }
-            state = State.Wait;
-        }
-        else
-        {
-            //정해진 시간동안 도망감
-            if (avoidTime <= avoidWaitTime)
-            {
-                avoidTime += Time.deltaTime;
-                direct = _avoidPosition - transform.position;
-                direct = direct.normalized;
-                //회전
-                direction = Quaternion.LookRotation(direct, Vector3.up);
-                transform.rotation = Quaternion.Lerp(this.transform.rotation, direction, Time.deltaTime * turnSpeed);
-            }
-            else
-            {
-                // 탄창이 없으면 도망가도록
-                if (fireController.Get_BulletCount() == 0)
-                {
-                    avoidTime = 0f;
-                }
-                else
-                {
-                    avoidTime = 0f;
-                    state = State.Wait;
-                }
-            }
+            Quaternion diretion = Quaternion.LookRotation(diret, Vector3.up);
+            transform.rotation = Quaternion.Lerp(this.transform.rotation, diretion, Time.deltaTime * turnSpeed);
         }
     }
     #endregion
@@ -391,9 +393,6 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 break;
             case MessageType.DAMAGE:
                 hp -= message.amount;
-                emergencyMode = 2;
-                avoidState = AvoidState.Emergency;
-                state = State.Avoid;
                 break;
             case MessageType.BULLET:
                 if (message.upgrade)

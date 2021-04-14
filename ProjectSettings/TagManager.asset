@@ -11,6 +11,7 @@ TagManager:
   - Item_Health
   - Item_Dollar
   - Bullet
+  - Obstacle
   layers:
   - Default
   - TransparentFX

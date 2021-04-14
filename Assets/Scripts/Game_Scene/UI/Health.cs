@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     public Image hp;
-
+    float current_HP;
     public void ChaneHP(int amount)
     {
-        float current_HP = amount / 100f;
-        hp.fillAmount = amount;
+        current_HP = amount / 100f;
+        hp.fillAmount = current_HP;
     }
 }

@@ -2,11 +2,12 @@
 
 public  class PlaneBase :MonoBehaviour
 {
+    [Header("비행기 기본 설정")]
     [SerializeField]
     public float runSpeed; //이동속도
     [SerializeField]
     public float turnSpeed; //회전속도
-    public float runPower; //추가 이동속도
+    public float runPower; //부스터 추가 이동속도
 
     public int hp;
 

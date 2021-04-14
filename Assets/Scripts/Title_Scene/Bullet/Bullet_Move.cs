@@ -15,7 +15,7 @@ public class Bullet_Move : MonoBehaviour
     {
         bulletSpeed = 80f;
         timeSpeed = 2f;
-        deadTime = 4f;
+        deadTime =  1.5f;
     }
     void Start()
     {
@@ -25,7 +25,7 @@ public class Bullet_Move : MonoBehaviour
 
     void Update()
     {
-        //총 생명 시간 2초  -> 2+2 =4 
+        //총 생명 시간 1초   
         lifeTime += Time.deltaTime *timeSpeed;
         if (lifeTime > deadTime)
         {
@@ -34,12 +34,20 @@ public class Bullet_Move : MonoBehaviour
         }
         transform.Translate(Vector3.forward * Time.deltaTime * bulletSpeed, Space.Self);
     }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
+        {
+            BM.bullet_Control(this.gameObject); //Push 및 active 설정
+        }
+        else if (other.gameObject.tag == "AI")
+        {
+            BM.bullet_Control(this.gameObject); //Push 및 active 설정
+        }
+        else if (other.gameObject.tag == "Obstacle")
         {
             BM.bullet_Control(this.gameObject); //Push 및 active 설정
         }
     }
+
 }
