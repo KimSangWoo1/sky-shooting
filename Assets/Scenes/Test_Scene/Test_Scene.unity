@@ -225,6 +225,10 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  engineFX: {fileID: 0}
+  hitFx: {fileID: 0}
+  busterFx: {fileID: 0}
+  deadFx: {fileID: 0}
   scanner:
     radius: 40
     angle: 160
@@ -1825,6 +1829,10 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  engineFX: {fileID: 0}
+  hitFx: {fileID: 0}
+  busterFx: {fileID: 0}
+  deadFx: {fileID: 0}
   scanner:
     radius: 40
     angle: 160
@@ -2129,6 +2137,10 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  engineFX: {fileID: 0}
+  hitFx: {fileID: 0}
+  busterFx: {fileID: 0}
+  deadFx: {fileID: 0}
   scanner:
     radius: 40
     angle: 160
@@ -2430,6 +2442,10 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  engineFX: {fileID: 0}
+  hitFx: {fileID: 0}
+  busterFx: {fileID: 0}
+  deadFx: {fileID: 0}
   scanner:
     radius: 40
     angle: 160

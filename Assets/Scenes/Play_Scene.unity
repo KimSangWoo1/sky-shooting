@@ -179,6 +179,7 @@ MonoBehaviour:
   fireController: {fileID: 946600856}
   avoidWaitTime: 0
   busterWaitTime: 0
+  sensingSensitivity: 0
 --- !u!64 &44103743
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -485,13 +486,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165834093}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 30, y: 1, z: 30}
   m_Children: []
   m_Father: {fileID: 982019702}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!114 &165834098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,7 +530,7 @@ GameObject:
   - component: {fileID: 167696365}
   - component: {fileID: 167696364}
   m_Layer: 5
-  m_Name: Fire
+  m_Name: Img_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,7 +569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1130,7 +1131,7 @@ GameObject:
   - component: {fileID: 332915769}
   - component: {fileID: 332915771}
   m_Layer: 5
-  m_Name: Buster
+  m_Name: Img_Buster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1169,7 +1170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1226,7 +1227,8 @@ MonoBehaviour:
   runPower: 0
   hp: 0
   fireController: {fileID: 2029991993335189858}
-  muzzle: {fileID: 1342027161}
+  muzzleController: {fileID: 1342027161}
+  busterController: {fileID: 2029991993335189859}
   rightPanel: {fileID: 1597744441}
   joystick: {fileID: 969311917}
   health: {fileID: 285496590}
@@ -2159,7 +2161,7 @@ GameObject:
   - component: {fileID: 792890719}
   - component: {fileID: 792890718}
   m_Layer: 5
-  m_Name: Magaizne_Two
+  m_Name: Img_Magaizne_Two
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2198,7 +2200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2219,42 +2221,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792890716}
   m_CullTransparentMesh: 0
---- !u!1 &799382965
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 799382966}
-  m_Layer: 5
-  m_Name: BusterButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &799382966
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 799382965}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1371928824}
-  m_Father: {fileID: 1597744437}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.000092, y: -179.20001}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &819239465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3309,7 +3275,7 @@ GameObject:
   - component: {fileID: 1358108419}
   - component: {fileID: 1358108418}
   m_Layer: 5
-  m_Name: Magazine_Three
+  m_Name: Img_Magazine_Three
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3348,7 +3314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3381,7 +3347,7 @@ GameObject:
   - component: {fileID: 1371928826}
   - component: {fileID: 1371928825}
   m_Layer: 5
-  m_Name: circle
+  m_Name: BusterButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3395,17 +3361,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371928823}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.000037165777}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00003716578}
+  m_LocalScale: {x: 1.2000002, y: 1.2000002, z: 1}
   m_Children:
   - {fileID: 1957661253}
   - {fileID: 332915768}
-  m_Father: {fileID: 799382966}
+  m_Father: {fileID: 1597744437}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -23, y: 10.000061}
+  m_AnchoredPosition: {x: -3.9999084, y: -169.19997}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1371928825
@@ -3427,12 +3393,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 2f24dad7c4eb48244b2f340117976380, type: 3}
-  m_Type: 3
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
-  m_FillClockwise: 1
+  m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
 --- !u!222 &1371928826
@@ -3461,7 +3427,7 @@ GameObject:
   - component: {fileID: 1461694853}
   - component: {fileID: 1461694852}
   m_Layer: 5
-  m_Name: Magaine_One
+  m_Name: Img_Magaine_One
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3500,7 +3466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3612,6 +3578,7 @@ MonoBehaviour:
   fireController: {fileID: 1775365073}
   avoidWaitTime: 0
   busterWaitTime: 0
+  sensingSensitivity: 0
 --- !u!64 &1473459570
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3668,6 +3635,7 @@ MonoBehaviour:
   fireController: {fileID: 681443937}
   avoidWaitTime: 0
   busterWaitTime: 0
+  sensingSensitivity: 0
 --- !u!114 &1495615427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3884,7 +3852,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 799382966}
+  - {fileID: 1371928824}
   - {fileID: 408293472}
   m_Father: {fileID: 719758506}
   m_RootOrder: 1
@@ -3942,7 +3910,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireButton: {fileID: 408293473}
-  busterGage: {fileID: 1957661256}
   fire: 0
   buster: 0
 --- !u!1001 &1612831301
@@ -4174,6 +4141,7 @@ MonoBehaviour:
   fireController: {fileID: 1176080845}
   avoidWaitTime: 0
   busterWaitTime: 0
+  sensingSensitivity: 0
 --- !u!1001 &1741983272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4761,8 +4729,9 @@ GameObject:
   - component: {fileID: 1957661255}
   - component: {fileID: 1957661254}
   - component: {fileID: 1957661256}
+  - component: {fileID: 1957661257}
   m_Layer: 5
-  m_Name: Gage
+  m_Name: Img_Gage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4801,7 +4770,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.08235294, g: 0.9137255, b: 0.54901963, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4834,6 +4803,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91935b7c393bb3040ac79948df629fa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  busterController: {fileID: 2029991993335189859}
+--- !u!114 &1957661257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957661252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6c226972a76bb46a45603852b0d112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AlphaThreshold: 0.1
 --- !u!4 &1972436228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: c3e32a9578716c64eb977ad6249a156d,
@@ -4907,6 +4890,7 @@ MonoBehaviour:
   fireController: {fileID: 130732153}
   avoidWaitTime: 0
   busterWaitTime: 0
+  sensingSensitivity: 0
 --- !u!64 &1999174247
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5015,6 +4999,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzle: {fileID: 1342027161}
   magazine: {fileID: 2029991993335189860}
+  rightPanel: {fileID: 1597744441}
+--- !u!114 &2029991993335189859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029991993335189857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0558d66549980464fa10d7f397e1d632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   rightPanel: {fileID: 1597744441}
 --- !u!114 &2029991993335189860
 MonoBehaviour:
