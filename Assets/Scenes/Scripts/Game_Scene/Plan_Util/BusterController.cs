@@ -63,6 +63,7 @@ public class BusterController : MonoBehaviour
             //부스터 게이지 다 사용했는지 검사 
             if (possible)
             {
+                buster = true; // 부스터 소진하도록
                 DIsCharge_Gage();
             }
             else

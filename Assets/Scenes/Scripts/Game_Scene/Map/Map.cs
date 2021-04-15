@@ -48,7 +48,7 @@ public class Map : MonoBehaviour
     }
     private void Update()
     {
-    
+        Random_Position();
     }
 
     //Map 크기 설정

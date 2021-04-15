@@ -38,7 +38,6 @@ public class B_Machine : PlaneBase, IMessageReceiver
     private Quaternion direction; //각도 계산용
     private int emergencyMode; //1 : 비행기 충돌 피하기 2 : 피격 피하기 후 공격하러 가기
 
-    private bool busterTrriger; //부스터 On Off
     private void OnEnable()
     {
         base.OnEnable();
@@ -73,10 +72,11 @@ public class B_Machine : PlaneBase, IMessageReceiver
         Machine_State(); //상태 관리
         busterController.AI_Buster_Control(); //부스터
     }
+    #region 이동 & 부스터
     //이동
     private void Move()
     {
-        if (!busterTrriger)
+        if (!busterController.buster)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
         }
@@ -84,40 +84,36 @@ public class B_Machine : PlaneBase, IMessageReceiver
         {
             transform.Translate(Vector3.forward * Time.deltaTime * (runSpeed + runPower), Space.Self);
         }
-
-        
+        //부스터 적용은 Wait과 Avoid 때만
         if (state == State.Wait)
         {
             BusterControl(0.6f);
+            print(busterController.Get_BusterGage());
         }
         else if(state == State.Avoid)
         {
             BusterControl(0.3f);
-        }
-
-           
+        }        
     }
     private void BusterControl(float amount)
     {
-        if (busterController.Get_BusterGage() >= amount)
+        if (busterController.Get_BusterGage() >= amount || busterController.buster)
         {
-            busterTrriger = true;
             busterController.buster = true;
             engineFX.gameObject.SetActive(false);
             if (!busterFx.isPlaying)
             {
                 busterFx.Play();
-            }
-          
+            }        
         }
         else
         {
-            busterTrriger = false;
             busterController.buster = false;
             engineFX.gameObject.SetActive(true);
             busterFx.Pause();
         }
     }
+    #endregion
     #region AI 상태 설정
     private void Machine_State()
     {
