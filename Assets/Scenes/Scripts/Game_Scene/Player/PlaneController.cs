@@ -7,10 +7,9 @@ public class PlaneController : PlaneBase ,IMessageReceiver
     public FireController fireController; //발사 시스템
     [Header("총구 설정")]
     public MuzzleController muzzleController; //총구
-    public BusterController busterController;
+    public BusterController busterController; //부스터
 
     [Header("UI")]
-    public RightPanel_Control rightPanel; //부스터 ,발사
     public JoyStick joystick; //조이스틱
     public Health health;
 
@@ -34,25 +33,58 @@ public class PlaneController : PlaneBase ,IMessageReceiver
 
     //비행기 이동 & 부스터
     private void Move()
-    {
+    {   /*
         //Mobile 부스터
-        if (rightPanel.buster)
+        if (busterController.Get_BusterClick())
         {
             transform.Translate(Vector3.forward * Time.deltaTime * (runSpeed + runPower), Space.Self);
+            engineFX.gameObject.SetActive(false);
+            if (!busterFx.isPlaying)
+            {
+                busterFx.Play();
+            }
+        }
+        else
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
+            engineFX.gameObject.SetActive(true);
+            busterFx.Pause();
+        }
+        */
+       
+        //PC 부스터
+        if (Input.GetKeyDown(KeyCode.Space)){
+            busterController.buster = true;
+            if (!busterFx.isPlaying)
+            {
+               busterFx.Play();
+            }
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            engineFX.gameObject.SetActive(false);
+            if(!busterController.buster)
+            { 
+                busterFx.Pause();
+                transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
+            }
+            else
+            {
+                transform.Translate(Vector3.forward * Time.deltaTime * (runSpeed + runPower), Space.Self);               
+            }
+            
+        }
+        else if(Input.GetKeyUp(KeyCode.Space))
+        {
+            engineFX.gameObject.SetActive(true);
+            busterFx.Pause();
+            busterController.buster = false;
         }
         else
         {
             transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
         }
-
-        //PC 부스터
-        if (Input.GetKey(KeyCode.Space))
-        {
-            rightPanel.buster = true;
-        }else if(Input.GetKeyUp(KeyCode.Space))
-        {
-            rightPanel.buster = false;
-        }
+        
     }
     //비행기 회전
     private void Rot()
@@ -93,10 +125,13 @@ public class PlaneController : PlaneBase ,IMessageReceiver
         {
             case MessageType.HEALTH:
                 hp += message.amount;
+                HpControl();
                 health.ChaneHP(hp);
                 break;
             case MessageType.DAMAGE:
                 hp -= message.amount;
+                hitFx.Play();
+                HpControl();
                 health.ChaneHP(hp);
                 break;
             case MessageType.BULLET:
@@ -115,8 +150,13 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                 if (message.upgrade)
                 {
                     runSpeed += message.amount;
-                    //fireWaitTime += 0.1f; 
                 }
+                break;
+            case MessageType.CLASH:
+                ParticleSystem dead = Instantiate(deadFx, transform.position, Quaternion.Euler(-90f, 0f, 0f));
+                dead.gameObject.SetActive(true);
+
+                this.gameObject.SetActive(false);
                 break;
         }
     }

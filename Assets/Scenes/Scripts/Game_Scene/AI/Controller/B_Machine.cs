@@ -15,6 +15,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
     public Map map; // 맵
     public MuzzleController muzzle; //총구
     public FireController fireController; //발사
+    public BusterController busterController; //부스터
 
     private Transform target; //적군
 
@@ -36,6 +37,8 @@ public class B_Machine : PlaneBase, IMessageReceiver
     private Vector3 direct; // 방향 계산용
     private Quaternion direction; //각도 계산용
     private int emergencyMode; //1 : 비행기 충돌 피하기 2 : 피격 피하기 후 공격하러 가기
+
+    private bool busterTrriger; //부스터 On Off
     private void OnEnable()
     {
         base.OnEnable();
@@ -68,11 +71,52 @@ public class B_Machine : PlaneBase, IMessageReceiver
 
         Move(); //이동
         Machine_State(); //상태 관리
+        busterController.AI_Buster_Control(); //부스터
     }
     //이동
     private void Move()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
+        if (!busterTrriger)
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
+        }
+        else
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime * (runSpeed + runPower), Space.Self);
+        }
+
+        
+        if (state == State.Wait)
+        {
+            BusterControl(0.6f);
+        }
+        else if(state == State.Avoid)
+        {
+            BusterControl(0.3f);
+        }
+
+           
+    }
+    private void BusterControl(float amount)
+    {
+        if (busterController.Get_BusterGage() >= amount)
+        {
+            busterTrriger = true;
+            busterController.buster = true;
+            engineFX.gameObject.SetActive(false);
+            if (!busterFx.isPlaying)
+            {
+                busterFx.Play();
+            }
+          
+        }
+        else
+        {
+            busterTrriger = false;
+            busterController.buster = false;
+            engineFX.gameObject.SetActive(true);
+            busterFx.Pause();
+        }
     }
     #region AI 상태 설정
     private void Machine_State()
@@ -405,10 +449,12 @@ public class B_Machine : PlaneBase, IMessageReceiver
         {
             case MessageType.HEALTH:
                 hp += message.amount;
+                HpControl();
                 break;
             case MessageType.DAMAGE:
                 hp -= message.amount;
                 hitFx.Play();
+                HpControl();
                 emergencyMode = 2;
                 avoidState = AvoidState.Emergency;
                 state = State.Avoid;

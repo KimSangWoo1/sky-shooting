@@ -37,7 +37,7 @@ public class Map : MonoBehaviour
     void Start()
     {
         rend = GetComponent<Renderer>();
-        scale = 10f;
+        //scale = 10f;
         margine = 10;
         limitRange = 4;
         permit_RangeMin = 5;

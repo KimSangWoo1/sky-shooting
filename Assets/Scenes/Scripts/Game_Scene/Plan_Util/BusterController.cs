@@ -7,9 +7,10 @@ public class BusterController : MonoBehaviour
     [Header("UI관련")]
     public RightPanel_Control rightPanel; //발사
 
-    private bool possible;
-
     private float value;
+
+    private bool possible;
+    public bool buster;
     void Start()
     {
         value = 1f;
@@ -17,6 +18,7 @@ public class BusterController : MonoBehaviour
 
     void Update()
     {
+        
         //부스터 사용 가능 여부
         if (value <= 0f)
         {
@@ -28,11 +30,11 @@ public class BusterController : MonoBehaviour
         }
     }
 
-    //Player용
+    //Player용 부스터  Mobile && PC
     public void Player_Buster_Control()
     {
         //부스터 사용 & 충전 
-        if (rightPanel.buster)
+        if (rightPanel.buster || buster)
         {
             //부스터 게이지 다 사용했는지 검사 
             if (possible)
@@ -41,15 +43,40 @@ public class BusterController : MonoBehaviour
             }
             else
             {
+                buster = false;
                 rightPanel.buster = false;
             }
         }
         else
         {
+            buster = false;
             Charge_Gage();
         }
     }
-        
+
+    //AI용 부스터
+    public void AI_Buster_Control()
+    {
+        //부스터 사용 & 충전 
+        if (buster)
+        {
+            //부스터 게이지 다 사용했는지 검사 
+            if (possible)
+            {
+                DIsCharge_Gage();
+            }
+            else
+            {
+                buster = false;
+                rightPanel.buster = false;
+            }
+        }
+        else
+        {
+            buster = false;
+            Charge_Gage();
+        }
+    }
     //부스터 게이지 충전
     public void Charge_Gage()
     {
@@ -64,15 +91,25 @@ public class BusterController : MonoBehaviour
         value -=  Time.deltaTime / 5f;
         value = Mathf.Clamp(value, 0, 1f);
     }
-
-    //부스터 사용 GET Method
+    //부스터 사용가능 GET Method
     public bool Get_Possible()
     {
         return possible;
     }
+    //Player PC Mobile용
+    public bool Get_BusterClick()
+    {
+        return rightPanel.buster;
+    }
 
     // Player 부스터 게이지 UI 전용 메소드
     public float Change_UI_Gage()
+    {
+        return value;
+    }
+
+    //AI용
+    public float Get_BusterGage()
     {
         return value;
     }

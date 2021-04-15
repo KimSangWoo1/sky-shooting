@@ -12,10 +12,11 @@ public  class PlaneBase :MonoBehaviour
 
     //FX
     private ParticleSystem[] FX;
-    protected ParticleSystem engineFX; //0
-    protected ParticleSystem hitFx;  //1
-    protected ParticleSystem busterFx; //2
-    protected ParticleSystem deadFx; //3
+    protected ParticleSystem engineFX; //0 기본 엔진FX
+    protected ParticleSystem hitFx;  //1 타격FX
+    protected ParticleSystem busterFx; //2 부스터FX
+    protected ParticleSystem hurtFx; //3 출혈FX
+    protected ParticleSystem deadFx; //4 죽음FX
 
     protected void Start()
     {
@@ -23,7 +24,8 @@ public  class PlaneBase :MonoBehaviour
         engineFX = FX[0];
         hitFx = FX[1];
         busterFx = FX[2];
-        deadFx = FX[3];
+        hurtFx = FX[3];
+        deadFx = FX[4];
 
         deadFx.gameObject.SetActive(false);
 
@@ -36,6 +38,21 @@ public  class PlaneBase :MonoBehaviour
         turnSpeed = 2f;
         
         hp = 100;
+    }
+
+    protected void HpControl()
+    {
+        if (hp <= 50f)
+        {
+            if (!hurtFx.isPlaying)
+            {
+                hurtFx.Play();
+            }
+        }
+        else
+        {
+            hurtFx.Stop();
+        }
     }
 
     /*
