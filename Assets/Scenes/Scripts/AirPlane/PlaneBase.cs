@@ -33,7 +33,7 @@ public  class PlaneBase :MonoBehaviour
         {
             deadState = ObjectPooling.DeadState.Red;
         }
-        else if (colorName.Contains("Green"))
+        else if (colorName.Contains("Grren"))
         {
             deadState = ObjectPooling.DeadState.Green;
         }
