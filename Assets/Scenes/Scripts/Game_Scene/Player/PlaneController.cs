@@ -20,7 +20,13 @@ public class PlaneController : PlaneBase ,IMessageReceiver
     {
         runPower = Mathf.Clamp(runPower, 10, 30);
         hp = Mathf.Clamp(hp, 0, 100);
-
+        if (hp <= 0f)
+        {
+            // 파괴 연출
+            base.FX_DM.FX_Pop(transform, deadState);
+            //삭제
+            this.gameObject.SetActive(false);
+        }
         //비행기 이동
         Move();
         //비행기 회전
@@ -154,10 +160,6 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                 }
                 break;
             case MessageType.CLASH:
-                /*
-                ParticleSystem dead = Instantiate(deadFx, transform.position, Quaternion.Euler(-90f, 0f, 0f));
-                dead.gameObject.SetActive(true);
-                */
                 this.gameObject.SetActive(false);
                 break;
         }

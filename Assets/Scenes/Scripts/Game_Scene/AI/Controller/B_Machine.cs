@@ -148,10 +148,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 break;
             case State.Dead:
                 // 파괴 연출
-                /*
-                ParticleSystem dead = Instantiate(deadFx, transform.position, Quaternion.Euler(-90f, 0f, 0f));
-                dead.gameObject.SetActive(true);
-                */
+                base.FX_DM.FX_Pop(transform, deadState);
                 //삭제
                 this.gameObject.SetActive(false);
                 break;
@@ -502,10 +499,6 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 runSpeed += message.amount;
                 break;
             case MessageType.CLASH:
-                /*
-                ParticleSystem dead = Instantiate(deadFx, transform.position, Quaternion.Euler(-90f,0f,0f));
-                dead.gameObject.SetActive(true);
-                */
                 this.gameObject.SetActive(false);
                 break;
         }

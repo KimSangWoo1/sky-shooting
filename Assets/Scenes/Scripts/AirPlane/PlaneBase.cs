@@ -2,6 +2,9 @@
 
 public  class PlaneBase :MonoBehaviour
 {
+    public FX_ItemManager FX_IM;
+    public FX_DeadManager FX_DM;
+
     [Header("비행기 기본 설정")]
     [SerializeField]
     public float runSpeed; //이동속도
@@ -25,6 +28,9 @@ public  class PlaneBase :MonoBehaviour
 
     protected void Start()
     {
+        FX_IM = FX_ItemManager.Instance;
+        FX_DM = FX_DeadManager.Instance;
+
         //죽음FX 어떤 색인지 알아야해서
         material = GetComponent<MeshRenderer>().material;
         colorName = material.name;
