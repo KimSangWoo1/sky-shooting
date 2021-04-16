@@ -9,28 +9,28 @@ public class FX_ItemManager : Singleton<FX_ItemManager>
     //총알 오브젝트 셋팅
     void Start()
     {
-        FX_ItemPooling.setState(ObjectPooling.Pooling_State.FX_Item);
-        FX_ItemPooling.Creation();
+        FX_ItemPooling.Set_FX_ItemState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.item);
+        FX_ItemPooling.FX_Creation();
     }
 
     //총알 정리
-    internal void Item_Push(GameObject FX_Item)
+    internal void FX_ItemPush(GameObject FX_Item)
     {
         FX_Item.SetActive(false);
-        FX_ItemPooling.Push(FX_Item);
+        FX_ItemPooling.FX_Push(FX_Item);
     }
 
     //총 발사
-    internal void Item_Pop(Transform deadObject)
+    internal void FX_ItemPop(Transform EatObject)
     {
-        if (FX_ItemPooling.getState() != ObjectPooling.Pooling_State.FX_Item)
+        if (FX_ItemPooling.getState() != ObjectPooling.Pooling_State.FX)
         {
-            FX_ItemPooling.setState(ObjectPooling.Pooling_State.FX_Item);
+            FX_ItemPooling.Set_FX_ItemState(ObjectPooling.Pooling_State.FX,ObjectPooling.FX_State.item);
         }
 
-        GameObject FX_Item = FX_ItemPooling.Pop();
-        FX_Item.transform.position = deadObject.position;
-        FX_Item.transform.rotation = deadObject.rotation;
+        GameObject FX_Item = FX_ItemPooling.FX_Pop();
+        FX_Item.transform.position = EatObject.position;
+        FX_Item.transform.rotation = EatObject.rotation;
         FX_Item.SetActive(true);
     }
 }

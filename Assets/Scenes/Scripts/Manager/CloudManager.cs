@@ -13,7 +13,7 @@ public class CloudManager : Singleton<CloudManager>
         {
             startPoint = Resources.Load("Prefab/Cloud_StartPoint") as GameObject;
         }
-        cloudPooling.setState(ObjectPooling.Pooling_State.Cloud); //오브젝트풀링 상태 설정
+        cloudPooling.Set_State(ObjectPooling.Pooling_State.Cloud); //오브젝트풀링 상태 설정
         cloudPooling.Creation(); //생성
         Cloud_Ready();
     }

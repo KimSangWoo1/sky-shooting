@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class FX_ItemControl : MonoBehaviour
 {
-    private FX_ItemManager FXM;
+    private FX_ItemManager FX_IM;
     ParticleSystem particle;
     private void Awake()
     {
         particle = GetComponent<ParticleSystem>();
     }
-    private void OnEnable()
-    {
 
-    }
     void Start()
     {
         //싱글톤 생성
-        FXM = FX_ItemManager.Instance;
+        FX_IM = FX_ItemManager.Instance;
     }
 
     void Update()
@@ -25,7 +22,7 @@ public class FX_ItemControl : MonoBehaviour
         //끝났을 경우
         if (particle.isStopped)
         {
-            FXM.Item_Push(this.gameObject); //Push 및 active 설정
+            FX_IM.FX_ItemPush(this.gameObject); //Push 및 active 설정
         }
     }
 }

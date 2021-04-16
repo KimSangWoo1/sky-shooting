@@ -22,7 +22,7 @@ public partial class Interaction : MonoBehaviour
         }
         else
         {
-            FXM.Item_Pop(transform);
+            FXM.FX_ItemPop(transform);
             if (other.gameObject.tag == "Item_Bullet")
             {
                 messageSender.Apply_AddBullet();

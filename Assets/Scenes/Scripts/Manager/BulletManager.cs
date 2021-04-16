@@ -10,7 +10,7 @@ public class BulletManager : Singleton<BulletManager>
     //총알 오브젝트 셋팅
     void Start()
     {
-        bulletPooling.setState(ObjectPooling.Pooling_State.Bullet);
+        bulletPooling.Set_State(ObjectPooling.Pooling_State.Bullet);
         bulletPooling.Creation();
     }
 
@@ -26,7 +26,7 @@ public class BulletManager : Singleton<BulletManager>
     {
         if (bulletPooling.getState() != ObjectPooling.Pooling_State.Bullet)
         {
-            bulletPooling.setState(ObjectPooling.Pooling_State.Bullet);
+            bulletPooling.Set_State(ObjectPooling.Pooling_State.Bullet);
         }
 
         GameObject bullet = bulletPooling.Pop();
