@@ -12,7 +12,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
     [Header("UI")]
     public JoyStick joystick; //조이스틱
     public Health health;
-
+    public Hit_Blinking hit_Blinking;
     //입력값
     private float h;
     private float v;
@@ -132,6 +132,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                 hp -= message.amount;
                 hitFx.Play();
                 HpControl();
+                hit_Blinking.Blinking(true);
                 health.ChaneHP(hp);
                 break;
             case MessageType.BULLET:

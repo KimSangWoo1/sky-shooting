@@ -88,7 +88,6 @@ public class B_Machine : PlaneBase, IMessageReceiver
         if (state == State.Wait)
         {
             BusterControl(0.6f);
-            print(busterController.Get_BusterGage());
         }
         else if(state == State.Avoid)
         {

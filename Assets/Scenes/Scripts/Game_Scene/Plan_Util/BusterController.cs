@@ -69,7 +69,6 @@ public class BusterController : MonoBehaviour
             else
             {
                 buster = false;
-                rightPanel.buster = false;
             }
         }
         else
