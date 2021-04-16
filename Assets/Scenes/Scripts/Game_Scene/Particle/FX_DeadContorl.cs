@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadFXContorller : MonoBehaviour
+public class FX_DeadContorl : MonoBehaviour
 {
     private ParticleSystem particle;
 

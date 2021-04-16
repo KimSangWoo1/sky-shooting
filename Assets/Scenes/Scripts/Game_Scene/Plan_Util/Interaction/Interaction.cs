@@ -5,12 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(MessageSender))]
 public partial class Interaction : MonoBehaviour
 {
+    private FX_ItemManager FXM;
     private MessageSender messageSender;
-    
-    private float damage;
 
     private void Start()
     {
+        FXM = FX_ItemManager.Instance;
         messageSender = GetComponent<MessageSender>();
     }
 
@@ -22,6 +22,7 @@ public partial class Interaction : MonoBehaviour
         }
         else
         {
+            FXM.Item_Pop(transform);
             if (other.gameObject.tag == "Item_Bullet")
             {
                 messageSender.Apply_AddBullet();

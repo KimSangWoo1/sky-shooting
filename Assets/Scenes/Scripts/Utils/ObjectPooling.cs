@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class ObjectPooling
 { 
-    public enum Pooling_State{ Cloud, Bullet}; //오브젝트 풀링 상태
+    public enum Pooling_State{ Cloud, Bullet,FX_Item}; //오브젝트 풀링 상태
     private Pooling_State pooling;
 
     private int cloudSize = 3; //구름 사이즈
     private int bulletSize = 10; //총알 사이즈
+    private int FX_ItemSize = 30;
 
     //풀링 셋팅
     private GameObject cloudParent; //구름 부모
     private GameObject bulletParent;  //총알 부모
+    private GameObject FX_ItemParent;  //총알 부모
 
     private GameObject prefab; //구름&총알 Prefab
     private GameObject clone; //Clone
@@ -20,7 +22,7 @@ public class ObjectPooling
     //실제 풀 Queue 리스트
     private Queue<GameObject> cloudPool = new Queue<GameObject>(); //구름 Pool
     private Queue<GameObject> bulletPool = new Queue<GameObject>(); // 총알 Pool
-   
+    private Queue<GameObject> FX_ItemPool = new Queue<GameObject>(); // FX_Item Pool
 
     //풀링 대상 오브젝트 resource 참조
     public void setState(Pooling_State state)
@@ -33,6 +35,9 @@ public class ObjectPooling
                 break;
             case Pooling_State.Bullet:
                 prefab = Resources.Load("Prefab/Plane/Bullets/Bullet") as GameObject;
+                break;
+            case Pooling_State.FX_Item:
+                prefab = Resources.Load("Particle/FX_Prefab/FX_Rainbow") as GameObject;
                 break;
         }
     }
@@ -74,7 +79,7 @@ public class ObjectPooling
                 if (bulletParent == null || !bulletParent.activeInHierarchy)
                 {
                     bulletParent = GameObject.Find("총알Pool");
-                    if (cloudParent == null)
+                    if (bulletParent == null)
                     {
                         bulletParent = new GameObject();
                         bulletParent.transform.name = "총알Pool";
@@ -92,7 +97,29 @@ public class ObjectPooling
                     bulletPool.Enqueue(clone);
                 }
                 break;
- 
+            case Pooling_State.FX_Item:
+                if (FX_ItemParent == null || !FX_ItemParent.activeInHierarchy)
+                {
+                    FX_ItemParent = GameObject.Find("FX_ItemPool");
+                    if (FX_ItemParent == null)
+                    {
+                        FX_ItemParent = new GameObject();
+                        FX_ItemParent.transform.name = "FX_ItemPool";
+                    }
+                }
+
+                for (int i = 0; i < bulletSize; i++)
+                {
+                    if (prefab == null)
+                    {
+                        setState(Pooling_State.FX_Item);
+                    }
+                    clone = GameObject.Instantiate(prefab, FX_ItemParent.transform.position, Quaternion.Euler(0f, 0f, 0f), FX_ItemParent.transform);
+                    clone.SetActive(false);
+                    FX_ItemPool.Enqueue(clone);
+                }
+                break;
+
         }
 
     }
@@ -112,6 +139,9 @@ public class ObjectPooling
                 break;
             case Pooling_State.Bullet:
                 bulletPool.Enqueue(temp);
+                break;
+            case Pooling_State.FX_Item:
+                FX_ItemPool.Enqueue(temp);
                 break;
         }
     }
@@ -134,6 +164,13 @@ public class ObjectPooling
                     Creation();
                 }
                 temp = bulletPool.Dequeue();
+                break;
+            case Pooling_State.FX_Item:
+                if (FX_ItemPool.Count == 0)
+                {
+                    Creation();
+                }
+                temp = FX_ItemPool.Dequeue();
                 break;
             default:
                 temp = null;

@@ -49,5 +49,4 @@ public class Bullet_Move : MonoBehaviour
             BM.bullet_Control(this.gameObject); //Push 및 active 설정
         }
     }
-
 }
