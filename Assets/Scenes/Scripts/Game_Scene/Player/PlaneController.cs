@@ -154,9 +154,10 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                 }
                 break;
             case MessageType.CLASH:
+                /*
                 ParticleSystem dead = Instantiate(deadFx, transform.position, Quaternion.Euler(-90f, 0f, 0f));
                 dead.gameObject.SetActive(true);
-
+                */
                 this.gameObject.SetActive(false);
                 break;
         }

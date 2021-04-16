@@ -10,6 +10,11 @@ public  class PlaneBase :MonoBehaviour
     public float runPower; //부스터 추가 이동속도
     public int hp;
 
+    private Material material;
+    public string colorName;
+
+    public ObjectPooling.DeadState deadState;
+
     //FX
     private ParticleSystem[] FX;
     protected ParticleSystem engineFX; //0 기본 엔진FX
@@ -20,6 +25,27 @@ public  class PlaneBase :MonoBehaviour
 
     protected void Start()
     {
+        //죽음FX 어떤 색인지 알아야해서
+        material = GetComponent<MeshRenderer>().material;
+        colorName = material.name;
+
+        if (colorName.Contains("Red"))
+        {
+            deadState = ObjectPooling.DeadState.Red;
+        }
+        else if (colorName.Contains("Green"))
+        {
+            deadState = ObjectPooling.DeadState.Green;
+        }
+        else if (colorName.Contains("Blue"))
+        {
+            deadState = ObjectPooling.DeadState.Blue;
+        }
+        else if (colorName.Contains("Orange"))
+        {
+            deadState = ObjectPooling.DeadState.Orange;
+        }
+
         FX = transform.GetComponentsInChildren<ParticleSystem>();
         engineFX = FX[0];
         hitFx = FX[1];

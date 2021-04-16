@@ -89,7 +89,7 @@ public class FX_DeadManager : Singleton<FX_DeadManager>
         if (FX_Dead != null)
         {
             FX_Dead.transform.position = deadObject.position;
-            FX_Dead.transform.rotation = deadObject.rotation;
+            FX_Dead.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
             FX_Dead.SetActive(true);
         }
     }

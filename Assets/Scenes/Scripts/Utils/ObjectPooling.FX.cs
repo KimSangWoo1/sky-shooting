@@ -117,7 +117,7 @@ public partial class ObjectPooling : MonoBehaviour
                             {
                                 Set_State(Pooling_State.FX);
                             }
-                            clone = GameObject.Instantiate(prefab, FX_DeadParent.transform.position, Quaternion.Euler(0f, 0f, 0f), FX_DeadParent.transform);
+                            clone = GameObject.Instantiate(prefab, FX_DeadParent.transform.position, Quaternion.Euler(-90f, 0f, 0f), FX_DeadParent.transform);
                             clone.SetActive(false);
                             switch (deadState)
                             {

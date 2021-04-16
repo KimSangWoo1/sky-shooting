@@ -159,6 +159,7 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  colorName: 
   scanner:
     radius: 60
     angle: 129
@@ -1249,6 +1250,7 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  colorName: 
   fireController: {fileID: 2029991993335189858}
   muzzleController: {fileID: 1342027161}
   busterController: {fileID: 2029991993335189859}
@@ -3621,6 +3623,7 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  colorName: 
   scanner:
     radius: 60
     angle: 129
@@ -3734,6 +3737,7 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  colorName: 
   scanner:
     radius: 60
     angle: 129
@@ -4244,6 +4248,7 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  colorName: 
   scanner:
     radius: 60
     angle: 129
@@ -4376,6 +4381,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2029991991711355660, guid: 2bae89fb4940e1f4f929035d54baa9bc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 421e2c6f2c6e454408632e9782cf744e, type: 2}
     - target: {fileID: 2029991991713124844, guid: 2bae89fb4940e1f4f929035d54baa9bc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5096,6 +5106,7 @@ MonoBehaviour:
   turnSpeed: 0
   runPower: 0
   hp: 0
+  colorName: 
   scanner:
     radius: 60
     angle: 129
@@ -5142,6 +5153,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2029991991711355660, guid: 2bae89fb4940e1f4f929035d54baa9bc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 421e2c6f2c6e454408632e9782cf744e, type: 2}
     - target: {fileID: 2029991991713124844, guid: 2bae89fb4940e1f4f929035d54baa9bc,
         type: 3}
       propertyPath: m_LocalPosition.x
