@@ -94,7 +94,7 @@ public class A_Machine : MonoBehaviour
     //찾기
     private void Find()
     {
-        Transform target = scanner.Detect(transform);
+        Transform target = scanner.Detect(transform, TargetScanner.DetectState.Enemy);
         //회전
         if (target != null)
         {
@@ -146,7 +146,7 @@ public class A_Machine : MonoBehaviour
     //레이더 안에 들어온 타겟 바라보기
     private void Rot()
     {
-        Transform target = scanner.Detect(transform);
+        Transform target = scanner.Detect(transform, TargetScanner.DetectState.Enemy);
         //회전
         if (target != null)
         {

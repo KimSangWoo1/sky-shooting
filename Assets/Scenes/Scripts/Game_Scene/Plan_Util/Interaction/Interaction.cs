@@ -57,6 +57,9 @@ public partial class Interaction : MonoBehaviour
         else if (collision.gameObject.tag == "AI")
         {
             messageSender.Self_Destruction();
+        }else if (collision.gameObject.tag == "Wall")
+        {
+            messageSender.Self_Destruction();
         }
     }
 

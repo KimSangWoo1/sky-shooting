@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 13500002}
   - component: {fileID: 2300002}
   - component: {fileID: 11400002}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: InnerPowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}

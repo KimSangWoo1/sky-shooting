@@ -37,7 +37,7 @@ public class JoyStick : MonoBehaviour,IPointerDownHandler, IDragHandler, IPointe
         //Circle 터치 위치로
         circle.transform.position = eventData.position;
         //스틱 회전 기능 ON
-        stick.GetComponent<PowerUpRotation>().enabled = true;
+     //   stick.GetComponent<PowerUpRotation>().enabled = true;
         move = true; //이동 ON
     }
 

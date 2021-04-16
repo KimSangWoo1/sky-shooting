@@ -33,7 +33,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
 
     //비행기 이동 & 부스터
     private void Move()
-    {   /*
+    {   
         //Mobile 부스터
         if (busterController.Get_BusterClick())
         {
@@ -50,41 +50,41 @@ public class PlaneController : PlaneBase ,IMessageReceiver
             engineFX.gameObject.SetActive(true);
             busterFx.Pause();
         }
-        */
-       
-        //PC 부스터
-        if (Input.GetKeyDown(KeyCode.Space)){
-            busterController.buster = true;
-            if (!busterFx.isPlaying)
-            {
-               busterFx.Play();
-            }
-        }
-        else if (Input.GetKey(KeyCode.Space))
-        {
-            engineFX.gameObject.SetActive(false);
-            if(!busterController.buster)
-            { 
-                busterFx.Pause();
-                transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
-            }
-            else
-            {
-                transform.Translate(Vector3.forward * Time.deltaTime * (runSpeed + runPower), Space.Self);               
-            }
-            
-        }
-        else if(Input.GetKeyUp(KeyCode.Space))
-        {
-            engineFX.gameObject.SetActive(true);
-            busterFx.Pause();
-            busterController.buster = false;
-        }
-        else
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
-        }
-        
+
+        /*
+         //PC 부스터
+         if (Input.GetKeyDown(KeyCode.Space)){
+             busterController.buster = true;
+             if (!busterFx.isPlaying)
+             {
+                busterFx.Play();
+             }
+         }
+         else if (Input.GetKey(KeyCode.Space))
+         {
+             engineFX.gameObject.SetActive(false);
+             if(!busterController.buster)
+             { 
+                 busterFx.Pause();
+                 transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
+             }
+             else
+             {
+                 transform.Translate(Vector3.forward * Time.deltaTime * (runSpeed + runPower), Space.Self);               
+             }
+
+         }
+         else if(Input.GetKeyUp(KeyCode.Space))
+         {
+             engineFX.gameObject.SetActive(true);
+             busterFx.Pause();
+             busterController.buster = false;
+         }
+         else
+         {
+             transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
+         }
+         */
     }
     //비행기 회전
     private void Rot()

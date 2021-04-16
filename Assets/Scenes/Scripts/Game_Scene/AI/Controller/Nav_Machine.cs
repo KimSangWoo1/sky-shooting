@@ -129,7 +129,7 @@ public class Nav_Machine : PlaneBase, IMessageReceiver
         switch (state)
         {
             case State.Wait:
-                target = scanner.Detect(transform);
+                target = scanner.Detect(transform, TargetScanner.DetectState.Enemy);
                 if (target != null)
                 {
                     state = State.Found; //발견
@@ -245,7 +245,7 @@ public class Nav_Machine : PlaneBase, IMessageReceiver
     //레이더 안에 들어온 타겟 방향 설정
     private void Rot()
     {
-        target = scanner.Detect(transform);
+        target = scanner.Detect(transform, TargetScanner.DetectState.Enemy);
         //회전
         if (target != null)
         {
@@ -294,7 +294,7 @@ public class Nav_Machine : PlaneBase, IMessageReceiver
 
     private void AvoidAction()
     {
-        target = scanner.Detect(transform);
+        target = scanner.Detect(transform, TargetScanner.DetectState.Enemy);
 
         switch (avoidState)
         {

@@ -4,10 +4,12 @@ using Message;
 [DefaultExecutionOrder(100)]
 public class B_Machine : PlaneBase, IMessageReceiver
 {
-    enum State { Wait, Found, Attack, Avoid, Item, Dead }; //비행기 상태 : (대기, 찾음, 공격, 도망, 아이템, 죽음)
+    enum State { Wait, Found, Attack, Avoid, Dead }; //비행기 상태 : (대기, 찾음, 공격, 도망, 죽음)
+    enum FoundState { Enemy, Item}; // 비행기 센서 상태 : (타겟 발견, 아이템 발견)
     enum WaitState { GetPosition, GoPosition }; //비행기 대기 상태 : (랜덤좌표 얻기, 랜덤좌표 이동)
     enum AvoidState { GetDirection, RunAway, Return, Emergency }//비행기 도망 상태 : (방향 얻기 ,도망가기, 다시 싸우러가기, 위급 상황)
     State state;
+    FoundState foundState;
     WaitState waitState;
     AvoidState avoidState;
 
@@ -18,6 +20,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
     public BusterController busterController; //부스터
 
     private Transform target; //적군
+    private Transform item; //아이템
 
     private Vector3 randomPosition; // Map  랜덤 좌표
     private Vector3 fightPosition; //싸웠던 위치
@@ -30,7 +33,6 @@ public class B_Machine : PlaneBase, IMessageReceiver
     private float avoidWaitTime; //도망가는 시간 설정 기본 2초  //시간이 : 짧을수록 공격형 - 밸런스형 - 방어형  시간이 길수록
     [SerializeField]
     private float busterWaitTime; //부스터
-                                  // 스피드 
     [SerializeField]
     private float sensingSensitivity; //근접 거리 감지 감도  //시간이 : 짧을수록 공격형 - 밸런스형 - 방어형  시간이 길수록   최소 : 5f ~ 최대 : 7f
 
@@ -45,6 +47,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
         state = State.Wait;
         waitState = WaitState.GetPosition;
         avoidState = AvoidState.GetDirection;
+        foundState = FoundState.Enemy;
         fightPosition = Vector3.zero;
         avoidPosition = Vector3.zero;
     }
@@ -122,8 +125,9 @@ public class B_Machine : PlaneBase, IMessageReceiver
         switch (state)
         {
             case State.Wait:
-                target = scanner.Detect(transform);
-                if (target != null)
+                target = scanner.Detect(transform, TargetScanner.DetectState.Enemy);
+                item = scanner.Detect(transform, TargetScanner.DetectState.Item);
+                if (target != null || item !=null)
                 {
                     state = State.Found; //발견
                 }
@@ -133,24 +137,14 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 }
                 break;
             case State.Found:
-                Rot(); //타겟 방향 회전
+                FoundAction();
                 CheckObstacle(); //장애물이 앞에 있을 경우
-                // 쏘면 맞는지 확인
-                if (target != null)
-                {
-                    if (scanner.AttackDetect(transform, target))
-                    {
-                        state = State.Attack;
-                    }
-                }
                 break;
             case State.Attack:
                 AttackAction();
                 break;
             case State.Avoid:
                 AvoidAction();
-                break;
-            case State.Item:
                 break;
             case State.Dead:
                 // 파괴 연출
@@ -248,14 +242,50 @@ public class B_Machine : PlaneBase, IMessageReceiver
     #endregion
 
     #region Found State (적방향 회전 & 적 쫒기)
-    //레이더 안에 들어온 타겟 방향 설정
-    private void Rot()
+    private void FoundAction()
     {
-        target = scanner.Detect(transform);
-        //회전
-        if (target != null)
+        target = scanner.Detect(transform, TargetScanner.DetectState.Enemy);
+        item = scanner.Detect(transform, TargetScanner.DetectState.Enemy);
+
+        switch (foundState)
         {
-            direct = target.position - transform.position;
+            case FoundState.Enemy:
+                Rot(target); //타겟 방향 회전
+                // 쏘면 맞는지 확인
+                if (target != null)
+                {
+                    if (scanner.AttackDetect(transform, target))
+                    {
+                        state = State.Attack;
+                    }
+                }
+                else
+                {
+                    if (item != null)
+                    {
+                        foundState = FoundState.Item;
+                    }
+                }
+                break;
+            case FoundState.Item:
+                Rot(item);
+                if (target != null)
+                {
+                    foundState = FoundState.Enemy;
+                }
+                    break;
+            default:
+                break;
+        }
+    }
+
+    //레이더 안에 들어온 타겟 방향 설정
+    private void Rot(Transform _target)
+    {
+        //회전
+        if (_target != null)
+        {
+            direct = _target.position - transform.position;
             if (direct != Vector3.zero)
             {
                 direct = direct.normalized;
@@ -300,7 +330,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
 
     private void AvoidAction()
     {
-        target = scanner.Detect(transform);
+        target = scanner.Detect(transform, TargetScanner.DetectState.Enemy);
 
         switch (avoidState)
         {
