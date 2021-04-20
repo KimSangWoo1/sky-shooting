@@ -48,12 +48,15 @@ public class BulletMagazine : MonoBehaviour
         switch (UI_Bullet)
         {
             case 3:
+                bullet_One.fillAmount = 1f;
                 break;
             case 2:
                 bullet_One.fillAmount = chargeTime;
+                bullet_Two.fillAmount = 1f;
                 break;
             case 1:
                 bullet_Two.fillAmount = chargeTime;
+                bullet_Three.fillAmount = 1f;
                 break;
             case 0:
                 bullet_Three.fillAmount = chargeTime;

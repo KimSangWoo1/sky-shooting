@@ -98,38 +98,6 @@ public partial class ObjectPooling
     }
     #endregion
 
-    #region 아이템 생성
-    public void Item_Creation()
-    {
-        switch (state)
-        {
-            case Pooling_State.Item:
-                if (FX_ItemParent == null || !FX_ItemParent.activeInHierarchy)
-                {
-                    FX_ItemParent = GameObject.Find("FX_ItemPool");
-                    if (FX_ItemParent == null)
-                    {
-                        FX_ItemParent = new GameObject();
-                        FX_ItemParent.transform.name = "FX_ItemPool";
-                    }
-                }
-
-                for (int i = 0; i < FX_ItemSize; i++)
-                {
-                    if (prefab == null)
-                    {
-                        Set_State(Pooling_State.Item);
-                    }
-                    clone = GameObject.Instantiate(prefab, FX_ItemParent.transform.position, Quaternion.Euler(0f, 0f, 0f), FX_ItemParent.transform);
-                    clone.SetActive(false);
-                    FX_ItemPool.Enqueue(clone);
-                }
-                break;
-
-        }
-    }
-    #endregion
-
     #region PUSH
     //오브젝트 넣기
     public void Push(GameObject temp)
