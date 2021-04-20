@@ -27,10 +27,9 @@ public partial class ObjectPooling : MonoBehaviour
 
     #region 상태조정
     //아이템 상태
-    public void Set_FX_ItemState(Pooling_State _state, FX_State subState)
+    public void Set_FX_ItemState(FX_State _state)
     {
-        state = _state;
-        fx_State = subState;
+        fx_State = _state;
         switch (fx_State)
         {
             case FX_State.item:
@@ -39,11 +38,10 @@ public partial class ObjectPooling : MonoBehaviour
         }
     }
     //죽음 상태
-    public void Set_FX_DeadState(Pooling_State _state, FX_State subState, DeadState tubState)
+    public void Set_FX_DeadState(FX_State _state, DeadState subState)
     {
-        state = _state;
-        fx_State = subState;
-        deadState = tubState;
+        fx_State = _state;
+        deadState = subState;
 
         switch (fx_State)
         {
@@ -69,79 +67,81 @@ public partial class ObjectPooling : MonoBehaviour
         }
     }
     #endregion
+    public FX_State Get_FX_State()
+    {
+        return fx_State;
+    }
+
+    public DeadState Get_FX_DeadState()
+    {
+        return deadState;
+    }
     #region FX 생성
     //오브젝트 생성
     public void FX_Creation()
     {
-        switch (state)
+
+        switch (fx_State)
         {
-            case Pooling_State.FX:
-                switch (fx_State)
+            case FX_State.item:
+                if (FX_ItemParent == null || !FX_ItemParent.activeInHierarchy)
                 {
-                    case FX_State.item:
-                        if (FX_ItemParent == null || !FX_ItemParent.activeInHierarchy)
-                        {
-                            FX_ItemParent = GameObject.Find("FX_ItemPool");
-                            if (FX_ItemParent == null)
-                            {
-                                FX_ItemParent = new GameObject();
-                                FX_ItemParent.transform.name = "FX_ItemPool";
-                            }
-                        }
+                    FX_ItemParent = GameObject.Find("FX_ItemPool");
+                    if (FX_ItemParent == null)
+                    {
+                        FX_ItemParent = new GameObject();
+                        FX_ItemParent.transform.name = "FX_ItemPool";
+                    }
+                }
 
-                        for (int i = 0; i < FX_ItemSize; i++)
-                        {
-                            if (prefab == null)
-                            {
-                                Set_State(Pooling_State.FX);
-                            }
-                            clone = GameObject.Instantiate(prefab, FX_ItemParent.transform.position, Quaternion.Euler(0f, 0f, 0f), FX_ItemParent.transform);
-                            clone.SetActive(false);
-                            FX_ItemPool.Enqueue(clone);
-                        }
-                        break;
-                    case FX_State.Dead:
-                        if (FX_DeadParent == null || !FX_DeadParent.activeInHierarchy)
-                        {
-                            FX_DeadParent = GameObject.Find("FX_DeadPool");
-                            if (FX_DeadParent == null)
-                            {
-                                FX_DeadParent = new GameObject();
-                                FX_DeadParent.transform.name = "FX_DeadPool";
-                            }
-                        }
-
-                        for (int i = 0; i < FX_DeadSize; i++)
-                        {
-                            if (prefab == null)
-                            {
-                                Set_State(Pooling_State.FX);
-                            }
-                            clone = GameObject.Instantiate(prefab, FX_DeadParent.transform.position, Quaternion.Euler(-90f, 0f, 0f), FX_DeadParent.transform);
-                            clone.SetActive(false);
-                            switch (deadState)
-                            {
-                                case DeadState.None:
-                                    break;
-                                case DeadState.Red:
-                                    FX_RedDeadPool.Enqueue(clone);
-                                    break;
-                                case DeadState.Green:
-                                    FX_GreenDeadPool.Enqueue(clone);
-                                    break;
-                                case DeadState.Blue:
-                                    FX_BlueDeadPool.Enqueue(clone);
-                                    break;
-                                case DeadState.Orange:
-                                    FX_OrangeDeadPool.Enqueue(clone);
-                                    break;
-                            }
-                        }
-                        break;
+                for (int i = 0; i < FX_ItemSize; i++)
+                {
+                    if (prefab == null)
+                    {
+                        Set_FX_ItemState(FX_State.item);
+                    }
+                    clone = GameObject.Instantiate(prefab, FX_ItemParent.transform.position, Quaternion.Euler(0f, 0f, 0f), FX_ItemParent.transform);
+                    clone.SetActive(false);
+                    FX_ItemPool.Enqueue(clone);
                 }
                 break;
+            case FX_State.Dead:
+                if (FX_DeadParent == null || !FX_DeadParent.activeInHierarchy)
+                {
+                    FX_DeadParent = GameObject.Find("FX_DeadPool");
+                    if (FX_DeadParent == null)
+                    {
+                        FX_DeadParent = new GameObject();
+                        FX_DeadParent.transform.name = "FX_DeadPool";
+                    }
+                }
 
-            default:
+                for (int i = 0; i < FX_DeadSize; i++)
+                {
+                    if (prefab == null)
+                    {
+                        Set_FX_DeadState(FX_State.Dead,deadState);
+                    }
+                    clone = GameObject.Instantiate(prefab, FX_DeadParent.transform.position, Quaternion.Euler(-90f, 0f, 0f), FX_DeadParent.transform);
+                    clone.SetActive(false);
+                    switch (deadState)
+                    {
+                        case DeadState.None:
+                            break;
+                        case DeadState.Red:
+                            FX_RedDeadPool.Enqueue(clone);
+                            break;
+                        case DeadState.Green:
+                            FX_GreenDeadPool.Enqueue(clone);
+                            break;
+                        case DeadState.Blue:
+                            FX_BlueDeadPool.Enqueue(clone);
+                            break;
+                        case DeadState.Orange:
+                            FX_OrangeDeadPool.Enqueue(clone);
+                            break;
+                    }
+                }
                 break;
         }
     }
@@ -156,35 +156,32 @@ public partial class ObjectPooling : MonoBehaviour
         {
             temp.SetActive(false);
         }
-        switch (state)
+
+        switch (fx_State)
         {
-            case Pooling_State.FX:
-                switch (fx_State)
+            case FX_State.item:
+                FX_ItemPool.Enqueue(temp);
+                break;
+            case FX_State.Dead:
+                switch (deadState)
                 {
-                    case FX_State.item:
-                        FX_ItemPool.Enqueue(temp);
+                    case DeadState.None:
                         break;
-                    case FX_State.Dead:
-                        switch (deadState)
-                        {
-                            case DeadState.None:
-                                break;
-                            case DeadState.Red:
-                                FX_RedDeadPool.Enqueue(clone);
-                                break;
-                            case DeadState.Green:
-                                FX_GreenDeadPool.Enqueue(clone);
-                                break;
-                            case DeadState.Blue:
-                                FX_BlueDeadPool.Enqueue(clone);
-                                break;
-                            case DeadState.Orange:
-                                FX_OrangeDeadPool.Enqueue(clone);
-                                break;
-                        }
+                    case DeadState.Red:
+                        FX_RedDeadPool.Enqueue(clone);
+                        break;
+                    case DeadState.Green:
+                        FX_GreenDeadPool.Enqueue(clone);
+                        break;
+                    case DeadState.Blue:
+                        FX_BlueDeadPool.Enqueue(clone);
+                        break;
+                    case DeadState.Orange:
+                        FX_OrangeDeadPool.Enqueue(clone);
                         break;
                 }
                 break;
+
         }
     }
     #endregion
@@ -193,57 +190,50 @@ public partial class ObjectPooling : MonoBehaviour
     public GameObject FX_Pop()
     {
         GameObject temp;
-        switch (state)
+
+        switch (fx_State)
         {
-            case Pooling_State.FX:
-                switch (fx_State)
+            case FX_State.item:
+                if (FX_ItemPool.Count == 0)
                 {
-                    case FX_State.item:
-                        if (FX_ItemPool.Count == 0)
+                    FX_Creation();
+                }
+                temp = FX_ItemPool.Dequeue();
+
+                break;
+            case FX_State.Dead:
+                switch (deadState)
+                {
+                    case DeadState.None:
+                        temp = null;
+                        break;
+                    case DeadState.Red:
+                        if (FX_RedDeadPool.Count == 0)
                         {
                             FX_Creation();
                         }
-                        temp = FX_ItemPool.Dequeue();
-
+                        temp = FX_RedDeadPool.Dequeue();
                         break;
-                    case FX_State.Dead:
-                        switch (deadState)
+                    case DeadState.Green:
+                        if (FX_GreenDeadPool.Count == 0)
                         {
-                            case DeadState.None:
-                                temp = null;
-                                break;
-                            case DeadState.Red:
-                                if (FX_RedDeadPool.Count == 0)
-                                {
-                                    FX_Creation();
-                                }
-                                temp = FX_RedDeadPool.Dequeue();
-                                break;
-                            case DeadState.Green:
-                                if (FX_GreenDeadPool.Count == 0)
-                                {
-                                    FX_Creation();
-                                }
-                                temp = FX_GreenDeadPool.Dequeue();
-                                break;
-                            case DeadState.Blue:
-                                if (FX_BlueDeadPool.Count == 0)
-                                {
-                                    FX_Creation();
-                                }
-                                temp = FX_BlueDeadPool.Dequeue();
-                                break;
-                            case DeadState.Orange:
-                                if (FX_OrangeDeadPool.Count == 0)
-                                {
-                                    FX_Creation();
-                                }
-                                temp = FX_OrangeDeadPool.Dequeue();
-                                break;
-                            default:
-                                temp = null;
-                                break;
+                            FX_Creation();
                         }
+                        temp = FX_GreenDeadPool.Dequeue();
+                        break;
+                    case DeadState.Blue:
+                        if (FX_BlueDeadPool.Count == 0)
+                        {
+                            FX_Creation();
+                        }
+                        temp = FX_BlueDeadPool.Dequeue();
+                        break;
+                    case DeadState.Orange:
+                        if (FX_OrangeDeadPool.Count == 0)
+                        {
+                            FX_Creation();
+                        }
+                        temp = FX_OrangeDeadPool.Dequeue();
                         break;
                     default:
                         temp = null;

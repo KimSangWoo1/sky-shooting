@@ -12,16 +12,16 @@ public class FX_DeadManager : Singleton<FX_DeadManager>
     //총알 오브젝트 셋팅
     void Start()
     {
-        FX_RedDeadPool.Set_FX_DeadState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Red);
+        FX_RedDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Red);
         FX_RedDeadPool.FX_Creation();
 
-        FX_GreenDeadPool.Set_FX_DeadState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Green);
+        FX_GreenDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Green);
         FX_GreenDeadPool.FX_Creation();
 
-        FX_BlueDeadPool.Set_FX_DeadState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Blue);
+        FX_BlueDeadPool.Set_FX_DeadState( ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Blue);
         FX_BlueDeadPool.FX_Creation();
 
-        FX_OrangeDeadPool.Set_FX_DeadState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Orange);
+        FX_OrangeDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Orange);
         FX_OrangeDeadPool.FX_Creation();
     }
 
@@ -58,30 +58,30 @@ public class FX_DeadManager : Singleton<FX_DeadManager>
             case ObjectPooling.DeadState.None:              
                 break;
             case ObjectPooling.DeadState.Red:
-                if (FX_RedDeadPool.getState() != ObjectPooling.Pooling_State.FX)
+                if (FX_RedDeadPool.Get_FX_State() != ObjectPooling.FX_State.Dead || FX_RedDeadPool.Get_FX_DeadState() != ObjectPooling.DeadState.Red)
                 {
-                    FX_RedDeadPool.Set_FX_DeadState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.item, ObjectPooling.DeadState.Red);
+                    FX_RedDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.item, ObjectPooling.DeadState.Red);
                 }
                 FX_Dead = FX_RedDeadPool.FX_Pop();
                 break;
             case ObjectPooling.DeadState.Green:
-                if (FX_GreenDeadPool.getState() != ObjectPooling.Pooling_State.FX)
+                if (FX_RedDeadPool.Get_FX_State() != ObjectPooling.FX_State.Dead || FX_RedDeadPool.Get_FX_DeadState() != ObjectPooling.DeadState.Green)
                 {
-                    FX_GreenDeadPool.Set_FX_DeadState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.item, ObjectPooling.DeadState.Red);
+                    FX_RedDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.item, ObjectPooling.DeadState.Green);
                 }
                 FX_Dead = FX_GreenDeadPool.FX_Pop();
                 break;
             case ObjectPooling.DeadState.Blue:
-                if (FX_BlueDeadPool.getState() != ObjectPooling.Pooling_State.FX)
+                if (FX_RedDeadPool.Get_FX_State() != ObjectPooling.FX_State.Dead || FX_RedDeadPool.Get_FX_DeadState() != ObjectPooling.DeadState.Blue)
                 {
-                    FX_BlueDeadPool.Set_FX_DeadState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.item, ObjectPooling.DeadState.Red);
+                    FX_RedDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.item, ObjectPooling.DeadState.Blue);
                 }
                 FX_Dead = FX_BlueDeadPool.FX_Pop();
                 break;
             case ObjectPooling.DeadState.Orange:
-                if (FX_OrangeDeadPool.getState() != ObjectPooling.Pooling_State.FX)
+                if (FX_RedDeadPool.Get_FX_State() != ObjectPooling.FX_State.Dead || FX_RedDeadPool.Get_FX_DeadState() != ObjectPooling.DeadState.Orange)
                 {
-                    FX_OrangeDeadPool.Set_FX_DeadState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.item, ObjectPooling.DeadState.Red);
+                    FX_RedDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.item, ObjectPooling.DeadState.Orange);
                 }
                 FX_Dead = FX_OrangeDeadPool.FX_Pop();
                 break;

@@ -9,7 +9,7 @@ public class FX_ItemManager : Singleton<FX_ItemManager>
     //총알 오브젝트 셋팅
     void Start()
     {
-        FX_ItemPooling.Set_FX_ItemState(ObjectPooling.Pooling_State.FX, ObjectPooling.FX_State.item);
+        FX_ItemPooling.Set_FX_ItemState(ObjectPooling.FX_State.item);
         FX_ItemPooling.FX_Creation();
     }
 
@@ -23,9 +23,9 @@ public class FX_ItemManager : Singleton<FX_ItemManager>
     //총 발사
     internal void FX_ItemPop(Transform EatObject)
     {
-        if (FX_ItemPooling.getState() != ObjectPooling.Pooling_State.FX)
+        if (FX_ItemPooling.Get_FX_State() != ObjectPooling.FX_State.item)
         {
-            FX_ItemPooling.Set_FX_ItemState(ObjectPooling.Pooling_State.FX,ObjectPooling.FX_State.item);
+            FX_ItemPooling.Set_FX_ItemState(ObjectPooling.FX_State.item);
         }
 
         GameObject FX_Item = FX_ItemPooling.FX_Pop();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class ObjectPooling
 { 
-    public enum Pooling_State{ Cloud, Bullet,FX,Item}; //오브젝트 풀링 상태
+    public enum Pooling_State{ Cloud, Bullet}; //오브젝트 풀링 상태
 
     private Pooling_State state;
 
