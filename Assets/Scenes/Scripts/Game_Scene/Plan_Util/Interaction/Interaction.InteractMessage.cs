@@ -6,4 +6,10 @@ public partial class Interaction : MonoBehaviour
        public int amount;
        public bool upgrade;
     }
+
+    public struct DamageMessage
+    {
+        public string name;
+        public int damage;
+    }
 }

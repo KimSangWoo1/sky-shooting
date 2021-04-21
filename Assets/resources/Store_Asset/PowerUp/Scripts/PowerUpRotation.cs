@@ -29,4 +29,9 @@ public class PowerUpRotation : MonoBehaviour
 	{
 		this.reverse = reverse;
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+		transform.parent.GetComponent<ItemControl>().OnTriggerEnter(other);
+    }
 }

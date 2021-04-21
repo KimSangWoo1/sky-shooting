@@ -6,16 +6,22 @@ public class MuzzleController : MonoBehaviour
 {
     BulletManager BM; //총알Manager
 
+    Profile profile;
     [Header("Player 총구 위치")]
     public Transform leftMuzzle;
     public Transform rightMuzzle;
     public Transform centerMuzzle;
+
+    private GameObject bullet1;
+    private GameObject bullet2;
+    private GameObject bullet3;
 
     enum Muzzle_Number {one, two, three}
     Muzzle_Number current_Muzzle;
 
     private int muzzle_Count; //총구 갯수
     private int bullet_Count; //총알 갯수
+
 
     private void OnEnable()
     {
@@ -24,6 +30,7 @@ public class MuzzleController : MonoBehaviour
     void Start()
     {
         BM = BulletManager.Instance;
+        profile = transform.parent.GetComponent<PlaneBase>().profile;
     }
 
     void Update()
@@ -86,16 +93,25 @@ public class MuzzleController : MonoBehaviour
         switch (current_Muzzle)
         {
             case Muzzle_Number.one:
-                BM.bullet_Fire(centerMuzzle);
+                bullet1 = BM.bullet_Fire(centerMuzzle);
+                
+                bullet1.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
                 break;
             case Muzzle_Number.two:
-                BM.bullet_Fire(leftMuzzle);
-                BM.bullet_Fire(rightMuzzle);
+                bullet1 = BM.bullet_Fire(leftMuzzle);
+                bullet2 = BM.bullet_Fire(rightMuzzle);
+
+                bullet1.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
+                bullet2.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
                 break;
             case Muzzle_Number.three:
-                BM.bullet_Fire(centerMuzzle);
-                BM.bullet_Fire(leftMuzzle);  
-                BM.bullet_Fire(rightMuzzle);
+                bullet1 = BM.bullet_Fire(centerMuzzle);
+                bullet2 = BM.bullet_Fire(leftMuzzle);
+                bullet3 = BM.bullet_Fire(rightMuzzle);
+
+                bullet1.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
+                bullet2.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
+                bullet3.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
                 break;
         }
     }

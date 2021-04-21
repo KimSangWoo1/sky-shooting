@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2234318, y: 5.201405, z: 2.1341925}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400004}
@@ -101,9 +101,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400004}
+  - component: {fileID: 114029650324704048}
   m_Layer: 0
   m_Name: Bullet_Blue
-  m_TagString: Untagged
+  m_TagString: Item_Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,8 +117,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.07224, y: -4.701405, z: 49.404114}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 400002}
   - {fileID: 400008}
@@ -125,6 +126,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114029650324704048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb272ec0d458dc04bb35859333ef4ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item_State: 0
+  health_State: 0
+  dollar_State: 0
 --- !u!1 &100008
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,12 +151,12 @@ GameObject:
   m_Component:
   - component: {fileID: 400008}
   - component: {fileID: 3300002}
-  - component: {fileID: 13500002}
   - component: {fileID: 2300002}
   - component: {fileID: 11400002}
+  - component: {fileID: 3825745403209359620}
   m_Layer: 11
   m_Name: InnerPowerUp
-  m_TagString: Untagged
+  m_TagString: Item_Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,7 +169,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2234321, y: 5.2014055, z: 2.1341927}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 400004}
@@ -167,19 +183,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100008}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!135 &13500002
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100008}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2300002
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -231,6 +234,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 65
   reverse: 1
+--- !u!135 &3825745403209359620
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2730822107765307716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,17 +276,17 @@ PrefabInstance:
     - target: {fileID: 759777206783366784, guid: 76dac7ab946d6204cb36e00453f9eb12,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.224
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 759777206783366784, guid: 76dac7ab946d6204cb36e00453f9eb12,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.335
+      value: 0.122
       objectReference: {fileID: 0}
     - target: {fileID: 759777206783366784, guid: 76dac7ab946d6204cb36e00453f9eb12,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.201
+      value: 0.061
       objectReference: {fileID: 0}
     - target: {fileID: 759777206783366784, guid: 76dac7ab946d6204cb36e00453f9eb12,
         type: 3}
@@ -336,6 +352,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435419543022674532, guid: 76dac7ab946d6204cb36e00453f9eb12,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114536712673906484, guid: 76dac7ab946d6204cb36e00453f9eb12, type: 3}

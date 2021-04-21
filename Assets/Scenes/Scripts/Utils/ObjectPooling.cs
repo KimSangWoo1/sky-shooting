@@ -31,7 +31,7 @@ public partial class ObjectPooling
         switch (state)
         {
             case Pooling_State.Cloud:
-                prefab = Resources.Load("Prefab/Clouds") as GameObject;
+                prefab = Resources.Load("Prefab/Env/Clouds") as GameObject;
                 break;
             case Pooling_State.Bullet:
                 prefab = Resources.Load("Prefab/Plane/Bullets/Bullet") as GameObject;

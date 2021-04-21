@@ -72,7 +72,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - fB: 0.05
+    - fB: 0
     - fG: 0.25
     - fR: 0.45
     m_Colors:

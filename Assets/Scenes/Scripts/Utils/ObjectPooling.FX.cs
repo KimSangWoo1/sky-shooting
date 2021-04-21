@@ -10,9 +10,10 @@ public partial class ObjectPooling : MonoBehaviour
     private FX_State fx_State;
     private DeadState deadState;
 
+    //크기 설정
     private int FX_ItemSize = 10; //아이템 첫 사이즈
     private int FX_DeadSize = 5;  //죽음 첫 사이즈
-
+    //부모 설정
     private GameObject FX_ItemParent;  //FX 아이템 부모
     private GameObject FX_DeadParent;  //FX 죽음 부모
 
@@ -25,7 +26,7 @@ public partial class ObjectPooling : MonoBehaviour
     private Queue<GameObject> FX_BlueDeadPool = new Queue<GameObject>(); // FX_BlueDead Pool
     private Queue<GameObject> FX_OrangeDeadPool = new Queue<GameObject>(); // FX_OrangeDead Pool
 
-    #region 상태조정
+    #region SET
     //아이템 상태
     public void Set_FX_ItemState(FX_State _state)
     {
@@ -67,6 +68,7 @@ public partial class ObjectPooling : MonoBehaviour
         }
     }
     #endregion
+    #region GET
     public FX_State Get_FX_State()
     {
         return fx_State;
@@ -76,6 +78,8 @@ public partial class ObjectPooling : MonoBehaviour
     {
         return deadState;
     }
+    #endregion
+
     #region FX 생성
     //오브젝트 생성
     public void FX_Creation()
@@ -151,7 +155,6 @@ public partial class ObjectPooling : MonoBehaviour
     // FX Push
     public void FX_Push(GameObject temp)
     {
-        //Debug.Log("push");
         if (temp.activeSelf)
         {
             temp.SetActive(false);
@@ -181,7 +184,6 @@ public partial class ObjectPooling : MonoBehaviour
                         break;
                 }
                 break;
-
         }
     }
     #endregion

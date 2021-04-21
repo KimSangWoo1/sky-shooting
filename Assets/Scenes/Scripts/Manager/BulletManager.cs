@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(10)]
 public class BulletManager : Singleton<BulletManager>
 {
     private static ObjectPooling bulletPooling = new ObjectPooling();
@@ -22,7 +23,7 @@ public class BulletManager : Singleton<BulletManager>
     }
 
     //총 발사
-    internal void bullet_Fire(Transform firePosition)
+    internal GameObject bullet_Fire(Transform firePosition)
     {
         if (bulletPooling.getState() != ObjectPooling.Pooling_State.Bullet)
         {
@@ -33,5 +34,7 @@ public class BulletManager : Singleton<BulletManager>
         bullet.transform.position = firePosition.position;
         bullet.transform.rotation = firePosition.rotation;
         bullet.SetActive(true);
+
+        return bullet;
     }
 }

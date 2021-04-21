@@ -14,6 +14,7 @@
     // Interface
     public interface IMessageReceiver
     {
-        void OnReceiverMessage(MessageType type, object msg); 
+        void OnReceiver_InteractMessage(MessageType type, object msg);
+        void OnReceiver_DamageMessage(MessageType type, object msg);
     }
 }

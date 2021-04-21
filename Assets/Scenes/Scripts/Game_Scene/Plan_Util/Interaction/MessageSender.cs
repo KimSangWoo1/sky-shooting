@@ -4,8 +4,8 @@ public class MessageSender : MonoBehaviour
 {
     public GameObject mono;
     private Message.IMessageReceiver onInteractionMessageReceiver;
-    Interaction.InteractMessage msg;
-
+    Interaction.InteractMessage interactMsg;
+    Interaction.DamageMessage damageMsg;
     private void Start()
     {
         OnValidate();
@@ -17,7 +17,7 @@ public class MessageSender : MonoBehaviour
         onInteractionMessageReceiver = mono.GetComponent<Message.IMessageReceiver>();
         if (onInteractionMessageReceiver == null) mono = null;
     }
-    #region HP Method
+    #region Item HP Method
     //HP 증가
     public void Apply_AddHealth(GameObject item)
     {
@@ -36,88 +36,89 @@ public class MessageSender : MonoBehaviour
     }
     private void Add_RedHealth()
     {
-        msg = new Interaction.InteractMessage
+        interactMsg = new Interaction.InteractMessage
         {
             amount = 30, //HP 0.3증가
             upgrade = false
         };
-        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.HEALTH, msg);
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.HEALTH, interactMsg);
     }
 
     private void Add_YellowHealth()
     {
-        msg = new Interaction.InteractMessage
+        interactMsg = new Interaction.InteractMessage
         {
             amount = 60, //HP 0.6 증가
             upgrade = false
         };
-        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.HEALTH, msg);
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.HEALTH, interactMsg);
     }
 
     private void Add_GreenHealth()
     {
-        msg = new Interaction.InteractMessage
+        interactMsg = new Interaction.InteractMessage
         {
             amount = 100, //HP 1증가
             upgrade = false
         };
-        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.HEALTH, msg);
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.HEALTH, interactMsg);
     }
     #endregion
 
+    #region Item Upgrade Method
     //총알 증가
     public void Apply_AddBullet()
     {
-        msg = new Interaction.InteractMessage
+        interactMsg = new Interaction.InteractMessage
         {
             amount = 0,
             upgrade = true
         };
-        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.BULLET, msg);
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.BULLET, interactMsg);
     }
     //스피드 증가
     public void Apply_AddTurbin()
     {
-        msg = new Interaction.InteractMessage
+        interactMsg = new Interaction.InteractMessage
         {
             amount = 5, //runSpeed 5 증가 , fireWaitTime  0.1증가
             upgrade = true
         };
-        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.TURBIN, msg);
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.TURBIN, interactMsg);
     }
     //총구 증가
     public void Apply_AddMuzzle()
     {
-        msg = new Interaction.InteractMessage
+        interactMsg = new Interaction.InteractMessage
         {
             amount = 0,
             upgrade = true
         };
-        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.MUZZLE, msg);
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.MUZZLE, damageMsg);
     }
+    #endregion
+
+    #region 데미지 메세지
     //데미지 적용
-    public void ApplyDamage()
+    public void ApplyDamage(string _name)
     {
-        msg = new Interaction.InteractMessage
+        damageMsg = new Interaction.DamageMessage
         {
-            amount = 10, // 대미지 0.1f
-            upgrade = false
+            name = _name,   
+            damage = 10, // 대미지 0.1f
         };
-        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.DAMAGE, msg);
+        onInteractionMessageReceiver.OnReceiver_DamageMessage(Message.MessageType.DAMAGE, damageMsg);
     }
     //자폭
     public void Self_Destruction()
     {
-        msg = new Interaction.InteractMessage
+        damageMsg = new Interaction.DamageMessage
         {
-            amount = 0, // 대미지 0.1f
-            upgrade = false
+            name = "",
+            damage = 100, // 대미지 1f
         };
-        onInteractionMessageReceiver.OnReceiverMessage(Message.MessageType.CLASH, msg);
+        onInteractionMessageReceiver.OnReceiver_DamageMessage(Message.MessageType.CLASH, damageMsg);
     }
-    //초기화
-    public void Reset_Interaction()
-    {
+    #endregion
 
-    }
 }

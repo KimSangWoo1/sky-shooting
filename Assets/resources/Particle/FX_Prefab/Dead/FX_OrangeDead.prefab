@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97167ff619a455942abb4b35dd7946ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadState: 4
 --- !u!1001 &8261189497695029948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21,7 +22,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
       propertyPath: m_Name
-      value: Orange_Dead
+      value: FX_OrangeDead
       objectReference: {fileID: 0}
     - target: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
       propertyPath: m_IsActive

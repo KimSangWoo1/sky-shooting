@@ -68,6 +68,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
             state = State.Dead;
             //초기화
             waitState = WaitState.GetPosition;
+            foundState = FoundState.Enemy;
             avoidState = AvoidState.GetDirection;
         }
 
@@ -147,10 +148,9 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 AvoidAction();
                 break;
             case State.Dead:
-                // 파괴 연출
-                base.FX_DM.FX_Pop(transform, deadState);
-                //삭제
-                this.gameObject.SetActive(false);
+                base.FXM.FX_Pop(transform, deadState);  // 파괴 연출
+                base.Item_Random(); //아이템 생성
+                this.gameObject.SetActive(false);//삭제
                 break;
         }
     }
@@ -464,8 +464,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
         }
     }
     #endregion
-
-    public void OnReceiverMessage(MessageType type, object msg)
+    public void OnReceiver_InteractMessage(MessageType type, object msg)
     {
         Interaction.InteractMessage message = (Interaction.InteractMessage)msg;
 
@@ -473,15 +472,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
         {
             case MessageType.HEALTH:
                 hp += message.amount;
-                HpControl();
-                break;
-            case MessageType.DAMAGE:
-                hp -= message.amount;
-                hitFx.Play();
-                HpControl();
-                emergencyMode = 2;
-                avoidState = AvoidState.Emergency;
-                state = State.Avoid;
+                HPCheck();
                 break;
             case MessageType.BULLET:
                 if (message.upgrade)
@@ -498,8 +489,44 @@ public class B_Machine : PlaneBase, IMessageReceiver
             case MessageType.TURBIN:
                 runSpeed += message.amount;
                 break;
+        }
+    }
+
+    //메시지 받기2
+    public void OnReceiver_DamageMessage(MessageType type, object msg)
+    {
+        Interaction.DamageMessage message = (Interaction.DamageMessage)msg;
+        switch (type)
+        {
+            case MessageType.DAMAGE:
+                //HP 변경
+                hp -= message.damage;
+                HPCheck(); //HP Check
+                base.hitFx.Play(); // Hp FX
+
+                //점수 보드 변경
+                if (hp <= 0f)
+                {
+                    BM.Add_Score(message.name, 100); // 죽인 Player에게 100점
+                    print(message.name + " : + 100점");
+                }
+                else
+                {
+                    BM.Add_Score(message.name, 10); // 맞춘 Player에게 10점
+                }
+
+                //상태변경
+                emergencyMode = 2; // 피격 피하기 후 공격하러 가기
+                avoidState = AvoidState.Emergency; 
+                state = State.Avoid; 
+                break;
             case MessageType.CLASH:
-                this.gameObject.SetActive(false);
+                hp -= message.damage;
+                HPCheck();
+
+                BM.Reset_Score(profile.name);//점수 보드 변경
+
+                state = State.Dead;
                 break;
         }
     }

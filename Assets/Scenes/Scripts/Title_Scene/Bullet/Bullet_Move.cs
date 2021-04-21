@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet_Move : MonoBehaviour
 {
+    private Profile profile;
+
     private BulletManager BM;
     [SerializeField]
     private float bulletSpeed; //총알 속도
@@ -11,6 +13,10 @@ public class Bullet_Move : MonoBehaviour
     private float lifeTime; //생명 시간
     private float deadTime; //죽는 시간
 
+    private void OnEnable()
+    {
+        lifeTime = 0f;
+    }
     private void Awake()
     {
         bulletSpeed = 80f;
@@ -49,4 +55,15 @@ public class Bullet_Move : MonoBehaviour
             BM.bullet_Control(this.gameObject); //Push 및 active 설정
         }
     }
+    
+    public void Set_PlayerProfile(Profile _profile)
+    {
+        profile = _profile;
+    }
+
+    public string Get_ProfileName()
+    {
+        return profile.name;
+    }
+
 }

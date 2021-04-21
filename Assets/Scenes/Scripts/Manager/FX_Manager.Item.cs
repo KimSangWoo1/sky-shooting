@@ -2,25 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FX_ItemManager : Singleton<FX_ItemManager>
+public partial class FX_Manager : Singleton<FX_Manager>
 {
-    private static ObjectPooling  FX_ItemPooling = new ObjectPooling();
-
-    //총알 오브젝트 셋팅
-    void Start()
-    {
-        FX_ItemPooling.Set_FX_ItemState(ObjectPooling.FX_State.item);
-        FX_ItemPooling.FX_Creation();
-    }
-
-    //총알 정리
+    //FX 아이템 Pool Push
     internal void FX_ItemPush(GameObject FX_Item)
     {
         FX_Item.SetActive(false);
         FX_ItemPooling.FX_Push(FX_Item);
     }
 
-    //총 발사
+    //FX 아이템 Pool POP
     internal void FX_ItemPop(Transform EatObject)
     {
         if (FX_ItemPooling.Get_FX_State() != ObjectPooling.FX_State.item)

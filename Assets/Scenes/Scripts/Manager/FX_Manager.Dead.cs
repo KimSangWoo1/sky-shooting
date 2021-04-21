@@ -2,30 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FX_DeadManager : Singleton<FX_DeadManager>
+public partial class FX_Manager : Singleton<FX_Manager>
 {
-    private static ObjectPooling FX_RedDeadPool = new ObjectPooling();// FX_RedDead Pool
-    private static ObjectPooling FX_GreenDeadPool = new ObjectPooling();// FX_GreenDead Pool
-    private static ObjectPooling FX_BlueDeadPool = new ObjectPooling(); // FX_BlueDead Pool
-    private static ObjectPooling FX_OrangeDeadPool = new ObjectPooling(); // FX_OrangeDead Pool
-
-    //총알 오브젝트 셋팅
-    void Start()
-    {
-        FX_RedDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Red);
-        FX_RedDeadPool.FX_Creation();
-
-        FX_GreenDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Green);
-        FX_GreenDeadPool.FX_Creation();
-
-        FX_BlueDeadPool.Set_FX_DeadState( ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Blue);
-        FX_BlueDeadPool.FX_Creation();
-
-        FX_OrangeDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Orange);
-        FX_OrangeDeadPool.FX_Creation();
-    }
-
-    //총알 정리
+    //FX 죽음 Pool Push
     internal void FX_Push(GameObject FX_Item, ObjectPooling.DeadState _deadState)
     {
         FX_Item.SetActive(false);
@@ -49,13 +28,13 @@ public class FX_DeadManager : Singleton<FX_DeadManager>
         }
     }
 
-    //총 발사
+    //FX 죽음 Pool POP
     internal void FX_Pop(Transform deadObject, ObjectPooling.DeadState _deadState)
     {
-        GameObject FX_Dead =null;
+        GameObject FX_Dead = null;
         switch (_deadState)
         {
-            case ObjectPooling.DeadState.None:              
+            case ObjectPooling.DeadState.None:
                 break;
             case ObjectPooling.DeadState.Red:
                 if (FX_RedDeadPool.Get_FX_State() != ObjectPooling.FX_State.Dead || FX_RedDeadPool.Get_FX_DeadState() != ObjectPooling.DeadState.Red)

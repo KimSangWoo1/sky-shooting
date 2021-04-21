@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine;
 using Message;
+[DefaultExecutionOrder(100)]
 public class PlaneController : PlaneBase ,IMessageReceiver
 {
     [Header("발사")]
@@ -22,24 +23,22 @@ public class PlaneController : PlaneBase ,IMessageReceiver
         hp = Mathf.Clamp(hp, 0, 100);
         if (hp <= 0f)
         {
-            // 파괴 연출
-            base.FX_DM.FX_Pop(transform, deadState);
-            //삭제
-            this.gameObject.SetActive(false);
+            base.FXM.FX_Pop(transform, deadState); // 파괴 연출
+            base.Item_Random(); //아이템 생성
+
+            this.gameObject.SetActive(false); //삭제
         }
-        //비행기 이동
-        Move();
-        //비행기 회전
-        Rot();
-        //발사
-        fireController.Player_FireTrigger();
-        //부스터 관리
-        busterController.Player_Buster_Control();
+
+        Move(); //비행기 이동
+        Rot(); //비행기 회전
+        fireController.Player_FireTrigger(); //발사
+        busterController.Player_Buster_Control(); //부스터 관리
     }
 
     //비행기 이동 & 부스터
     private void Move()
     {   
+        /*
         //Mobile 부스터
         if (busterController.Get_BusterClick())
         {
@@ -56,8 +55,8 @@ public class PlaneController : PlaneBase ,IMessageReceiver
             engineFX.gameObject.SetActive(true);
             busterFx.Pause();
         }
-
-        /*
+        */
+        
          //PC 부스터
          if (Input.GetKeyDown(KeyCode.Space)){
              busterController.buster = true;
@@ -90,7 +89,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
          {
              transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
          }
-         */
+         
     }
     //비행기 회전
     private void Rot()
@@ -112,6 +111,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                 transform.rotation = Quaternion.Lerp(this.transform.rotation, diretion , Time.deltaTime * turnSpeed);
             }
         }
+        
         //Mobile 용
         if (joystick.move)
         {
@@ -120,10 +120,11 @@ public class PlaneController : PlaneBase ,IMessageReceiver
             float angle = Mathf.Atan2(joyDirect.x, joyDirect.y) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0f, angle, 0f) ;
         }
+        
     }
- 
-    //메시지 받기
-    public void OnReceiverMessage(MessageType type, object msg)
+
+    //메시지 받기1
+    public void OnReceiver_InteractMessage(MessageType type, object msg)
     {
         Interaction.InteractMessage message = (Interaction.InteractMessage)msg;
 
@@ -131,15 +132,11 @@ public class PlaneController : PlaneBase ,IMessageReceiver
         {
             case MessageType.HEALTH:
                 hp += message.amount;
-                HpControl();
+                HPCheck();
                 health.ChaneHP(hp);
                 break;
-            case MessageType.DAMAGE:
-                hp -= message.amount;
-                hitFx.Play();
-                HpControl();
-                hit_Blinking.Blinking(true);
-                health.ChaneHP(hp);
+            case MessageType.DOLLAR:
+                //아직
                 break;
             case MessageType.BULLET:
                 if (message.upgrade)
@@ -159,9 +156,42 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                     runSpeed += message.amount;
                 }
                 break;
-            case MessageType.CLASH:
-                this.gameObject.SetActive(false);
-                break;
         }
     }
+        //메시지 받기2
+        public void OnReceiver_DamageMessage(MessageType type, object msg)
+        {
+            Interaction.DamageMessage message = (Interaction.DamageMessage)msg;
+            switch (type)
+            {
+                case MessageType.DAMAGE:
+                    hp -= message.damage;  
+                    HPCheck(); //hp 체크
+                    base.hitFx.Play(); //타격 FX 
+
+                   //점수 보드 변경
+                    if (hp <= 0f)
+                    {
+                        BM.Add_Score(message.name, 100); // 죽인 Player에게 100점
+                        print(message.name + " : + 100점");
+                    }
+                    else
+                    {
+                        BM.Add_Score(message.name, 10); // 맞춘 Player에게 10점
+                    }
+
+                    hit_Blinking.Blinking(true); //UI 빨간색 깜박임
+                    health.ChaneHP(hp); //UI hp 변경
+                    break;
+                case MessageType.CLASH:
+                    hp -= message.damage;
+                    HPCheck();//hp 체크
+
+                    BM.Reset_Score(profile.name);//점수 보드 변경
+
+                    hit_Blinking.Blinking(true); //UI 빨간색 깜박임
+                    health.ChaneHP(hp); //UI hp 변경
+                break;
+            }
+        }
 }

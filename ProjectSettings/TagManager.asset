@@ -13,6 +13,7 @@ TagManager:
   - Bullet
   - Obstacle
   - Wall
+  - AI
   layers:
   - Default
   - TransparentFX
@@ -24,9 +25,9 @@ TagManager:
   - 
   - PostProcessing
   - Player
+  - AI
   - Obstacle
   - Item
-  - 
   - 
   - 
   - 

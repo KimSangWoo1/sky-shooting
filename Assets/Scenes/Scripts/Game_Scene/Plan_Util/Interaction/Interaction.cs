@@ -18,32 +18,32 @@ public partial class Interaction : MonoBehaviour
     {
         if (other.gameObject.tag == "Bullet")
         {
-            messageSender.ApplyDamage();
+            messageSender.ApplyDamage(other.gameObject.GetComponent<Bullet_Move>().Get_ProfileName());
         }
         else
         {
-            planeBase.FX_IM.FX_ItemPop(transform);
-            if (other.gameObject.tag == "Item_Bullet")
+            planeBase.FXM.FX_ItemPop(transform);
+            if (other.transform.parent.tag == "Item_Bullet")
             {
                 messageSender.Apply_AddBullet();
             }
-            else if (other.gameObject.tag == "Item_Muzzle")
+            else if (other.transform.parent.tag == "Item_Muzzle")
             {
                 messageSender.Apply_AddMuzzle();
             }
-            else if (other.gameObject.tag == "Item_Turbin")
+            else if (other.transform.parent.tag == "Item_Turbin")
             {
                 messageSender.Apply_AddTurbin();
             }
-            else if (other.gameObject.tag == "Item_Health")
+            else if (other.transform.parent.tag == "Item_Health")
             {
                 messageSender.Apply_AddHealth(other.gameObject);
             }
-            else if (other.gameObject.tag == "Item_Dollar")
+            else if (other.transform.parent.tag == "Item_Dollar")
             {
                 //추가해야함??
             }
-            other.transform.parent.gameObject.SetActive(false);
+        
         }
 
     }
@@ -52,16 +52,13 @@ public partial class Interaction : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-           planeBase.FX_DM.FX_Pop(transform, planeBase.deadState);
             messageSender.Self_Destruction();
         }
         else if (collision.gameObject.tag == "AI")
         {
-            planeBase.FX_DM.FX_Pop(transform, planeBase.deadState);
             messageSender.Self_Destruction();
         }else if (collision.gameObject.tag == "Wall")
         {
-            planeBase.FX_DM.FX_Pop(transform, planeBase.deadState);
             messageSender.Self_Destruction();
         }
     }

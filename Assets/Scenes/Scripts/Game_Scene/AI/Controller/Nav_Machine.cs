@@ -382,7 +382,7 @@ public class Nav_Machine : PlaneBase, IMessageReceiver
     }
     #endregion
 
-    public void OnReceiverMessage(MessageType type, object msg)
+    public void OnReceiver_InteractMessage(MessageType type, object msg)
     {
         Interaction.InteractMessage message = (Interaction.InteractMessage)msg;
 
@@ -390,9 +390,7 @@ public class Nav_Machine : PlaneBase, IMessageReceiver
         {
             case MessageType.HEALTH:
                 hp += message.amount;
-                break;
-            case MessageType.DAMAGE:
-                hp -= message.amount;
+                HPCheck();
                 break;
             case MessageType.BULLET:
                 if (message.upgrade)
@@ -408,7 +406,40 @@ public class Nav_Machine : PlaneBase, IMessageReceiver
                 break;
             case MessageType.TURBIN:
                 runSpeed += message.amount;
-                //fireWaitTime += 0.1f;
+                break;
+        }
+    }
+
+    //메시지 받기2
+    public void OnReceiver_DamageMessage(MessageType type, object msg)
+    {
+        Interaction.DamageMessage message = (Interaction.DamageMessage)msg;
+        switch (type)
+        {
+            case MessageType.DAMAGE:
+                //HP 변경
+                hp -= message.damage;
+                HPCheck(); //HP Check
+                base.hitFx.Play(); // Hp FX
+
+                //점수 보드 변경
+                if (hp <= 0f)
+                {
+                    BM.Add_Score(message.name, 100); // 죽인 Player에게 100점
+                }
+                else
+                {
+                    BM.Add_Score(message.name, 10); // 맞춘 Player에게 10점
+                }
+
+                //상태변경
+                avoidState = AvoidState.Emergency;
+                state = State.Avoid;
+                break;
+            case MessageType.CLASH:
+                hp -= message.damage;
+                HPCheck();
+                state = State.Dead;
                 break;
         }
     }

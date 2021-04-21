@@ -1,35 +1,49 @@
 ﻿using UnityEngine;
 
+
 public  class PlaneBase :MonoBehaviour
 {
-    public FX_ItemManager FX_IM;
-    public FX_DeadManager FX_DM;
-
+    public Profile profile;
     [Header("비행기 기본 설정")]
-    [SerializeField]
     public float runSpeed; //이동속도
-    [SerializeField]
     public float turnSpeed; //회전속도
     public float runPower; //부스터 추가 이동속도
     public int hp;
 
     private Material material;
     public string colorName;
-
+    [HideInInspector]
     public ObjectPooling.DeadState deadState;
 
     //FX
+    [HideInInspector]
+    public FX_Manager FXM;
+    [HideInInspector]
+    public ItemManager IM;
+    [HideInInspector]
+    public BoardManager BM;
+
     private ParticleSystem[] FX;
     protected ParticleSystem engineFX; //0 기본 엔진FX
     protected ParticleSystem hitFx;  //1 타격FX
     protected ParticleSystem busterFx; //2 부스터FX
-    protected ParticleSystem hurtFx; //3 출혈FX
-    protected ParticleSystem deadFx; //4 죽음FX
+    protected ParticleSystem hurtFx; //3 출혈FX                     
+
+    private void Awake()
+    { 
+        // AI 이름 설정
+        if (transform.tag == "AI")
+        {       
+            profile.UpdateName(GamePlayer.Get_RandomName());
+        }
+        GamePlayer.ParticipatePlayer(profile);
+    }
 
     protected void Start()
     {
-        FX_IM = FX_ItemManager.Instance;
-        FX_DM = FX_DeadManager.Instance;
+        FXM = FX_Manager.Instance;
+        IM = ItemManager.Instance;
+        BM = BoardManager.Instance;
 
         //죽음FX 어떤 색인지 알아야해서
         material = GetComponent<MeshRenderer>().material;
@@ -57,9 +71,6 @@ public  class PlaneBase :MonoBehaviour
         hitFx = FX[1];
         busterFx = FX[2];
         hurtFx = FX[3];
-        deadFx = FX[4];
-
-        deadFx.gameObject.SetActive(false);
 
     }
     protected void OnEnable()
@@ -72,7 +83,7 @@ public  class PlaneBase :MonoBehaviour
         hp = 100;
     }
 
-    protected void HpControl()
+    protected void HPCheck()
     {
         if (hp <= 50f)
         {
@@ -87,22 +98,51 @@ public  class PlaneBase :MonoBehaviour
         }
     }
 
+    protected void Item_Random()
+    {
+        int random = Random.Range(1, 10);
+        switch (random)
+        {
+            case 1:
+                IM.Item_Pop(transform, ObjectPooling.Item_State.Bullet);
+                break;
+            case 2:
+                IM.Item_Pop(transform, ObjectPooling.Item_State.Muzzle);
+                break;
+            case 3:
+                IM.Item_Pop(transform, ObjectPooling.Item_State.Turbin);
+                break;
+            case 4:
+                IM.Item_HealthPop(transform, ObjectPooling.Item_HealthState.Red);
+                break;
+            case 5:
+                IM.Item_HealthPop(transform, ObjectPooling.Item_HealthState.Yellow);
+                break;
+            case 6:
+                IM.Item_HealthPop(transform, ObjectPooling.Item_HealthState.Green);
+                break;
+            case 7:
+                IM.Item_DollarPop(transform, ObjectPooling.Item_DollarState.Red);
+                break;
+            case 8:
+                IM.Item_DollarPop(transform, ObjectPooling.Item_DollarState.Yellow);
+                break;
+            case 9:
+                IM.Item_DollarPop(transform, ObjectPooling.Item_DollarState.Green);
+                break;
+            case 10:
+                //아이템 없음
+                break;
+
+        }
+    }
+
     /*
 #if UNITY_ANDROID || UNITY_IOS
     #region Mobile 비행기 부스터
     protected virtual void Mobile_Buster()
     {
-        //이동
-        transform.Translate(Vector3.down * Time.deltaTime * runSpeed, Space.Self);
-        //Mobile 부스터
-        if (rightPanel.buster)
-        {
-            runSpeed = runPower * 2;
-        }
-        else
-        {
-            runSpeed = runPower;
-        }
+
     }
     #endregion
 #endif
@@ -111,16 +151,7 @@ public  class PlaneBase :MonoBehaviour
     #region PC 비행기 부스터
     protected virtual void PC_Buster()
         {
-            //PC 부스터
-            if (Input.GetKey(KeyCode.Space))
-            {
-                rightPanel.buster = true;
-            }
-            else if (Input.GetKeyUp(KeyCode.Space))
-            {
-                rightPanel.buster = false;
-            }
-        }
+
     #endregion
 #endif
     */

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class FX_DeadContorl : MonoBehaviour
 {
-    private FX_DeadManager FX_DM;
+    private FX_Manager FXM;
     private ParticleSystem particle;
+    [SerializeField]
     ObjectPooling.DeadState deadState;
     private void Awake()
     {
@@ -14,22 +15,7 @@ public class FX_DeadContorl : MonoBehaviour
     void Start()
     {
         //싱글톤 생성
-        FX_DM = FX_DeadManager.Instance;
-        if (this.transform.name.Contains("Red"))
-        {
-            deadState = ObjectPooling.DeadState.Red;
-        }else if (this.transform.name.Contains("Green"))
-        {
-            deadState = ObjectPooling.DeadState.Green;
-        }
-        else if (this.transform.name.Contains("Blue"))
-        {
-            deadState = ObjectPooling.DeadState.Blue;
-        }
-        else if (this.transform.name.Contains("Orange"))
-        {
-            deadState = ObjectPooling.DeadState.Orange;
-        }
+        FXM = FX_Manager.Instance;
     }
     private void OnEnable()
     {
@@ -40,7 +26,7 @@ public class FX_DeadContorl : MonoBehaviour
         //끝났을 경우
         if (particle.isStopped)
         {
-            FX_DM.FX_Push(this.gameObject, deadState); //Push 및 active 설정
+            FXM.FX_Push(this.gameObject, deadState); //Push 및 active 설정
         }
     }
 }

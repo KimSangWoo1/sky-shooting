@@ -31,7 +31,6 @@ public class Plane_AvoidMove : MathFunction
     private int fireCount; //총 발사 횟수
     private int fireMaxCount; //발사 최대 횟수
 
-    
     private void Awake()
     {
         //이동
