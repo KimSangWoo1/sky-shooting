@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wall : MonoBehaviour
 {
     [Header("Map")]
-    public GameObject map;
+    public Map map;
 
     [Header("벽들")]
     public GameObject upWall;
@@ -17,7 +17,7 @@ public class Wall : MonoBehaviour
     private float size;
     void Start()
     {
-        size = map.GetComponent<Map>().scale;
+        size = map.scale;
         euler = map.transform.rotation.eulerAngles;
 
         //크기 설정
@@ -28,6 +28,19 @@ public class Wall : MonoBehaviour
 
         //각도 설정
         transform.rotation = Quaternion.Euler(euler);
+
+        //위치 설정
+        upWall.transform.position = new Vector3(0f, 5f, map.rend.bounds.extents.z);
+        downWall.transform.position = new Vector3(0f, 5f, -map.rend.bounds.extents.z);
+        leftWall.transform.position = new Vector3(-map.rend.bounds.extents.x, 5f, 0f);
+        rightWall.transform.position = new Vector3(map.rend.bounds.extents.x, 5f, 0f);
+
+        //Active
+        upWall.SetActive(true);
+        downWall.SetActive(true);
+        leftWall.SetActive(true);
+        rightWall.SetActive(true);
+
     }
 
     

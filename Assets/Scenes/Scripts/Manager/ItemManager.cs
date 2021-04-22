@@ -5,17 +5,22 @@ using UnityEngine;
 public partial class ItemManager : Singleton<ItemManager>
 {
     // 비행기 업그레이드 아이템 Pool
-    private static ObjectPooling item_BulletPooling = new ObjectPooling();
-    private static ObjectPooling item_MuzzlePooling = new ObjectPooling();
-    private static ObjectPooling item_TurbinPooling = new ObjectPooling();
+    private  ObjectPooling item_BulletPooling = new ObjectPooling();
+    private  ObjectPooling item_MuzzlePooling = new ObjectPooling();
+    private  ObjectPooling item_TurbinPooling = new ObjectPooling();
     // HP 아이템 Pool
-    private static ObjectPooling item_RedHealthPooling = new ObjectPooling();
-    private static ObjectPooling item_YellowHealthPooling = new ObjectPooling();
-    private static ObjectPooling item_GreenHealthPooling = new ObjectPooling();
+    private  ObjectPooling item_RedHealthPooling = new ObjectPooling();
+    private  ObjectPooling item_YellowHealthPooling = new ObjectPooling();
+    private  ObjectPooling item_GreenHealthPooling = new ObjectPooling();
     // 돈 아이템 Pool
-    private static ObjectPooling item_RedDollarPooling = new ObjectPooling();
-    private static ObjectPooling item_YellowDollarPooling = new ObjectPooling();
-    private static ObjectPooling item_GreenDollarPooling = new ObjectPooling();
+    private  ObjectPooling item_RedDollarPooling = new ObjectPooling();
+    private  ObjectPooling item_YellowDollarPooling = new ObjectPooling();
+    private  ObjectPooling item_GreenDollarPooling = new ObjectPooling();
+
+    private void Awake()
+    {
+
+    }
     void Start()
     {
         // 비행기 업그레이드 아이템 생성

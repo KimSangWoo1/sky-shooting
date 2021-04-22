@@ -1,5 +1,5 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using Message;
 [DefaultExecutionOrder(100)]
 public class PlaneController : PlaneBase ,IMessageReceiver
@@ -14,6 +14,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
     public JoyStick joystick; //조이스틱
     public Health health;
     public Hit_Blinking hit_Blinking;
+    public Image resultUI;
     //입력값
     private float h;
     private float v;
@@ -28,6 +29,8 @@ public class PlaneController : PlaneBase ,IMessageReceiver
 
             BM.Reset_Score(profile.name);//점수 보드 변경
             gameObject.SetActive(false); //삭제
+            resultUI.gameObject.SetActive(true);
+            //결과 UI 보여주기
         }
 
         Move(); //비행기 이동

@@ -16,6 +16,7 @@ public class BoardManager : Singleton<BoardManager>
     {
         GamePlayer.init();
         GamePlayer.Make_RandomName();
+
     }
     void Start()
     {

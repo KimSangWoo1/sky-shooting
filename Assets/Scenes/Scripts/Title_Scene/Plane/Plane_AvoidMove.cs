@@ -13,9 +13,6 @@ public class Plane_AvoidMove : MathFunction
     private BulletManager BM;
     private Title_SceneManager TS;
 
-    private Vector3 startPosition;  //초기 위치
-    private Quaternion startRotation;
-
     private float fireTime; // 발사 시간
     private float fireReloadTime; //재장전 시간
     private float fireWaitTime;  //발사 후 대기 시간
@@ -46,9 +43,7 @@ public class Plane_AvoidMove : MathFunction
 
     private void OnEnable()
     {
-        //초기 값
-        startPosition = transform.position;
-        startRotation = transform.rotation;
+
     }
     void Start()
     {

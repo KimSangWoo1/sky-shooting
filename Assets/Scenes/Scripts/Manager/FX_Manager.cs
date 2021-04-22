@@ -4,12 +4,16 @@ using UnityEngine;
 
 public partial class FX_Manager : Singleton<FX_Manager>
 {
-    private static ObjectPooling FX_ItemPooling = new ObjectPooling();
-    private static ObjectPooling FX_RedDeadPool = new ObjectPooling();// FX_RedDead Pool
-    private static ObjectPooling FX_GreenDeadPool = new ObjectPooling();// FX_GreenDead Pool
-    private static ObjectPooling FX_BlueDeadPool = new ObjectPooling(); // FX_BlueDead Pool
-    private static ObjectPooling FX_OrangeDeadPool = new ObjectPooling(); // FX_OrangeDead Pool
+    private  ObjectPooling FX_ItemPooling = new ObjectPooling();
+    private  ObjectPooling FX_RedDeadPool = new ObjectPooling();// FX_RedDead Pool
+    private  ObjectPooling FX_GreenDeadPool = new ObjectPooling();// FX_GreenDead Pool
+    private  ObjectPooling FX_BlueDeadPool = new ObjectPooling(); // FX_BlueDead Pool
+    private  ObjectPooling FX_OrangeDeadPool = new ObjectPooling(); // FX_OrangeDead Pool
 
+    private void Awake()
+    {
+
+    }
     void Start()
     {
         //FX Item 생성

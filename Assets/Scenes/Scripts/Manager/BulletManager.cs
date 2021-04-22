@@ -6,9 +6,13 @@ using UnityEngine;
 [DefaultExecutionOrder(10)]
 public class BulletManager : Singleton<BulletManager>
 {
-    private static ObjectPooling bulletPooling = new ObjectPooling();
+    private ObjectPooling bulletPooling = new ObjectPooling();
 
     //총알 오브젝트 셋팅
+    private void Awake()
+    {
+
+    }
     void Start()
     {
         bulletPooling.Set_State(ObjectPooling.Pooling_State.Bullet);

@@ -48,6 +48,8 @@ public class B_Machine : PlaneBase, IMessageReceiver
         waitState = WaitState.GetPosition;
         avoidState = AvoidState.GetDirection;
         foundState = FoundState.Enemy;
+
+        randomPosition = Vector3.zero;
         fightPosition = Vector3.zero;
         avoidPosition = Vector3.zero;
     }

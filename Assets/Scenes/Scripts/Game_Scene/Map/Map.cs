@@ -25,7 +25,7 @@ public class Map : MonoBehaviour
     public LayerMask obstacleLayer;
     [Header("비행기 레이어")]
     public LayerMask planeLayer;
-    private Renderer rend; //MeshRender
+    public Renderer rend; //MeshRender
 
     private float eyePos; //비행기 높이
 
@@ -47,20 +47,11 @@ public class Map : MonoBehaviour
         permit_RangeAngle = 180f;
         eyePos = 2f;
 
-        changeMapTime = 0f;
+
     }
     private void Update()
     {
-        BecomeSmaller();
-    }
 
-    private void BecomeSmaller()
-    {
-        changeMapTime += Time.deltaTime /2f;
-        float size = scale - changeMapTime;
-
-        size = Mathf.Clamp(size, 10f, scale);
-        transform.localScale = new Vector3(size, 1f, size);
     }
     //Map 크기 설정
     internal void GeneratorMap()
@@ -272,7 +263,6 @@ public class Map : MonoBehaviour
         //좌표가 맵 경계선을 넘지 않도록 
         x = Mathf.Clamp(point.x, -size.x, size.x);
         z = Mathf.Clamp(point.z, -size.z, size.z);
-        print(size);
         point = new Vector3(x, plane.position.y, z);
 
         return point;
