@@ -4963,9 +4963,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb272ec0d458dc04bb35859333ef4ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_State: 3
-  health_State: 0
-  dollar_State: 0
+  itemState: 3
+  healthState: 0
+  dollarState: 0
 --- !u!1 &100010
 GameObject:
   m_ObjectHideFlags: 0

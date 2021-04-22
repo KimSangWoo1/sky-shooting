@@ -19,19 +19,19 @@ public class MessageSender : MonoBehaviour
     }
     #region Item HP Method
     //HP 증가
-    public void Apply_AddHealth(GameObject item)
+    public void Apply_AddHealth(ObjectPooling.Item_HealthState _healthState)
     {
-        if (item.transform.parent.name == "Health_Red")
+        switch (_healthState)
         {
-            Add_RedHealth();
-        }
-        else if (item.transform.parent.name == "Health_Yellow")
-        {
-            Add_YellowHealth();
-        }
-        else if (item.transform.parent.name == "Health_Green")
-        {
-            Add_GreenHealth();
+            case ObjectPooling.Item_HealthState.Red:
+                Add_RedHealth();
+                break;
+            case ObjectPooling.Item_HealthState.Yellow:
+                Add_YellowHealth();
+                break;
+            case ObjectPooling.Item_HealthState.Green:
+                Add_GreenHealth();
+                break;
         }
     }
     private void Add_RedHealth()
@@ -94,7 +94,7 @@ public class MessageSender : MonoBehaviour
             amount = 0,
             upgrade = true
         };
-        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.MUZZLE, damageMsg);
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.MUZZLE, interactMsg);
     }
     #endregion
 

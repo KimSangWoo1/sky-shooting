@@ -19,7 +19,7 @@ public class Camera_Flow : MonoBehaviour
     private void Awake()
     {
         camSpeed = 50f;
-        height = 50f;
+        height = 60f;
     }
     void Start()
     {

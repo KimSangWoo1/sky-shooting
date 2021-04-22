@@ -150,7 +150,9 @@ public class B_Machine : PlaneBase, IMessageReceiver
             case State.Dead:
                 base.FXM.FX_Pop(transform, deadState);  // 파괴 연출
                 base.Item_Random(); //아이템 생성
-                this.gameObject.SetActive(false);//삭제
+
+                BM.Reset_Score(profile.name);//점수 보드 변경
+                gameObject.SetActive(false);//삭제
                 break;
         }
     }
@@ -508,7 +510,6 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 if (hp <= 0f)
                 {
                     BM.Add_Score(message.name, 100); // 죽인 Player에게 100점
-                    print(message.name + " : + 100점");
                 }
                 else
                 {

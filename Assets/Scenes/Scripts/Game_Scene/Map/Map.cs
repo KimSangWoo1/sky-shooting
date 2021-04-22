@@ -33,6 +33,7 @@ public class Map : MonoBehaviour
     private Vector3 point; // 랜덤 Point
     private Vector3 inside; //InsideSquere 값
 
+    private float changeMapTime;
     //public Transform target; //test
     void Start()
     {
@@ -45,12 +46,22 @@ public class Map : MonoBehaviour
         ray_Duration = 3f;
         permit_RangeAngle = 180f;
         eyePos = 2f;
+
+        changeMapTime = 0f;
     }
     private void Update()
     {
-
+        BecomeSmaller();
     }
 
+    private void BecomeSmaller()
+    {
+        changeMapTime += Time.deltaTime /2f;
+        float size = scale - changeMapTime;
+
+        size = Mathf.Clamp(size, 10f, scale);
+        transform.localScale = new Vector3(size, 1f, size);
+    }
     //Map 크기 설정
     internal void GeneratorMap()
     {
@@ -261,7 +272,7 @@ public class Map : MonoBehaviour
         //좌표가 맵 경계선을 넘지 않도록 
         x = Mathf.Clamp(point.x, -size.x, size.x);
         z = Mathf.Clamp(point.z, -size.z, size.z);
-
+        print(size);
         point = new Vector3(x, plane.position.y, z);
 
         return point;

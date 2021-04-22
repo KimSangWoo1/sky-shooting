@@ -8,6 +8,7 @@ public static class GamePlayer
     public static Queue<string> randomName = new Queue<string>();
 
     public static List<Profile> playList = new List<Profile>();
+    public static List<Profile> deadPlayList = new List<Profile>();
     public static void Make_RandomName()
     { //98개의 랜덤 이름
         names = new string[99] {
@@ -77,9 +78,15 @@ public static class GamePlayer
     {
         randomName.Clear();
         playList.Clear();
+        deadPlayList.Clear();
     }
     public static void ParticipatePlayer(Profile _profile)
     {
         playList.Add(_profile);
+    }
+
+    public static void Add_DeadPlayer(Profile _profile)
+    {
+        deadPlayList.Add(_profile);
     }
 }

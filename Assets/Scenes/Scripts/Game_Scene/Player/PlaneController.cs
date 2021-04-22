@@ -26,7 +26,8 @@ public class PlaneController : PlaneBase ,IMessageReceiver
             base.FXM.FX_Pop(transform, deadState); // 파괴 연출
             base.Item_Random(); //아이템 생성
 
-            this.gameObject.SetActive(false); //삭제
+            BM.Reset_Score(profile.name);//점수 보드 변경
+            gameObject.SetActive(false); //삭제
         }
 
         Move(); //비행기 이동
@@ -132,6 +133,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
         {
             case MessageType.HEALTH:
                 hp += message.amount;
+                print(hp);
                 HPCheck();
                 health.ChaneHP(hp);
                 break;
@@ -173,7 +175,6 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                     if (hp <= 0f)
                     {
                         BM.Add_Score(message.name, 100); // 죽인 Player에게 100점
-                        print(message.name + " : + 100점");
                     }
                     else
                     {

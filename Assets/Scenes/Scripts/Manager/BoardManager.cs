@@ -34,16 +34,16 @@ public class BoardManager : Singleton<BoardManager>
     public void Show_PlayerList()
     {
         //Linq
-        var list = from player in GamePlayer.playList
+        var aliveList = from player in GamePlayer.playList
                    orderby player.score descending
                    select player;
 
         int i = 0;
-        foreach(Profile profile in list)
+        foreach(Profile profile in aliveList)
         {
             if (i < maxShowNum)
             {
-                playerNames[i].text = profile.name;
+                playerNames[i].text = profile.name+"살음";
                 scores[i].text = profile.score.ToString();
                 i++;
             }
@@ -51,10 +51,21 @@ public class BoardManager : Singleton<BoardManager>
 
         if (i < maxShowNum)
         {
-            for(int j=i; j < playerNames.Length; j++)
+            //Linq
+            var deadList = from player in GamePlayer.deadPlayList
+                       orderby player.score descending
+                       select player;
+
+            foreach(Profile profile in deadList)
             {
-                playerNames[i].text = "";
-                scores[i].text = "";
+                if (i < maxShowNum)
+                {
+                    playerNames[i].text = profile.name +"죽음";
+                    playerNames[i].color = Color.red;
+                    scores[i].text = profile.score.ToString();
+                    scores[i].color = Color.red;
+                    i++;
+                }
             }
         }
     }
@@ -86,10 +97,12 @@ public class BoardManager : Singleton<BoardManager>
 
     public void Reset_Score(string _name)
     {
-        foreach(Profile profile in GamePlayer.playList)
+        //GamePlayer.playList.Find(x => x.name == _name);
+        foreach (Profile profile in GamePlayer.playList)
         {
             if(profile.name.Equals(_name))
             {
+                GamePlayer.deadPlayList.Add(profile);
                 GamePlayer.playList.Remove(profile);
                 break;
             }

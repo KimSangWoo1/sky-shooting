@@ -37,15 +37,13 @@ public partial class Interaction : MonoBehaviour
             }
             else if (other.transform.parent.tag == "Item_Health")
             {
-                messageSender.Apply_AddHealth(other.gameObject);
+                messageSender.Apply_AddHealth(other.transform.parent.GetComponent<ItemControl>().healthState);
             }
             else if (other.transform.parent.tag == "Item_Dollar")
             {
                 //추가해야함??
-            }
-        
+            }     
         }
-
     }
 
     private void OnCollisionEnter(Collision collision)
