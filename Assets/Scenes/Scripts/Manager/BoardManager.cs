@@ -44,7 +44,7 @@ public class BoardManager : Singleton<BoardManager>
         {
             if (i < maxShowNum)
             {
-                playerNames[i].text = profile.name+"살음";
+                playerNames[i].text = profile.name;
                 scores[i].text = profile.score.ToString();
                 i++;
             }
@@ -61,7 +61,7 @@ public class BoardManager : Singleton<BoardManager>
             {
                 if (i < maxShowNum)
                 {
-                    playerNames[i].text = profile.name +"죽음";
+                    playerNames[i].text = profile.name;
                     playerNames[i].color = Color.red;
                     scores[i].text = profile.score.ToString();
                     scores[i].color = Color.red;

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_android_client_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
+  <string name="gcm_defaultSenderId" translatable="false">830305369095</string>
+  <string name="google_storage_bucket" translatable="false">skyshooting-399f5.appspot.com</string>
+  <string name="project_id" translatable="false">skyshooting-399f5</string>
+  <string name="google_api_key" translatable="false">AIzaSyCxleASjxE3umcoLDERSxC1plg0Nx1RYXA</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCxleASjxE3umcoLDERSxC1plg0Nx1RYXA</string>
+  <string name="google_app_id" translatable="false">1:830305369095:android:dc723d6d20278ebd96fea2</string>
+  <string name="default_android_client_id" translatable="false">830305369095-kfjqhglf3mbm49kttd7uhjk40pt9r1cq.apps.googleusercontent.com</string>
+  <string name="default_web_client_id" translatable="false">830305369095-p2n0n1knse193i0tlnj671o7f9jh5f4h.apps.googleusercontent.com</string>
+</resources>

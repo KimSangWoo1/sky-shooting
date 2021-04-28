@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "830305369095",
+    "project_id": "skyshooting-399f5",
+    "storage_bucket": "skyshooting-399f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830305369095:android:dc723d6d20278ebd96fea2",
+        "android_client_info": {
+          "package_name": "com.ksw.SkyShooting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "830305369095-kfjqhglf3mbm49kttd7uhjk40pt9r1cq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ksw.SkyShooting",
+            "certificate_hash": "b53452ff8e9447500922c3ceb9a632b3041ce2cf"
+          }
+        },
+        {
+          "client_id": "830305369095-p2n0n1knse193i0tlnj671o7f9jh5f4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxleASjxE3umcoLDERSxC1plg0Nx1RYXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "830305369095-p2n0n1knse193i0tlnj671o7f9jh5f4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
