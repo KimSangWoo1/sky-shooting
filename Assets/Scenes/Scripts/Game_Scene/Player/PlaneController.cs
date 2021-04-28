@@ -41,8 +41,8 @@ public class PlaneController : PlaneBase ,IMessageReceiver
 
     //비행기 이동 & 부스터
     private void Move()
-    {   
-        /*
+    {
+        #if UNITY_ANDROID
         //Mobile 부스터
         if (busterController.Get_BusterClick())
         {
@@ -59,45 +59,50 @@ public class PlaneController : PlaneBase ,IMessageReceiver
             engineFX.gameObject.SetActive(true);
             busterFx.Pause();
         }
-        */
-        
-         //PC 부스터
-         if (Input.GetKeyDown(KeyCode.Space)){
-             busterController.buster = true;
-             if (!busterFx.isPlaying)
-             {
-                busterFx.Play();
-             }
-         }
-         else if (Input.GetKey(KeyCode.Space))
-         {
-             engineFX.gameObject.SetActive(false);
-             if(!busterController.buster)
-             { 
-                 busterFx.Pause();
-                 transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
-             }
-             else
-             {
-                 transform.Translate(Vector3.forward * Time.deltaTime * (runSpeed + runPower), Space.Self);               
-             }
+        #endif
 
-         }
-         else if(Input.GetKeyUp(KeyCode.Space))
-         {
-             engineFX.gameObject.SetActive(true);
-             busterFx.Pause();
-             busterController.buster = false;
-         }
-         else
-         {
-             transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
-         }
-         
+        #if UNITY_EDITOR_WIN
+        //PC 부스터
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            busterController.buster = true;
+            if (!busterFx.isPlaying)
+            {
+                busterFx.Play();
+            }
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            engineFX.gameObject.SetActive(false);
+            if (!busterController.buster)
+            {
+                busterFx.Pause();
+                transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
+            }
+            else
+            {
+                busterFx.Play();
+                transform.Translate(Vector3.forward * Time.deltaTime * (runSpeed + runPower), Space.Self);
+            }
+
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            engineFX.gameObject.SetActive(true);
+            busterFx.Pause();
+            busterController.buster = false;
+        }
+        else
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime * runSpeed, Space.Self);
+        }
+        #endif
+
     }
     //비행기 회전
     private void Rot()
     {
+        #if UNITY_EDITOR_WIN
         //PC용
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
@@ -115,16 +120,23 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                 transform.rotation = Quaternion.Lerp(this.transform.rotation, diretion , Time.deltaTime * turnSpeed);
             }
         }
-        
+        #endif
+        #if UNITY_ANDROID
         //Mobile 용
         if (joystick.move)
         {
             Vector2 joyDirect = joystick.getDirection();
-            joyDirect = joyDirect.normalized;
+            Vector3 direct = new Vector3(joyDirect.x, 0f, joyDirect.y);
+            direct = direct.normalized;
+
+            Quaternion diretion = Quaternion.LookRotation(direct, Vector3.up);
+            transform.rotation = Quaternion.Lerp(this.transform.rotation, diretion, Time.deltaTime * turnSpeed);
+            /* 곧바로 회전
             float angle = Mathf.Atan2(joyDirect.x, joyDirect.y) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0f, angle, 0f) ;
+            */
         }
-        
+        #endif
     }
 
     //메시지 받기1

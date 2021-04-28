@@ -250,7 +250,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 7
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
+  AndroidKeystoreName: C:/Users/sangwoo/Unity_Project/sky shooting/user.keystore
   AndroidKeyaliasName: ksw
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
