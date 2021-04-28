@@ -294,7 +294,7 @@ public class B_Machine : PlaneBase, IMessageReceiver
                 direct = direct.normalized;
 
                 direction = Quaternion.LookRotation(direct, Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, direction, Time.deltaTime * turnSpeed * 2f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, direction, Time.deltaTime * turnSpeed); //*2f
             }
         }
         else

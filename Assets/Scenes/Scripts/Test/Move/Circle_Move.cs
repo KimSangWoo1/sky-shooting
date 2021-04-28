@@ -42,8 +42,8 @@ public class Circle_Move : MathFunction
         //Tan();
         z += Time.deltaTime * speed* limit;
         //Circle_exercise();
-        //Half_exercise();
-        Horizontal_Circle();
+        Half_exercise();
+        //Horizontal_Circle();
     }
     //주로 높낮이 Vector3 Y에 사용되는게 좋음  
     /*
@@ -74,7 +74,8 @@ public class Circle_Move : MathFunction
     private void Half_exercise()
     {
         float cos = Cos();
-        this.transform.position = new Vector3(cos, -Sin(), - z) + startPoint;
+        //this.transform.position = new Vector3(cos, -Sin(), z) + startPoint;
+        this.transform.position = new Vector3(cos, -Sin(), startPoint.z) + startPoint;
         this.transform.rotation =  Quaternion.Euler(x,y, cos * turnSpeed) * startRotation;
     }
 

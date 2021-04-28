@@ -78,7 +78,7 @@ public  class PlaneBase :MonoBehaviour
         //이동설정
         runSpeed = 10f;
         runPower = 10f;
-        turnSpeed = 2f;
+        turnSpeed = 3f;
         
         hp = 100;
     }
