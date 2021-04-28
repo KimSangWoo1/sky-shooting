@@ -8,7 +8,7 @@ public class DeathMatchManager : Singleton<DeathMatchManager>
 
     private void Awake()
     {
-
+      
     }
 
     void Start()
