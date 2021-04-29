@@ -1288,7 +1288,7 @@ GameObject:
   - component: {fileID: 252161610}
   - component: {fileID: 252161609}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: DeathMatchManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1307,6 +1307,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 165834098}
+  materials:
+  - {fileID: 2100000, guid: 421e2c6f2c6e454408632e9782cf744e, type: 2}
+  - {fileID: 2100000, guid: b6bccb5d2d4ed7b4d99b27cb8af082d6, type: 2}
+  - {fileID: 2100000, guid: 03b7b6b9080d16b40b2fb6dc579ec515, type: 2}
+  - {fileID: 2100000, guid: 9e1c5a2f69aceaa4390cbbe5f498657f, type: 2}
+  Player: {fileID: 351132608}
 --- !u!4 &252161610
 Transform:
   m_ObjectHideFlags: 0

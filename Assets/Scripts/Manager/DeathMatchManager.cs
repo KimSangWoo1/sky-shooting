@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class DeathMatchManager : Singleton<DeathMatchManager>
 {
     public Map map;
+    public Material[] materials;
+    public GameObject Player;
 
     private void Awake()
     {
@@ -13,7 +15,7 @@ public class DeathMatchManager : Singleton<DeathMatchManager>
 
     void Start()
     {
-        
+        Player.GetComponent<Renderer>().material = materials[GameManager.planeNumber];
     }
 
     // Update is called once per frame
