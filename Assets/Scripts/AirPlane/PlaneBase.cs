@@ -21,7 +21,7 @@ public  class PlaneBase :MonoBehaviour
     [HideInInspector]
     public ItemManager IM;
     [HideInInspector]
-    public BoardManager BM;
+    public BoardManager UI_BM;
 
     private ParticleSystem[] FX;
     protected ParticleSystem engineFX; //0 기본 엔진FX
@@ -43,7 +43,7 @@ public  class PlaneBase :MonoBehaviour
     {
         FXM = FX_Manager.Instance;
         IM = ItemManager.Instance;
-        BM = BoardManager.Instance;
+        UI_BM = BoardManager.Instance;
 
         //죽음FX 어떤 색인지 알아야해서
         material = GetComponent<MeshRenderer>().material;
@@ -97,7 +97,7 @@ public  class PlaneBase :MonoBehaviour
             hurtFx.Stop();
         }
     }
-
+    //죽었을 경우 아이템 랜덤으로 POP
     protected void Item_Random()
     {
         int random = Random.Range(1, 10);
@@ -136,24 +136,5 @@ public  class PlaneBase :MonoBehaviour
 
         }
     }
-
-    /*
-#if UNITY_ANDROID || UNITY_IOS
-    #region Mobile 비행기 부스터
-    protected virtual void Mobile_Buster()
-    {
-
-    }
-    #endregion
-#endif
-
-#if UNITY_WINDOW
-    #region PC 비행기 부스터
-    protected virtual void PC_Buster()
-        {
-
-    #endregion
-#endif
-    */
 }
 

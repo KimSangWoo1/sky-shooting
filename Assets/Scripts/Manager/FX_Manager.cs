@@ -4,8 +4,10 @@ using UnityEngine;
 
 public partial class FX_Manager : Singleton<FX_Manager>
 {
-    private  ObjectPooling FX_ItemPooling = new ObjectPooling();
-    private  ObjectPooling FX_RedDeadPool = new ObjectPooling();// FX_RedDead Pool
+    private  ObjectPooling FX_ItemPool = new ObjectPooling(); //FX_Item Pool
+    private ObjectPooling FX_MoneyPool = new ObjectPooling();// FX Money Pool
+
+    private ObjectPooling FX_RedDeadPool = new ObjectPooling();// FX_RedDead Pool
     private  ObjectPooling FX_GreenDeadPool = new ObjectPooling();// FX_GreenDead Pool
     private  ObjectPooling FX_BlueDeadPool = new ObjectPooling(); // FX_BlueDead Pool
     private  ObjectPooling FX_OrangeDeadPool = new ObjectPooling(); // FX_OrangeDead Pool
@@ -17,8 +19,12 @@ public partial class FX_Manager : Singleton<FX_Manager>
     void Start()
     {
         //FX Item 생성
-        FX_ItemPooling.Set_FX_ItemState(ObjectPooling.FX_State.item);
-        FX_ItemPooling.FX_Creation();
+        FX_ItemPool.Set_FX_ItemState(ObjectPooling.FX_State.item);
+        FX_ItemPool.FX_Creation();
+
+        //FX Money 생성
+        FX_MoneyPool.Set_FX_MoneyState(ObjectPooling.FX_State.Money);
+        FX_MoneyPool.FX_Creation();
 
         //FX Dead 생성
         FX_RedDeadPool.Set_FX_DeadState(ObjectPooling.FX_State.Dead, ObjectPooling.DeadState.Red);

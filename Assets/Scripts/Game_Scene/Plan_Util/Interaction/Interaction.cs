@@ -18,30 +18,34 @@ public partial class Interaction : MonoBehaviour
     {
         if (other.gameObject.tag == "Bullet")
         {
-            messageSender.ApplyDamage(other.gameObject.GetComponent<Bullet_Move>().Get_ProfileName());
+            messageSender.ApplyDamage(other.gameObject.GetComponent<BulletController>().Get_ProfileName());
         }
         else
-        {
-            planeBase.FXM.FX_ItemPop(transform);
+        {       
             if (other.transform.parent.tag == "Item_Bullet")
             {
+                planeBase.FXM.FX_ItemPop(transform);
                 messageSender.Apply_AddBullet();
             }
             else if (other.transform.parent.tag == "Item_Muzzle")
             {
+                planeBase.FXM.FX_ItemPop(transform);
                 messageSender.Apply_AddMuzzle();
             }
             else if (other.transform.parent.tag == "Item_Turbin")
             {
+                planeBase.FXM.FX_ItemPop(transform);
                 messageSender.Apply_AddTurbin();
             }
             else if (other.transform.parent.tag == "Item_Health")
             {
+                planeBase.FXM.FX_ItemPop(transform);
                 messageSender.Apply_AddHealth(other.transform.parent.GetComponent<ItemControl>().healthState);
             }
             else if (other.transform.parent.tag == "Item_Dollar")
             {
-                //추가해야함??
+                planeBase.FXM.FX_MoneyPop(transform);
+                messageSender.Apply_AddMoney(other.transform.parent.GetComponent<ItemControl>().dollarState);
             }     
         }
     }

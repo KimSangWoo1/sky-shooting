@@ -6,6 +6,8 @@ public class FX_ItemControl : MonoBehaviour
 {
     private FX_Manager FXM;
     ParticleSystem particle;
+    [SerializeField]
+    ObjectPooling.FX_State fxState;
     private void Awake()
     {
         particle = GetComponent<ParticleSystem>();
@@ -22,7 +24,14 @@ public class FX_ItemControl : MonoBehaviour
         //끝났을 경우
         if (particle.isStopped)
         {
-            FXM.FX_ItemPush(this.gameObject); //Push 및 active 설정
+            if (fxState == ObjectPooling.FX_State.item)
+            {
+                FXM.FX_ItemPush(this.gameObject); //Push 및 active 설정
+            }
+            else if(fxState == ObjectPooling.FX_State.Money)
+            {
+                FXM.FX_MoneyPush(this.gameObject);
+            }
         }
     }
 }

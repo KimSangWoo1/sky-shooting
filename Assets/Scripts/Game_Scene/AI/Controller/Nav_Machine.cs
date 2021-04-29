@@ -425,11 +425,11 @@ public class Nav_Machine : PlaneBase, IMessageReceiver
                 //점수 보드 변경
                 if (hp <= 0f)
                 {
-                    BM.Add_Score(message.name, 100); // 죽인 Player에게 100점
+                    UI_BM.Add_Score(message.name, 100); // 죽인 Player에게 100점
                 }
                 else
                 {
-                    BM.Add_Score(message.name, 10); // 맞춘 Player에게 10점
+                    UI_BM.Add_Score(message.name, 10); // 맞춘 Player에게 10점
                 }
 
                 //상태변경

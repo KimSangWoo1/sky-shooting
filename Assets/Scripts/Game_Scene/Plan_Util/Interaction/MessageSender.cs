@@ -17,7 +17,7 @@ public class MessageSender : MonoBehaviour
         onInteractionMessageReceiver = mono.GetComponent<Message.IMessageReceiver>();
         if (onInteractionMessageReceiver == null) mono = null;
     }
-    #region Item HP Method
+    #region HP Method
     //HP 증가
     public void Apply_AddHealth(ObjectPooling.Item_HealthState _healthState)
     {
@@ -62,6 +62,53 @@ public class MessageSender : MonoBehaviour
             upgrade = false
         };
         onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.HEALTH, interactMsg);
+    }
+    #endregion
+
+    #region Money Method
+    public void Apply_AddMoney(ObjectPooling.Item_DollarState _dollarState)
+    {
+        switch (_dollarState)
+        {
+            case ObjectPooling.Item_DollarState.Red:
+                Add_RedMoney();
+                break;
+            case ObjectPooling.Item_DollarState.Yellow:
+                Add_YellowMoney();
+                break;
+            case ObjectPooling.Item_DollarState.Green:
+                Add_GreenMoney();
+                break;
+        }
+    }
+    private void Add_RedMoney()
+    {
+        interactMsg = new Interaction.InteractMessage
+        {
+            amount = 5, //돈 1 증가
+            upgrade = false
+        };
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.DOLLAR, interactMsg);
+    }
+
+    private void Add_YellowMoney()
+    {
+        interactMsg = new Interaction.InteractMessage
+        {
+            amount = 10, //돈 5 증가
+            upgrade = false
+        };
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.DOLLAR, interactMsg);
+    }
+
+    private void Add_GreenMoney()
+    {
+        interactMsg = new Interaction.InteractMessage
+        {
+            amount = 20, //돈 20 증가
+            upgrade = false
+        };
+        onInteractionMessageReceiver.OnReceiver_InteractMessage(Message.MessageType.DOLLAR, interactMsg);
     }
     #endregion
 

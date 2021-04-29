@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class ObjectPooling : MonoBehaviour
 {
-    public enum FX_State { item, Dead };
+    public enum FX_State {item,Money, Dead };
     public enum DeadState {None, Red, Green, Blue, Orange };
 
     private FX_State fx_State;
@@ -12,15 +12,20 @@ public partial class ObjectPooling : MonoBehaviour
 
     //크기 설정
     private int FX_ItemSize = 10; //아이템 첫 사이즈
+    private int FX_MoneySize = 5; //아이템 첫 사이즈
     private int FX_DeadSize = 5;  //죽음 첫 사이즈
     //부모 설정
     private GameObject FX_ItemParent;  //FX 아이템 부모
+    private GameObject FX_MoneyParent;  //FX 돈 부모
     private GameObject FX_DeadParent;  //FX 죽음 부모
 
-    // 아이템 Pool
+    // FX 아이템 Pool
     private Queue<GameObject> FX_ItemPool = new Queue<GameObject>(); // FX_Item Pool
 
-    //죽음 Pool
+    // FX 돈 Pool
+    private Queue<GameObject> FX_MoneyPool = new Queue<GameObject>(); // FX_Money Pool
+
+    // FX 죽음 Pool
     private Queue<GameObject> FX_RedDeadPool = new Queue<GameObject>(); // FX_RedDead Pool
     private Queue<GameObject> FX_GreenDeadPool = new Queue<GameObject>(); // FX_GreenDead Pool
     private Queue<GameObject> FX_BlueDeadPool = new Queue<GameObject>(); // FX_BlueDead Pool
@@ -38,6 +43,18 @@ public partial class ObjectPooling : MonoBehaviour
                 break;
         }
     }
+    //돈 상태
+    public void Set_FX_MoneyState(FX_State _state)
+    {
+        fx_State = _state;
+        switch (fx_State)
+        {
+            case FX_State.Money:
+                prefab = Resources.Load("Particle/FX_Prefab/FX_MoneyRainbow") as GameObject;
+                break;
+        }
+    }
+
     //죽음 상태
     public void Set_FX_DeadState(FX_State _state, DeadState subState)
     {
@@ -109,6 +126,28 @@ public partial class ObjectPooling : MonoBehaviour
                     FX_ItemPool.Enqueue(clone);
                 }
                 break;
+            case FX_State.Money:
+                if (FX_MoneyParent == null || !FX_MoneyParent.activeInHierarchy)
+                {
+                    FX_MoneyParent = GameObject.Find("FX_MoneyPool");
+                    if (FX_MoneyParent == null)
+                    {
+                        FX_MoneyParent = new GameObject();
+                        FX_MoneyParent.transform.name = "FX_MoneyPool";
+                    }
+                }
+
+                for (int i = 0; i < FX_ItemSize; i++)
+                {
+                    if (prefab == null)
+                    {
+                        Set_FX_ItemState(FX_State.item);
+                    }
+                    clone = GameObject.Instantiate(prefab, FX_MoneyParent.transform.position, Quaternion.Euler(0f, 0f, 0f), FX_MoneyParent.transform);
+                    clone.SetActive(false);
+                    FX_MoneyPool.Enqueue(clone);
+                }
+                break;
             case FX_State.Dead:
                 if (FX_DeadParent == null || !FX_DeadParent.activeInHierarchy)
                 {
@@ -165,6 +204,9 @@ public partial class ObjectPooling : MonoBehaviour
             case FX_State.item:
                 FX_ItemPool.Enqueue(temp);
                 break;
+            case FX_State.Money:
+                FX_MoneyPool.Enqueue(temp);
+                break;
             case FX_State.Dead:
                 switch (deadState)
                 {
@@ -201,7 +243,13 @@ public partial class ObjectPooling : MonoBehaviour
                     FX_Creation();
                 }
                 temp = FX_ItemPool.Dequeue();
-
+                break;
+            case FX_State.Money:
+                if (FX_MoneyPool.Count == 0)
+                {
+                    FX_Creation();
+                }
+                temp = FX_MoneyPool.Dequeue();
                 break;
             case FX_State.Dead:
                 switch (deadState)

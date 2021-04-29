@@ -95,23 +95,23 @@ public class MuzzleController : MonoBehaviour
             case Muzzle_Number.one:
                 bullet1 = BM.bullet_Fire(centerMuzzle);
                 
-                bullet1.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
+                bullet1.GetComponent<BulletController>().Set_PlayerProfile(profile);
                 break;
             case Muzzle_Number.two:
                 bullet1 = BM.bullet_Fire(leftMuzzle);
                 bullet2 = BM.bullet_Fire(rightMuzzle);
 
-                bullet1.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
-                bullet2.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
+                bullet1.GetComponent<BulletController>().Set_PlayerProfile(profile);
+                bullet2.GetComponent<BulletController>().Set_PlayerProfile(profile);
                 break;
             case Muzzle_Number.three:
                 bullet1 = BM.bullet_Fire(centerMuzzle);
                 bullet2 = BM.bullet_Fire(leftMuzzle);
                 bullet3 = BM.bullet_Fire(rightMuzzle);
 
-                bullet1.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
-                bullet2.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
-                bullet3.GetComponent<Bullet_Move>().Set_PlayerProfile(profile);
+                bullet1.GetComponent<BulletController>().Set_PlayerProfile(profile);
+                bullet2.GetComponent<BulletController>().Set_PlayerProfile(profile);
+                bullet3.GetComponent<BulletController>().Set_PlayerProfile(profile);
                 break;
         }
     }

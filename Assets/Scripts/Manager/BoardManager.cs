@@ -78,24 +78,27 @@ public class BoardManager : Singleton<BoardManager>
             if (profile.name.Equals(_name))
             {
                 profile.score += _score;
+                break;
             }
         }
         update = true;
     }
 
-    public Profile Get_Grade(string _name)
+    public int Get_Score(string _name)
     {
-
+        int score = 0;
         foreach (Profile profile in GamePlayer.playList)
         {
             if (profile.name.Equals(_name))
             {
-                return profile;
+                score = profile.score;
+                break;
             }
         }
-        return null;
+        return score;
     }
 
+    //죽은 플레이어와 살아있는 플레이어를 나눈다.
     public void Reset_Score(string _name)
     {
         //GamePlayer.playList.Find(x => x.name == _name);

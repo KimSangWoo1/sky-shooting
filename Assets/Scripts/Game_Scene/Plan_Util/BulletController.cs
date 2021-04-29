@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet_Move : MonoBehaviour
+public class BulletController : MonoBehaviour
 {
     private Profile profile;
 

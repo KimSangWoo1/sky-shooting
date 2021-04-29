@@ -44,14 +44,4 @@ public class DeathMatchManager : Singleton<DeathMatchManager>
         //Player 들어올시 꽉 차면 다른 방에 참가
         
     }
-
-    public void Load_LobbyScene()
-    {
-        SceneManager.LoadScene("Lobby_Scene");
-    }
-
-    public void Load_DeathMatchScene()
-    {
-        SceneManager.LoadScene("DeathMatch_Scene");
-    }
 }

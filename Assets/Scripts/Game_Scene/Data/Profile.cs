@@ -5,10 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class Profile 
 {
-
     public string name;
     public int score = 0;
-    private int dollar = 0;
+    public int dollar = 0;
 
     public void UpdateProfile(string _name, int _score, int _dollar)
     {

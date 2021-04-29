@@ -14,7 +14,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
     public JoyStick joystick; //조이스틱
     public Health health;
     public Hit_Blinking hit_Blinking;
-    public Image resultUI;
+    public ResultBoardControl resultBoardControl;
     //입력값
     private float h;
     private float v;
@@ -27,10 +27,13 @@ public class PlaneController : PlaneBase ,IMessageReceiver
             base.FXM.FX_Pop(transform, deadState); // 파괴 연출
             base.Item_Random(); //아이템 생성
 
-            BM.Reset_Score(profile.name);//점수 보드 변경
+            profile.UpdateScore(UI_BM.Get_Score(profile.name));//결과 점수 가져오기
+
+            resultBoardControl.Set_ResultBoard(profile); //결과 내용 전송
+            
+
+            UI_BM.Reset_Score(profile.name);//플레이 점수 보드 변경
             gameObject.SetActive(false); //삭제
-            resultUI.gameObject.SetActive(true);
-            //결과 UI 보여주기
         }
 
         Move(); //비행기 이동
@@ -139,7 +142,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
         #endif
     }
 
-    //메시지 받기1
+    //아이템 메시지 받기
     public void OnReceiver_InteractMessage(MessageType type, object msg)
     {
         Interaction.InteractMessage message = (Interaction.InteractMessage)msg;
@@ -148,12 +151,11 @@ public class PlaneController : PlaneBase ,IMessageReceiver
         {
             case MessageType.HEALTH:
                 hp += message.amount;
-                print(hp);
                 HPCheck();
                 health.ChaneHP(hp);
                 break;
             case MessageType.DOLLAR:
-                //아직
+                profile.UpdateDollar(message.amount);
                 break;
             case MessageType.BULLET:
                 if (message.upgrade)
@@ -175,7 +177,7 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                 break;
         }
     }
-        //메시지 받기2
+        //점수 메시지 받기
         public void OnReceiver_DamageMessage(MessageType type, object msg)
         {
             Interaction.DamageMessage message = (Interaction.DamageMessage)msg;
@@ -189,11 +191,11 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                    //점수 보드 변경
                     if (hp <= 0f)
                     {
-                        BM.Add_Score(message.name, 100); // 죽인 Player에게 100점
+                        UI_BM.Add_Score(message.name, 100); // 죽인 Player에게 100점
                     }
                     else
                     {
-                        BM.Add_Score(message.name, 10); // 맞춘 Player에게 10점
+                        UI_BM.Add_Score(message.name, 10); // 맞춘 Player에게 10점
                     }
 
                     hit_Blinking.Blinking(true); //UI 빨간색 깜박임
@@ -202,8 +204,6 @@ public class PlaneController : PlaneBase ,IMessageReceiver
                 case MessageType.CLASH:
                     hp -= message.damage;
                     HPCheck();//hp 체크
-
-                    BM.Reset_Score(profile.name);//점수 보드 변경
 
                     hit_Blinking.Blinking(true); //UI 빨간색 깜박임
                     health.ChaneHP(hp); //UI hp 변경
