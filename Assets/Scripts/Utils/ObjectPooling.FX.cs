@@ -39,7 +39,7 @@ public partial class ObjectPooling : MonoBehaviour
         switch (fx_State)
         {
             case FX_State.item:
-                prefab = Resources.Load("Particle/FX_Prefab/FX_Rainbow") as GameObject;
+                prefab = Resources.Load("Prefab/Particle/FX_Prefab/Effect/FX_Rainbow") as GameObject;
                 break;
         }
     }
@@ -50,7 +50,7 @@ public partial class ObjectPooling : MonoBehaviour
         switch (fx_State)
         {
             case FX_State.Money:
-                prefab = Resources.Load("Particle/FX_Prefab/FX_MoneyRainbow") as GameObject;
+                prefab = Resources.Load("Prefab/Particle/FX_Prefab/Money/FX_MoneyRainbow") as GameObject;
                 break;
         }
     }
@@ -69,16 +69,16 @@ public partial class ObjectPooling : MonoBehaviour
                     case DeadState.None:
                         break;
                     case DeadState.Red:
-                        prefab = Resources.Load("Particle/FX_Prefab/Dead/FX_RedDead") as GameObject;
+                        prefab = Resources.Load("Prefab/Particle/FX_Prefab/Dead/FX_RedDead") as GameObject;
                         break;
                     case DeadState.Green:
-                        prefab = Resources.Load("Particle/FX_Prefab/Dead/FX_GreenDead") as GameObject;
+                        prefab = Resources.Load("Prefab/Particle/FX_Prefab/Dead/FX_GreenDead") as GameObject;
                         break;
                     case DeadState.Blue:
-                        prefab = Resources.Load("Particle/FX_Prefab/Dead/FX_BlueDead") as GameObject;
+                        prefab = Resources.Load("Prefab/Particle/FX_Prefab/Dead/FX_BlueDead") as GameObject;
                         break;
                     case DeadState.Orange:
-                        prefab = Resources.Load("Particle/FX_Prefab/Dead/FX_OrangeDead") as GameObject;
+                        prefab = Resources.Load("Prefab/Particle/FX_Prefab/Dead/FX_OrangeDead") as GameObject;
                         break;
                 }
                 break;
@@ -137,11 +137,11 @@ public partial class ObjectPooling : MonoBehaviour
                     }
                 }
 
-                for (int i = 0; i < FX_ItemSize; i++)
+                for (int i = 0; i < FX_MoneySize; i++)
                 {
                     if (prefab == null)
                     {
-                        Set_FX_ItemState(FX_State.item);
+                        Set_FX_MoneyState(FX_State.Money);
                     }
                     clone = GameObject.Instantiate(prefab, FX_MoneyParent.transform.position, Quaternion.Euler(0f, 0f, 0f), FX_MoneyParent.transform);
                     clone.SetActive(false);

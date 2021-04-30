@@ -36,12 +36,14 @@ public class PlaneController : PlaneBase ,IMessageReceiver
             gameObject.SetActive(false); //삭제
         }
 
-        Move(); //비행기 이동
-        Rot(); //비행기 회전
         fireController.Player_FireTrigger(); //발사
         busterController.Player_Buster_Control(); //부스터 관리
     }
-
+    void FixedUpdate()
+    {
+        Move(); //비행기 이동
+        Rot(); //비행기 회전 
+    }
     //비행기 이동 & 부스터
     private void Move()
     {

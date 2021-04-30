@@ -6,12 +6,13 @@ public  class PlaneBase :MonoBehaviour
     public Profile profile;
     [Header("비행기 기본 설정")]
     public float runSpeed; //이동속도
+    [HideInInspector]
     public float turnSpeed; //회전속도
+    [HideInInspector]
     public float runPower; //부스터 추가 이동속도
     public int hp;
 
     private Material material;
-    public string colorName;
     [HideInInspector]
     public ObjectPooling.DeadState deadState;
 
@@ -46,25 +47,26 @@ public  class PlaneBase :MonoBehaviour
         UI_BM = BoardManager.Instance;
 
         //죽음FX 어떤 색인지 알아야해서
-        material = GetComponent<MeshRenderer>().material;
-        colorName = material.name;
+        switch (profile.skinType)
+        {
+            case 0:
+                deadState = ObjectPooling.DeadState.Red;
+                break;
+            case 1:
+                deadState = ObjectPooling.DeadState.Green;
+                break;
+            case 2:
+                deadState = ObjectPooling.DeadState.Blue;
+                break;
+            case 3:
+                deadState = ObjectPooling.DeadState.Orange;
+                break;
+            default:
+                deadState = ObjectPooling.DeadState.Red;
+                break;
+        }
 
-        if (colorName.Contains("Red"))
-        {
-            deadState = ObjectPooling.DeadState.Red;
-        }
-        else if (colorName.Contains("Grren"))
-        {
-            deadState = ObjectPooling.DeadState.Green;
-        }
-        else if (colorName.Contains("Blue"))
-        {
-            deadState = ObjectPooling.DeadState.Blue;
-        }
-        else if (colorName.Contains("Orange"))
-        {
-            deadState = ObjectPooling.DeadState.Orange;
-        }
+        material = GetComponent<MeshRenderer>().material;
 
         FX = transform.GetComponentsInChildren<ParticleSystem>();
         engineFX = FX[0];

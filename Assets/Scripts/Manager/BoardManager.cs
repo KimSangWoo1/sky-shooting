@@ -14,8 +14,6 @@ public class BoardManager : Singleton<BoardManager>
     private int maxShowNum =5;
     private void Awake()
     {
-        GamePlayer.init();
-        GamePlayer.Make_RandomName();
 
     }
     void Start()

@@ -9,6 +9,9 @@ public static class GamePlayer
 
     public static List<Profile> playList = new List<Profile>();
     public static List<Profile> deadPlayList = new List<Profile>();
+
+    public static int playerCount= 1;
+    public static int maxPlayer = 50;
     public static void Make_RandomName()
     { //98개의 랜덤 이름
         names = new string[99] {

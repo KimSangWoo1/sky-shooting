@@ -10,12 +10,14 @@ public class DeathMatchManager : Singleton<DeathMatchManager>
 
     private void Awake()
     {
-      
+        GamePlayer.init();
+        GamePlayer.Make_RandomName();
     }
 
     void Start()
     {
         Player.GetComponent<Renderer>().material = materials[GameManager.planeNumber];
+        Player.GetComponent<PlaneBase>().profile.skinType = GameManager.planeNumber;
     }
 
     // Update is called once per frame
@@ -42,6 +44,26 @@ public class DeathMatchManager : Singleton<DeathMatchManager>
         //Player 들어오면 점수 가장 낮은 AI 폭파
 
         //Player 들어올시 꽉 차면 다른 방에 참가
-        
+    }
+
+    //1.AI생성
+    private void AIPlaneCreation()
+    {
+        for(int i=0; i < GamePlayer.maxPlayer - GamePlayer.playerCount; i++)
+        {
+            //비행기 Pop
+
+            //material 설정
+
+            //부스터 설정
+
+            //위치 설정   
+        }
+
+    }
+    //2.Player 생성
+    private void PlayerPlaneCreation()
+    {
+
     }
 }

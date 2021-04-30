@@ -13,8 +13,11 @@ public class BulletController : MonoBehaviour
     private float lifeTime; //생명 시간
     private float deadTime; //죽는 시간
 
+    private bool pop;
+
     private void OnEnable()
     {
+        pop = false;
         lifeTime = 0f;
     }
     private void Awake()
@@ -31,15 +34,28 @@ public class BulletController : MonoBehaviour
 
     void Update()
     {
-        //총 생명 시간 1초   
-        lifeTime += Time.deltaTime *timeSpeed;
-        if (lifeTime > deadTime)
+        if (!pop)
         {
-            lifeTime = 0f;  //초기화
-            BM.bullet_Control(this.gameObject); //Push 및 active 설정
+            StartCoroutine(BulletLife());
         }
+    }
+    private void FixedUpdate()
+    {
         transform.Translate(Vector3.forward * Time.deltaTime * bulletSpeed, Space.Self);
     }
+
+    IEnumerator BulletLife()
+    {
+        //총 생명 시간 1초   
+        lifeTime += Time.deltaTime * timeSpeed;
+        yield return new WaitUntil(() => lifeTime > deadTime);
+
+        lifeTime = 0f;  //초기화
+        BM.bullet_Control(this.gameObject); //Push 및 active 설정
+        
+        pop = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")

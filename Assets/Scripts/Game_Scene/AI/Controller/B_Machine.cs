@@ -40,6 +40,14 @@ public class B_Machine : PlaneBase, IMessageReceiver
     private Quaternion direction; //각도 계산용
     private int emergencyMode; //1 : 비행기 충돌 피하기 2 : 피격 피하기 후 공격하러 가기
 
+
+    private void Awake()
+    {
+        if (map == null)
+        {
+            map = GameObject.Find("map").GetComponent<Map>();
+        }
+    }
     private void OnEnable()
     {
         base.OnEnable();

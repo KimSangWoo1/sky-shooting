@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class FireController : MonoBehaviour
 {
-    [Header("발사 관련")]
-    public MuzzleController muzzle;
-    public MagazineController magazine;
     [Header("UI관련")]
     public RightPanel_Control rightPanel; //발사
 
+    private MuzzleController muzzle;
+    private MagazineController magazine;
 
     private float fireTime; // 발사 시간
     private float fireReloadTime; //재장전 시간
@@ -27,6 +26,11 @@ public class FireController : MonoBehaviour
         fireSpeedTime = 5f;
     }
 
+    private void Start()
+    {
+        muzzle = GetComponent<MuzzleController>();
+        magazine = GetComponent<MagazineController>();
+    }
     // Update is called once per frame
     void Update()
     {

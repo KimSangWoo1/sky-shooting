@@ -47,8 +47,8 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
     private float revengeAction_Time;
     private float cameraBumpAction_Time;
     private float cameraBreakAction_Time;
-    private float nextAction_WaitTime;
 
+    /*
     [Header("액션 진행 상태")]
     //현재 액션 
     [SerializeField]
@@ -58,11 +58,13 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
     [SerializeField]
     private bool action_Fire;
     [SerializeField]
-    private bool action_Revenge;
-    [SerializeField]
     private bool action_Bump;
     [SerializeField]
     private bool action_Break;
+    */
+    [SerializeField]
+    private bool action_Revenge;
+
 
 
     private void Awake()
@@ -109,7 +111,7 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
         switch (action)
         {
             case Action_State.wait:
-                action_Wait = true;
+                //action_Wait = true;
                 break;
             case Action_State.circleAction:
                 StartCoroutine(circleAction_Start());
@@ -137,8 +139,8 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
     }
     IEnumerator circleAction_Start()
     {
-        action_Wait = false;
-        action_Circle = true;
+       // action_Wait = false;
+       // action_Circle = true;
         //n초 후 시작
         yield return new WaitForSeconds(circleAction_Time);
         //오브젝트 활성화 시켜 액션ON
@@ -150,8 +152,8 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
 
     IEnumerator fireAction_Start()
     {
-        action_Wait = false;
-        action_Fire = true;
+       // action_Wait = false;
+       // action_Fire = true;
         //circle비행기 비활성화
         circlePlane.SetActive(false);
         flowObejct.SetActive(false);
@@ -182,8 +184,8 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
 
     IEnumerator revengeAction_Start()
     {
-        action_Wait = false;
-        action_Revenge = true;
+     //   action_Wait = false;
+     //   action_Revenge = true;
         //fire 비행기 비활성화
         avoidPlane.SetActive(false);
         firePlane.SetActive(false);
@@ -213,8 +215,8 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
 
     IEnumerator bumpAction_Start()
     {
-        action_Wait = false;
-        action_Bump = true;
+    //    action_Wait = false;
+     //   action_Bump = true;
         //revenge 비행기 비활성화
         avoidPlane.SetActive(false);
         firePlane.SetActive(false);
@@ -227,7 +229,7 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
     }
     IEnumerator breackAction_Start()
     {
-        action_Break = true;
+    //    action_Break = true;
         //break 비행기 활성화
         breakPlane.SetActive(false);
 
@@ -279,17 +281,15 @@ public class Title_SceneManager : Singleton<Title_SceneManager>
         firePlane.transform.rotation = fire_StartRotation;
         avoidPlane.transform.rotation = avoid_StartRotation;
 
-        nextAction_WaitTime = 0f;
         alpha = 0f;
 
         //액션 초기화
-        action_Wait = false;
-        action_Circle = false;
-        action_Fire = false;
+     //   action_Wait = false;
+     //   action_Circle = false;
+     //   action_Fire = false;
         action_Revenge = false;
-        action_Revenge = false;
-        action_Bump = false;
-        action_Break = false;
+     //    action_Bump = false;
+     //   action_Break = false;
         
         //Circle_Action시작
         action = Action_State.circleAction;

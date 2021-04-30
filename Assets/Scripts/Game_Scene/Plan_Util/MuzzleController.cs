@@ -7,10 +7,10 @@ public class MuzzleController : MonoBehaviour
     BulletManager BM; //총알Manager
 
     Profile profile;
-    [Header("Player 총구 위치")]
-    public Transform leftMuzzle;
-    public Transform rightMuzzle;
-    public Transform centerMuzzle;
+    // [Header("Player 총구 위치")]
+    private Transform leftMuzzle;
+    private Transform rightMuzzle;
+    private Transform centerMuzzle;
 
     private GameObject bullet1;
     private GameObject bullet2;
@@ -22,6 +22,10 @@ public class MuzzleController : MonoBehaviour
     private int muzzle_Count; //총구 갯수
     private int bullet_Count; //총알 갯수
 
+    private void Awake()
+    {
+        
+    }
 
     private void OnEnable()
     {
@@ -31,6 +35,11 @@ public class MuzzleController : MonoBehaviour
     {
         BM = BulletManager.Instance;
         profile = transform.parent.GetComponent<PlaneBase>().profile;
+
+        leftMuzzle = gameObject.transform.GetChild(0);
+        rightMuzzle = gameObject.transform.GetChild(1);
+        centerMuzzle = gameObject.transform.GetChild(2);
+
     }
 
     void Update()
@@ -44,6 +53,14 @@ public class MuzzleController : MonoBehaviour
         Muzzle_Update();  //총구 변경
     }
 
+    //초기 설정
+    private void init()
+    {
+        muzzle_Count = 1;
+        bullet_Count = 1;
+
+        current_Muzzle = Muzzle_Number.one;
+    }
     //총구 설정
     private void Muzzle_Setting()
     {
@@ -131,13 +148,5 @@ public class MuzzleController : MonoBehaviour
     public int Get_BulletCount()
     {
         return bullet_Count;
-    }
-    //초기 설정
-    public void init()
-    {
-        muzzle_Count = 1;
-        bullet_Count = 1;
-
-        current_Muzzle = Muzzle_Number.one;
     }
 }

@@ -11,18 +11,16 @@ public partial class ObjectPooling
     private int cloudSize = 3; //구름 사이즈
     private int bulletSize = 10; //총알 사이즈
 
-    
     //풀링 셋팅
-    private GameObject cloudParent; //구름 부모
-    private GameObject bulletParent;  //총알 부모
+    private GameObject cloudParent;//구름 부모
+    private GameObject bulletParent;//총알 부모
 
     private GameObject prefab; //구름&총알 Prefab
     private GameObject clone; //Clone
-
+    
     //실제 풀 Queue 리스트
     private Queue<GameObject> cloudPool = new Queue<GameObject>(); //구름 Pool
     private Queue<GameObject> bulletPool = new Queue<GameObject>(); // 총알 Pool
-
 
     //풀링 대상 오브젝트 resource 참조
     public void Set_State(Pooling_State _state)

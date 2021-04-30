@@ -5,9 +5,17 @@ using UnityEngine;
 [System.Serializable]
 public class Profile 
 {
-    public string name;
-    public int score = 0;
-    public int dollar = 0;
+    //Player 전용
+    public string name; //이름
+    [HideInInspector]
+    public int dollar = 0; //돈
+
+    //공용
+    public int score = 0; // 점수
+    [HideInInspector]
+    public int skinType = 0; // 비행기 색
+    [HideInInspector]
+    public int busterType = 0; // 비행기 부스터 타입
 
     public void UpdateProfile(string _name, int _score, int _dollar)
     {
