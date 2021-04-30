@@ -3,6 +3,8 @@
 
 public  class PlaneBase :MonoBehaviour
 {
+    private PlaneManager PM;
+
     public Profile profile;
     [Header("비행기 기본 설정")]
     public float runSpeed; //이동속도
@@ -39,7 +41,9 @@ public  class PlaneBase :MonoBehaviour
     protected ParticleSystem hurtFx; //3 출혈FX                     
 
     protected void Awake()
-    { 
+    {
+        PM = PlaneManager.Instance;
+
         // AI 이름 설정
         if (transform.tag == "AI")
         {       
@@ -177,6 +181,15 @@ public  class PlaneBase :MonoBehaviour
         hitFx.gameObject.SetActive(false);
         hurtFx.gameObject.SetActive(false);
         busterFx.gameObject.SetActive(false);
+
+        if (gameObject.tag.Equals("Player"))
+        {
+            PM.Plane_Push(gameObject, ObjectPooling.PlaneState.Player);
+        }
+        else if (gameObject.tag.Equals("AI"))
+        {
+            PM.Plane_Push(gameObject, ObjectPooling.PlaneState.AI);
+        }
     }
 }
 
