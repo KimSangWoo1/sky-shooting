@@ -12,7 +12,6 @@ public  class PlaneBase :MonoBehaviour
     public float runPower; //부스터 추가 이동속도
     public int hp;
 
-    private Material material;
     [HideInInspector]
     public ObjectPooling.DeadState deadState;
 
@@ -24,13 +23,22 @@ public  class PlaneBase :MonoBehaviour
     [HideInInspector]
     public BoardManager UI_BM;
 
-    private ParticleSystem[] FX;
+    private GameObject normalFXParent;
+    private GameObject bustersFXParent;
+    private GameObject hitsFXParent;
+    private GameObject hurtsFXParent;
+
+    private ParticleSystem[] normalFX;
+    private ParticleSystem[] bustersFX;
+    private ParticleSystem[] hitsFX;
+    private ParticleSystem[] hurtsFX;
+
     protected ParticleSystem engineFX; //0 기본 엔진FX
     protected ParticleSystem hitFx;  //1 타격FX
     protected ParticleSystem busterFx; //2 부스터FX
     protected ParticleSystem hurtFx; //3 출혈FX                     
 
-    private void Awake()
+    protected void Awake()
     { 
         // AI 이름 설정
         if (transform.tag == "AI")
@@ -38,15 +46,36 @@ public  class PlaneBase :MonoBehaviour
             profile.UpdateName(GamePlayer.Get_RandomName());
         }
         GamePlayer.ParticipatePlayer(profile);
+
+        normalFXParent = transform.Find("FX_Normals").gameObject;
+        bustersFXParent = transform.Find("FX_Busters").gameObject;
+        hitsFXParent = transform.Find("FX_Hits").gameObject;
+        hurtsFXParent = transform.Find("FX_Smokes").gameObject;
+
+        normalFX = normalFXParent.GetComponentsInChildren<ParticleSystem>();
+        bustersFX = bustersFXParent.GetComponentsInChildren<ParticleSystem>();
+        hitsFX = hitsFXParent.GetComponentsInChildren<ParticleSystem>();
+        hurtsFX = hurtsFXParent.GetComponentsInChildren<ParticleSystem>();  
+
+        for(int i=0; i < bustersFX.Length; i++)
+        {
+            bustersFX[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < hitsFX.Length; i++)
+        {
+            hitsFX[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < hurtsFX.Length; i++)
+        {
+            hurtsFX[i].gameObject.SetActive(false);
+        }
+
+        engineFX = normalFX[0];
     }
 
-    protected void Start()
+    protected void OnEnable()
     {
-        FXM = FX_Manager.Instance;
-        IM = ItemManager.Instance;
-        UI_BM = BoardManager.Instance;
-
-        //죽음FX 어떤 색인지 알아야해서
+        //죽음FX 설정
         switch (profile.skinType)
         {
             case 0:
@@ -65,24 +94,29 @@ public  class PlaneBase :MonoBehaviour
                 deadState = ObjectPooling.DeadState.Red;
                 break;
         }
+        //부스터FX 설정
+        hitFx = hitsFX[profile.skinType];
+        hurtFx = hurtsFX[profile.skinType];
+        busterFx = bustersFX[profile.busterType];
 
-        material = GetComponent<MeshRenderer>().material;
-
-        FX = transform.GetComponentsInChildren<ParticleSystem>();
-        engineFX = FX[0];
-        hitFx = FX[1];
-        busterFx = FX[2];
-        hurtFx = FX[3];
-
-    }
-    protected void OnEnable()
-    {
+        hitFx.gameObject.SetActive(true);
+        hurtFx.gameObject.SetActive(true);
+        busterFx.gameObject.SetActive(true);
+        
         //이동설정
         runSpeed = 10f;
         runPower = 10f;
         turnSpeed = 3f;
         
         hp = 100;
+    }
+
+    protected void Start()
+    {
+        FXM = FX_Manager.Instance;
+        IM = ItemManager.Instance;
+        UI_BM = BoardManager.Instance;
+
     }
 
     protected void HPCheck()
@@ -137,6 +171,12 @@ public  class PlaneBase :MonoBehaviour
                 break;
 
         }
+    }
+    private void OnDisable()
+    {
+        hitFx.gameObject.SetActive(false);
+        hurtFx.gameObject.SetActive(false);
+        busterFx.gameObject.SetActive(false);
     }
 }
 

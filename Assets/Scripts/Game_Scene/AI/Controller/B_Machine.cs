@@ -43,9 +43,11 @@ public class B_Machine : PlaneBase, IMessageReceiver
 
     private void Awake()
     {
+        base.Awake();
+
         if (map == null)
         {
-            map = GameObject.Find("map").GetComponent<Map>();
+            map = GameObject.Find("Map").GetComponent<Map>();       
         }
     }
     private void OnEnable()

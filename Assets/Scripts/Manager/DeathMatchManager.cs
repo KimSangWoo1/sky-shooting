@@ -17,7 +17,7 @@ public class DeathMatchManager : Singleton<DeathMatchManager>
     void Start()
     {
         Player.GetComponent<Renderer>().material = materials[GameManager.planeNumber];
-        Player.GetComponent<PlaneBase>().profile.skinType = GameManager.planeNumber;
+       // Player.GetComponent<PlaneBase>().profile.skinType = GameManager.planeNumber;
     }
 
     // Update is called once per frame

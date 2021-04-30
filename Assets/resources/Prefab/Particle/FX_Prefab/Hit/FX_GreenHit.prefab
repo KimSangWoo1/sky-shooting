@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100748, guid: cd4d7020429cde74db076ffa72495419, type: 3}
       propertyPath: m_Name
-      value: FX_Fireworks_Green_Small Variant
+      value: FX_GreenHit
       objectReference: {fileID: 0}
     - target: {fileID: 100748, guid: cd4d7020429cde74db076ffa72495419, type: 3}
       propertyPath: m_IsActive
@@ -17,15 +17,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 459750, guid: cd4d7020429cde74db076ffa72495419, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.55
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 459750, guid: cd4d7020429cde74db076ffa72495419, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.3400002
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 459750, guid: cd4d7020429cde74db076ffa72495419, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.38
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 459750, guid: cd4d7020429cde74db076ffa72495419, type: 3}
       propertyPath: m_LocalRotation.x
