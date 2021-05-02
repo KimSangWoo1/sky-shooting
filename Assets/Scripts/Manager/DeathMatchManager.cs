@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class DeathMatchManager : Singleton<DeathMatchManager>
 {
     private PlaneManager PM;
@@ -10,6 +11,11 @@ public class DeathMatchManager : Singleton<DeathMatchManager>
     public GameObject Player;
 
     private int aiCount;
+    private bool aiCreation;
+
+    //Test
+    private GameObject[] AIs = new GameObject[50];
+    public bool show;
     private void Awake()
     {
         GamePlayer.init();
@@ -30,9 +36,19 @@ public class DeathMatchManager : Singleton<DeathMatchManager>
 
     void Update()
     {
-        if (aiCount<=100)
+        if (!aiCreation)
         {
             StartCoroutine(AICreation()); //AI생성
+        }
+
+
+        if (show)
+        {
+            for(int i=0; i < AIs.Length; i++)
+            {
+                print(AIs[i].transform.name+" : "+AIs[i].activeSelf);
+            }
+            show = false;
         }
     }
 
@@ -54,9 +70,16 @@ public class DeathMatchManager : Singleton<DeathMatchManager>
         //Object Active
         cloneAI.SetActive(true);
 
+        //Test
+        cloneAI.transform.name = aiCount + " AI";
+        AIs[aiCount] = cloneAI;
+        
+        
         aiCount++;
-        yield return new WaitUntil(() => aiCount >= 100);
+        yield return new WaitUntil(() => aiCount >= 50);
+        aiCreation = true;
     }
+
     //2.Player 생성
     private void PlayerCreation()
     {

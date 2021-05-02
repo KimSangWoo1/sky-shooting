@@ -442,7 +442,7 @@ public class RandomPosition : MonoBehaviour
         Vector3 _target = point - target.position;
         if (Vector3.Dot(_target.normalized, target.right) > Mathf.Cos(60f * 0.5f * Mathf.Deg2Rad))
         {
-            print(point);
+           // print(point);
             Debug.DrawRay(point, Vector3.up, Color.blue, 5f);
         }
         else
